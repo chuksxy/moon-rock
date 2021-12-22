@@ -8,8 +8,8 @@ namespace game.world.character {
             public class Template : ScriptableObject {
 
                   public string characterName;
-                  public int    health;
-                  public float  energy;
+                  public int    maxHealth;
+                  public float  maxEnergy;
 
                   public SkinnedMeshRenderer skeleton;
 
@@ -26,8 +26,8 @@ namespace game.world.character {
 
                   public string   ID        { get; set; }
                   public string   Name      { get; set; }
-                  public int      Health    { get; set; }
-                  public float    Energy    { get; set; }
+                  public Health   Health    { get; set; }
+                  public Energy   Energy    { get; set; }
                   public string[] Modifiers { get; set; }
 
                   public string Base { get; set; }
@@ -44,8 +44,8 @@ namespace game.world.character {
                   public Data(
                         string           id,
                         string           name,
-                        int              health,
-                        float            energy,
+                        Health           health,
+                        Energy           energy,
                         string[]         modifiers,
                         string           @base,
                         Item.Hat[]       hats,
@@ -75,8 +75,8 @@ namespace game.world.character {
 
                   private string           _ID;
                   private string           _name;
-                  private int              _health;
-                  private float            _energy;
+                  private Health           _health;
+                  private Energy           _energy;
                   private Item.BaseLayer[] _baseLayer;
                   private Item.Hat[]       _hats;
                   private Item.Sleeve[]    _leftSleeves;
@@ -104,8 +104,20 @@ namespace game.world.character {
                   }
 
 
-                  public Builder AddHealth(int health) {
+                  public Builder AddHealth(Health health) {
                         _health = health;
+                        return this;
+                  }
+
+
+                  public Builder AddEnergy(Energy energy) {
+                        _energy = energy;
+                        return this;
+                  }
+
+
+                  public Builder AddBase(string @base) {
+                        _base = @base;
                         return this;
                   }
 

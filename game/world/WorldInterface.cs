@@ -2,18 +2,21 @@ using UnityEngine;
 
 namespace game.world {
 
-      public class WorldInterface : MonoBehaviour {
+      public static partial class World {
 
-            private WorldData _data = WorldData.Blank;
+            public class WorldInterface : MonoBehaviour {
 
-            public void Begin() { }
-            public void End()   { }
+                  private Data _data = Data.Blank;
+
+                  public void Begin() { }
+                  public void End()   { }
 
 
-            internal WorldInterface Init(WorldData data) {
-                  if (_data.IsBlank() && !data.IsBlank()) _data = data;
+                  internal WorldInterface Init(Data data) {
+                        if (_data.IsBlank() && !data.IsBlank()) _data = data;
+                        return this;
+                  }
 
-                  return this;
             }
 
       }
