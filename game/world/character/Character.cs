@@ -3,27 +3,35 @@ using UnityEngine;
 
 namespace game.world.character {
       public static class Character {
-            public static CharacterInterface Create(TCharacter template,
-                                                    string     characterID,
-                                                    string     registryID,
-                                                    string     zoneID) {
+            public static CharacterInterface Create(
+                  TCharacter template,
+                  string     characterID,
+                  string     registryID,
+                  string     zoneID
+            ) {
                   var data = ToData(template);
                   return Create(data, characterID, registryID, zoneID);
             }
 
-            public static CharacterInterface Create(CharacterData data,
-                                                    string        characterID,
-                                                    string        registryID,
-                                                    string        zoneID) {
+            public static CharacterInterface Create(
+                  CharacterData data,
+                  string        characterID,
+                  string        registryID,
+                  string        zoneID
+            ) {
                   return Assemble(data).Init(data, characterID, registryID, zoneID);
             }
 
-            public static CharacterInterface Assemble(TCharacter template) {
+            public static CharacterInterface Assemble(
+                  TCharacter template
+            ) {
                   var data = ToData(template);
                   return Assemble(data);
             }
 
-            public static CharacterInterface Assemble(CharacterData characterData) {
+            public static CharacterInterface Assemble(
+                  CharacterData characterData
+            ) {
                   var character = Load(characterData.Base);
 
                   Item.Equip(character, Item.Slot.Head, Item.ExtractNames(characterData.Hats));
@@ -36,13 +44,17 @@ namespace game.world.character {
                   return character.AddComponent<CharacterInterface>();
             }
 
-            public static GameObject Load(string name) {
+            public static GameObject Load(
+                  string name
+            ) {
                   return Resources.Load<GameObject>($"/Character/{name}.fbx");
             }
 
-            internal static void Move(CharacterInterface @interface,
-                                      Vector3            direction,
-                                      float              modifier) {
+            internal static void Move(
+                  CharacterInterface @interface,
+                  Vector3            direction,
+                  float              modifier
+            ) {
                   var data = WorldRegistry.GetRegistry(@interface.GetRegistryID())
                                           .GetCharacterData(@interface.GetCharacterID());
 
@@ -52,9 +64,11 @@ namespace game.world.character {
                   controller.Move(direction * modifier * speed);
             }
 
-            internal static void Jump(CharacterInterface @interface,
-                                      Vector3            direction,
-                                      float              modifier) {
+            internal static void Jump(
+                  CharacterInterface @interface,
+                  Vector3            direction,
+                  float              modifier
+            ) {
                   var data = WorldRegistry.GetRegistry(@interface.GetRegistryID())
                                           .GetCharacterData(@interface.GetCharacterID());
 
@@ -64,15 +78,21 @@ namespace game.world.character {
                   controller.Move(direction * modifier * speed);
             }
 
-            private static float EvaluateMovementSpeed(CharacterData characterData) {
+            private static float EvaluateMovementSpeed(
+                  CharacterData characterData
+            ) {
                   return 12.0f;
             }
 
-            private static float EvaluateJumpSpeed(CharacterData characterData) {
+            private static float EvaluateJumpSpeed(
+                  CharacterData characterData
+            ) {
                   return 8.0f;
             }
 
-            private static CharacterData ToData(TCharacter template) {
+            private static CharacterData ToData(
+                  TCharacter template
+            ) {
                   return new CharacterData();
             }
       }
