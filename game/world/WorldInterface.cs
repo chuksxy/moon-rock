@@ -4,7 +4,7 @@ namespace game.world {
 
       public static partial class World {
 
-            public class WorldInterface : MonoBehaviour {
+            public class Interface : MonoBehaviour {
 
                   private Data _data = Data.Blank;
 
@@ -12,7 +12,7 @@ namespace game.world {
                   public void End()   { }
 
 
-                  internal WorldInterface Init(Data data) {
+                  internal Interface Init(Data data) {
                         if (_data.IsBlank() && !data.IsBlank()) _data = data;
                         return this;
                   }
