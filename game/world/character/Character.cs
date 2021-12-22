@@ -57,7 +57,7 @@ namespace game.world.character {
             private static void Move(Interface characterInterface, Vector3 direction, float modifier) {
                   var registry = WorldRegistry.GetRegistry(characterInterface.GetRegistryID());
                   var data     = registry.GetCharacterData(characterInterface.GetCharacterID());
-                  var speed    = EvaluateMovementSpeed(data);
+                  var speed    = Mathf.Min(World.MAX_MOVEMENT_SPEED_AFTER_MODIFIERS, EvaluateMovementSpeed(data) * modifier);
 
                   var controller = characterInterface.GetController();
                   controller.Move(direction * modifier * speed * Time.deltaTime);
@@ -72,7 +72,7 @@ namespace game.world.character {
             private static void Jump(Interface characterInterface, Vector3 direction, float modifier) {
                   var registry = WorldRegistry.GetRegistry(characterInterface.GetRegistryID());
                   var data     = registry.GetCharacterData(characterInterface.GetCharacterID());
-                  var speed    = EvaluateJumpSpeed(data);
+                  var speed    = Mathf.Min(World.MAX_JUMP_SPEED_AFTER_MODIFIERS, EvaluateJumpSpeed(data) * modifier);
 
                   var controller = characterInterface.GetController();
                   controller.Move(direction * modifier * speed);
