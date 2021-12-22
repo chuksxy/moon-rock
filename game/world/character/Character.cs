@@ -18,30 +18,30 @@ namespace game.world.character {
 
             // Load a character from `Character Data`(Persisted). Assign the ID and register the character within the world.
             public static Interface Load(Data data, string registryID, string zoneID) {
-                  return Assemble(data).Init(data, registryID, zoneID);
+                  return Assemble(data, registryID).Init(data, registryID, zoneID);
             }
 
 
             // Assemble a character from a `Character Template` ScriptableObject.
             public static Interface Assemble(Template template) {
-                  var data = ConvertToData(template, "");
-                  return Assemble(data);
+                  var data = ConvertToData(template, "no.character.id");
+                  return Assemble(data, "main.registry");
             }
 
 
             // Assemble a character from `Character Data`.
-            public static Interface Assemble(Data data) {
-                  var characterID = data.ID;
-                  var character   = Load(data.Base);
+            public static Interface Assemble(Data data, string registryID) {
+                  var character          = Load(data.Base);
+                  var characterInterface = character.AddComponent<Interface>().Init(data, registryID);
 
-                  Item.Equip(character, characterID, Item.Slot.Head, Item.ExtractNames(data.Hats));
-                  Item.Equip(character, characterID, Item.Slot.Body, Item.ExtractNames(data.BaseLayer));
-                  Item.Equip(character, characterID, Item.Slot.LeftSleeve, Item.ExtractNames(data.LeftSleeve));
-                  Item.Equip(character, characterID, Item.Slot.RightSleeve, Item.ExtractNames(data.RightSleeve));
-                  Item.Equip(character, characterID, Item.Slot.OuterWear, Item.ExtractNames(data.OuterWear));
-                  Item.Equip(character, characterID, Item.Slot.Feet, Item.ExtractNames(data.Shoes));
+                  Item.Equip(characterInterface, Item.Slot.Head, Item.ExtractNames(data.Hats));
+                  Item.Equip(characterInterface, Item.Slot.Body, Item.ExtractNames(data.BaseLayer));
+                  Item.Equip(characterInterface, Item.Slot.LeftSleeve, Item.ExtractNames(data.LeftSleeve));
+                  Item.Equip(characterInterface, Item.Slot.RightSleeve, Item.ExtractNames(data.RightSleeve));
+                  Item.Equip(characterInterface, Item.Slot.OuterWear, Item.ExtractNames(data.OuterWear));
+                  Item.Equip(characterInterface, Item.Slot.Feet, Item.ExtractNames(data.Shoes));
 
-                  return character.AddComponent<Interface>();
+                  return characterInterface;
             }
 
 
@@ -53,11 +53,11 @@ namespace game.world.character {
 
             // Move the character in a specific direction using the CharacterController. Also apply any speed modifier
             // that is present.
-            internal static void Move(Interface @interface, Vector3 direction, float modifier) {
-                  var registry   = WorldRegistry.GetRegistry(@interface.GetRegistryID());
-                  var data       = registry.GetCharacterData(@interface.GetCharacterID());
+            internal static void Move(Interface characterInterface, Vector3 direction, float modifier) {
+                  var registry   = WorldRegistry.GetRegistry(characterInterface.GetRegistryID());
+                  var data       = registry.GetCharacterData(characterInterface.GetCharacterID());
                   var speed      = EvaluateMovementSpeed(data);
-                  var controller = @interface.GetController();
+                  var controller = characterInterface.GetController();
 
                   controller.Move(direction * modifier * speed);
             }

@@ -83,7 +83,7 @@ namespace game.world.character {
                   public void HandleDamageToPod(int index) { }
 
 
-                  internal Interface Init(Data data, string registryID, string zoneId) {
+                  internal Interface Init(Data data, string registryID, string zoneId = "main.zone") {
                         RegisterCharacter(data, registryID, zoneId);
                         AssembleCharacter(data);
                         return this;

@@ -22,22 +22,12 @@ namespace game.world.item {
             }
 
 
-            // Equip items in an assigned slot, allowing multiple items in the same slot if they can be stacked. Use default
-            // registry.
-            public static void Equip(GameObject character, string characterID, Slot slot, IEnumerable<string> names) {
-                  Equip(character, characterID, "", slot, names);
-            }
-
-
             // Equip items in an assigned slot, allowing multiple items in the same slot if they can be stacked.
-            public static void Equip(
-                  GameObject          character,
-                  string              characterID,
-                  string              registryID,
-                  Slot                slot,
-                  IEnumerable<string> names
-            ) {
-                  var items = names.Select(name => Load(slot, name)).ToArray();
+            public static void Equip(Character.Interface characterInterface, Slot slot, IEnumerable<string> names) {
+                  var character   = characterInterface.gameObject;
+                  var characterID = characterInterface.GetCharacterID();
+                  var registryID  = characterInterface.GetRegistryID();
+                  var items       = names.Select(name => Load(slot, name)).ToArray();
 
                   for (var index = 0; index < items.Length; index++) {
                         var gameObject = character.transform.Find(slot.ToString()).gameObject;
