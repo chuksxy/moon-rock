@@ -19,56 +19,85 @@ namespace game.world.character {
                   public void ResetCharacter() { }
 
 
+                  // Move the character in the directions supplied while applying the movement speed modifier.
                   public void Move(Vector3 direction, float modifier) {
                         Character.Move(this, direction, modifier);
                   }
 
 
+                  // Jump in direction while applying the jump speed modifier.
                   public void Jump(Vector3 direction, float modifier) {
                         Character.Jump(this, direction, modifier);
                   }
 
 
-                  public void UseLeftSleeve()  { }
+                  // Use Left Sleeve Weapon.
+                  public void UseLeftSleeve() { }
+
+
+                  // Use Right Sleeve Weapon.
                   public void UseRightSleeve() { }
 
+
+                  // Use Current Pod Item.
                   public void UseItem() { }
 
+
+                  // Cycle Right Pod on the Right Sleeve.
                   public void CycleRightPod() { }
 
+
+                  // Cycle Left Pod on the Left Sleeve.
                   public void CycleLeftPod() { }
 
-                  public void Hover() { }
-                  public void Dodge() { }
 
+                  // Hover while in the air.
+                  public void Hover() { }
+
+
+                  // Dodge in direction and apply dodge speed modifier.
+                  public void Dodge(Vector3 direction, float modifier) { }
+
+
+                  // Boost in direction and apply boost speed modifier.
+                  public void Boost(Vector3 direction, float modifier) { }
+
+
+                  // Interact with objects in the world.
                   public void Interact() { }
 
 
+                  // Swap Hat such as Balaclavas, Shades, Masks and Scarves in stack.
                   public Item.Hat SwapHat(int index) {
                         return new Item.Hat();
                   }
 
 
+                  // Swap Base Layer such as T-shirts, Compression Layers and Vests in stack.
                   public Item.BaseLayer SwapBaseLayer(int index) {
                         return new Item.BaseLayer();
                   }
 
 
+                  // Swap Left Sleeve in stack.
                   public Item.Sleeve SwapLeftSleeve(int index) {
                         return new Item.Sleeve();
                   }
 
 
+                  // Swap Right Sleeve in stack.
                   public Item.Sleeve SwapRightSleeve(int index) {
                         return new Item.Sleeve();
                   }
 
 
+                  // Swap Outer Wear such as Jackets, Sweaters and Coats in the stack.
                   public Item.OuterWear SwapOuterWear(int index) {
                         return new Item.OuterWear();
                   }
 
 
+                  // Swap Shoes such as Socks, Feet, Shoes and Boots in the stack.
                   public Item.Shoes SwapShoes(int index) {
                         return new Item.Shoes();
                   }
