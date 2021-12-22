@@ -48,7 +48,8 @@ namespace game.world.character {
 
             // Load the Character's base fbx file from the `Resources` folder by name.
             public static GameObject Load(string name) {
-                  return Resources.Load<GameObject>($"/Character/{name}.fbx");
+                  var item = Resources.Load<GameObject>($"/Character/{name}.prefab");
+                  return item == null ? Resources.Load<GameObject>($"/Character/{name}.fbx") : item;
             }
 
 

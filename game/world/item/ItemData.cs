@@ -7,7 +7,7 @@ namespace game.world.item {
 
             public class THat : ScriptableObject { }
 
-            public struct Hat : IHaveWeight {
+            public struct Hat : IHaveWeight, ICanStack {
 
 
                   public string[] Tags      { get; set; }
@@ -16,49 +16,59 @@ namespace game.world.item {
                   public int      Health    { get; set; }
                   public float    Weight    { get; set; }
 
+                  public bool CanStack { get; }
+
             }
 
             public class TBaseLayer : ScriptableObject { }
 
-            public struct BaseLayer : IHaveWeight {
+            public struct BaseLayer : IHaveWeight, ICanStack {
 
                   public string[] Tags   { get; set; }
                   public string   Name   { get; set; }
                   public int      Health { get; set; }
                   public float    Weight { get; set; }
+
+                  public bool CanStack { get; }
 
             }
 
             public class TOuterWear : ScriptableObject { }
 
-            public struct OuterWear : IHaveWeight {
+            public struct OuterWear : IHaveWeight, ICanStack {
 
                   public string[] Tags   { get; set; }
                   public string   Name   { get; set; }
                   public int      Health { get; set; }
                   public float    Weight { get; set; }
+
+                  public bool CanStack { get; }
 
             }
 
             public class TShoes : ScriptableObject { }
 
-            public struct Shoes : IHaveWeight {
+            public struct Shoes : IHaveWeight, ICanStack {
 
                   public string[] Tags   { get; set; }
                   public string   Name   { get; set; }
                   public int      Health { get; set; }
                   public float    Weight { get; set; }
+
+                  public bool CanStack { get; }
 
             }
 
             public class TSleeve : MonoBehaviour { }
 
-            public struct Sleeve : IHaveWeight {
+            public struct Sleeve : IHaveWeight, ICanStack {
 
                   public string[] Tags   { get; set; }
                   public string   Name   { get; set; }
                   public int      Health { get; set; }
                   public float    Weight { get; set; }
+
+                  public bool CanStack { get; }
 
             }
 

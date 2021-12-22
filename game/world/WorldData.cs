@@ -49,5 +49,10 @@ namespace game.world {
 
       }
 
+      public interface ICanStack {
+
+            bool CanStack { get; }
+
+      }
 
 }

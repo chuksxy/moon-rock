@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using game.world.character;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 /*
  * Item manages and behaviours.
@@ -10,8 +12,16 @@ namespace game.world.item {
 
       public static partial class Item {
 
+            public struct Address {
+
+                  public Slot SlotID { get; set; }
+                  public int  Index  { get; set; }
+
+            }
+
             public enum Slot {
 
+                  None,
                   Head,
                   Body,
                   Feet,
@@ -23,33 +33,47 @@ namespace game.world.item {
 
 
             // Equip items in an assigned slot, allowing multiple items in the same slot if they can be stacked.
-            public static void Equip(Character.Interface characterInterface, Slot slot, IEnumerable<string> names) {
-                  var character   = characterInterface.gameObject;
-                  var characterID = characterInterface.GetCharacterID();
-                  var registryID  = characterInterface.GetRegistryID();
-                  var items       = names.Select(name => Load(slot, name)).ToArray();
+            public static void Equip(Character.Interface characterInterface, Slot slotID, IEnumerable<string> names) {
+                  var slot = characterInterface.gameObject.transform.Find(slotID.ToString()).gameObject;
 
-                  for (var index = 0; index < items.Length; index++) {
-                        var gameObject = character.transform.Find(slot.ToString()).gameObject;
-                        var renderer   = gameObject.GetComponentInChildren<SkinnedMeshRenderer>();
-                        var item       = gameObject.GetComponentInChildren<Interface>();
+                  RemoveAll(slot);
 
-                        item.Init(characterID, registryID);
+                  var skinnedMeshes =
+                        names.Select(name => Load(slotID, name).GetComponentInChildren<SkinnedMeshRenderer>()).ToArray();
 
-                        renderer.sharedMesh          = items[index].sharedMesh;
-                        renderer.material            = items[index].material;
-                        renderer.sharedMaterial      = items[index].sharedMaterial;
-                        renderer.quality             = items[index].quality;
-                        renderer.updateWhenOffscreen = items[index].updateWhenOffscreen;
-                        renderer.materials           = items[index].materials;
-                        renderer.sortingOrder        = index;
+                  for (var index = 0; index < skinnedMeshes.Length; index++) {
+                        var index_skinnedMesh = slot.AddComponent<SkinnedMeshRenderer>();
+                        var index_interface   = slot.AddComponent<Interface>();
+
+                        if (index > 0 && !Item.CanStack(characterInterface.GetData(), slotID, index)) {
+                              continue;
+                        }
+
+                        index_interface.Init(
+                              slotID, index, characterInterface.GetCharacterID(), characterInterface.GetRegistryID());
+
+                        index_skinnedMesh.sharedMesh          = skinnedMeshes[index].sharedMesh;
+                        index_skinnedMesh.material            = skinnedMeshes[index].material;
+                        index_skinnedMesh.sharedMaterial      = skinnedMeshes[index].sharedMaterial;
+                        index_skinnedMesh.quality             = skinnedMeshes[index].quality;
+                        index_skinnedMesh.updateWhenOffscreen = skinnedMeshes[index].updateWhenOffscreen;
+                        index_skinnedMesh.materials           = skinnedMeshes[index].materials;
+                        index_skinnedMesh.sortingOrder        = index;
                   }
             }
 
 
-            // Load an item's fbx file from the `Resources` folder ane extract the SkinMeshRenderer.
-            private static SkinnedMeshRenderer Load(Slot part, string item) {
-                  return Resources.Load<GameObject>($"{part}/{item}.fbx").GetComponentInChildren<SkinnedMeshRenderer>();
+            // Remove All items equipped in slot.
+            private static void RemoveAll(GameObject slot) {
+                  slot.GetComponentsInChildren<SkinnedMeshRenderer>().ToList().ForEach(Object.Destroy);
+                  slot.GetComponentsInChildren<Interface>().ToList().ForEach(Object.Destroy);
+            }
+
+
+            // Load an item's `.fbx` or `.prefab` file from the `Resources` folder ane extract the SkinMeshRenderer.
+            private static GameObject Load(Slot part, string name) {
+                  var item = Resources.Load<GameObject>($"{part}/{name}.prefab");
+                  return item == null ? Resources.Load<GameObject>($"{part}/{name}.fbx") : item;
             }
 
 
@@ -110,6 +134,32 @@ namespace game.world.item {
 
             public static float Weigh(IEnumerable<Shoes> allShoes) {
                   return allShoes.Select(shoes => shoes.Weight).Sum();
+            }
+
+
+            public static bool CanStack(Character.Data data, Address address) {
+                  return CanStack(data, address.SlotID, address.Index);
+            }
+
+
+            internal static bool CanStack(Character.Data data, Slot slotId, int index) {
+                  switch (slotId) {
+                        case Slot.Head:
+                              return data.Hats[index].CanStack;
+                        case Slot.Body:
+                              return data.BaseLayer[index].CanStack;
+                        case Slot.Feet:
+                              return data.Shoes[index].CanStack;
+                        case Slot.LeftSleeve:
+                              return data.LeftSleeve[index].CanStack;
+                        case Slot.RightSleeve:
+                              return data.RightSleeve[index].CanStack;
+                        case Slot.OuterWear:
+                              return data.OuterWear[index].CanStack;
+                        case Slot.None:
+                        default:
+                              return false;
+                  }
             }
 
       }

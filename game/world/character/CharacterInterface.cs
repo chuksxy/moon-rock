@@ -21,9 +21,15 @@ namespace game.world.character {
 
                   private Animator            _animator;
                   private CharacterController _characterController;
-                  private string              _characterID = "";
-                  private string              _registryID  = "";
+                  private string              _characterID = "no.character.id";
+                  private string              _registryID  = "main.registry";
                   private Rigidbody[]         _rigidbodies;
+
+
+                  // GetData associated with the character such as ID, name, energy, items, equipment, etc...
+                  public Data GetData() {
+                        return WorldRegistry.GetRegistry(_registryID).GetCharacterData(_characterID);
+                  }
 
 
                   // Set Position of character to the specified point in the world.
