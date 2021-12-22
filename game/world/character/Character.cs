@@ -1,11 +1,12 @@
 using game.world.item;
 using UnityEngine;
 
-/*
- * This contains all necessary functions related to character management and behaviour.
- */
+
 namespace game.world.character {
 
+      /*
+       * Character Management and Behaviour.
+       */
       public static class Character {
 
             // Create a character from a `Character Template` ScriptableObject. Give the character an ID and register 
