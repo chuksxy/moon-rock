@@ -6,12 +6,13 @@ using UnityEngine;
 using Object = UnityEngine.Object;
 
 /*
- * Item manages and behaviours.
+ * Item management and behaviours.
  */
 namespace game.world.item {
 
       public static partial class Item {
 
+            // Address for locating item in `Character Data` via it's Slot (Head, Body, etc.) and Index in the stack.
             public struct Address {
 
                   public Slot SlotID { get; set; }
@@ -19,6 +20,7 @@ namespace game.world.item {
 
             }
 
+            // Slots for equipping body parts and gear.
             public enum Slot {
 
                   None,
@@ -142,7 +144,7 @@ namespace game.world.item {
             }
 
 
-            internal static bool CanStack(Character.Data data, Slot slotId, int index) {
+            public static bool CanStack(Character.Data data, Slot slotId, int index) {
                   switch (slotId) {
                         case Slot.Head:
                               return data.Hats[index].CanStack;
