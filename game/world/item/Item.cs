@@ -35,7 +35,8 @@ namespace game.world.item {
                   string              characterID,
                   string              registryID,
                   Slot                slot,
-                  IEnumerable<string> names) {
+                  IEnumerable<string> names
+            ) {
                   var items = names.Select(name => Load(slot, name)).ToArray();
 
                   for (var index = 0; index < items.Length; index++) {
