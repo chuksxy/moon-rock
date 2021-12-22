@@ -11,34 +11,35 @@ namespace game.world.character {
             // Create a character from a `Character Template` ScriptableObject. Give the character an ID and register 
             // the character within the world.
             public static Interface Create(Template template, string characterID, string registryID, string zoneID) {
-                  var data = ConvertToData(template);
-                  return Load(data, characterID, registryID, zoneID);
+                  var data = ConvertToData(template, characterID);
+                  return Load(data, registryID, zoneID);
             }
 
 
             // Load a character from `Character Data`(Persisted). Assign the ID and register the character within the world.
-            public static Interface Load(Data data, string characterID, string registryID, string zoneID) {
-                  return Assemble(data).Init(data, characterID, registryID, zoneID);
+            public static Interface Load(Data data, string registryID, string zoneID) {
+                  return Assemble(data).Init(data, registryID, zoneID);
             }
 
 
             // Assemble a character from a `Character Template` ScriptableObject.
             public static Interface Assemble(Template template) {
-                  var data = ConvertToData(template);
+                  var data = ConvertToData(template, "");
                   return Assemble(data);
             }
 
 
             // Assemble a character from `Character Data`.
             public static Interface Assemble(Data data) {
-                  var character = Load(data.Base);
+                  var characterID = data.ID;
+                  var character   = Load(data.Base);
 
-                  Item.Equip(character, Item.Slot.Head, Item.ExtractNames(data.Hats));
-                  Item.Equip(character, Item.Slot.Body, Item.ExtractNames(data.BaseLayer));
-                  Item.Equip(character, Item.Slot.LeftSleeve, Item.ExtractNames(data.LeftSleeve));
-                  Item.Equip(character, Item.Slot.RightSleeve, Item.ExtractNames(data.RightSleeve));
-                  Item.Equip(character, Item.Slot.OuterWear, Item.ExtractNames(data.OuterWear));
-                  Item.Equip(character, Item.Slot.Feet, Item.ExtractNames(data.Shoes));
+                  Item.Equip(character, characterID, Item.Slot.Head, Item.ExtractNames(data.Hats));
+                  Item.Equip(character, characterID, Item.Slot.Body, Item.ExtractNames(data.BaseLayer));
+                  Item.Equip(character, characterID, Item.Slot.LeftSleeve, Item.ExtractNames(data.LeftSleeve));
+                  Item.Equip(character, characterID, Item.Slot.RightSleeve, Item.ExtractNames(data.RightSleeve));
+                  Item.Equip(character, characterID, Item.Slot.OuterWear, Item.ExtractNames(data.OuterWear));
+                  Item.Equip(character, characterID, Item.Slot.Feet, Item.ExtractNames(data.Shoes));
 
                   return character.AddComponent<Interface>();
             }
@@ -86,7 +87,7 @@ namespace game.world.character {
 
 
             // Convert `Character Template` ScriptableObject to a Data object.
-            private static Data ConvertToData(Template template) {
+            private static Data ConvertToData(Template template, string characterID) {
                   return new Data();
             }
 

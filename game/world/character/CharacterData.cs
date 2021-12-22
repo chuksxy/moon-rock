@@ -24,6 +24,7 @@ namespace game.world.character {
 
             public struct Data {
 
+                  public string   ID        { get; set; }
                   public string   Name      { get; set; }
                   public int      Health    { get; set; }
                   public float    Energy    { get; set; }
@@ -41,6 +42,7 @@ namespace game.world.character {
 
 
                   public Data(
+                        string           id,
                         string           name,
                         int              health,
                         float            energy,
@@ -51,7 +53,9 @@ namespace game.world.character {
                         Item.Sleeve[]    leftSleeve,
                         Item.Sleeve[]    rightSleeve,
                         Item.OuterWear[] outerWear,
-                        Item.Shoes[]     shoes) {
+                        Item.Shoes[]     shoes
+                  ) {
+                        ID          = id;
                         Name        = name;
                         Health      = health;
                         Energy      = energy;
@@ -69,21 +73,28 @@ namespace game.world.character {
 
             public class Builder {
 
-                  private Item.BaseLayer[] _baseLayer;
-                  private float            _energy;
-                  private Item.Hat[]       _hats;
+                  private string           _ID;
+                  private string           _name;
                   private int              _health;
+                  private float            _energy;
+                  private Item.BaseLayer[] _baseLayer;
+                  private Item.Hat[]       _hats;
                   private Item.Sleeve[]    _leftSleeves;
                   private string[]         _modifiers;
-                  private string           _name;
                   private Item.OuterWear[] _outerWear;
                   private Item.Sleeve[]    _rightSleeves;
                   private Item.Shoes[]     _shoes;
-                  private string           _skeleton;
+                  private string           _base;
 
 
                   public static Builder Make() {
                         return new Builder();
+                  }
+
+
+                  public Builder AddID(string @ID) {
+                        _ID = @ID;
+                        return this;
                   }
 
 
@@ -143,11 +154,12 @@ namespace game.world.character {
 
                   public Data Build() {
                         return new Data(
+                              _ID,
                               _name,
                               _health,
                               _energy,
                               _modifiers,
-                              _skeleton,
+                              _base,
                               _hats,
                               _baseLayer,
                               _leftSleeves,

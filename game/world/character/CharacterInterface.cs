@@ -8,8 +8,7 @@ namespace game.world.character {
 
             public class Interface : MonoBehaviour {
 
-                  private Animator _animator;
-
+                  private Animator            _animator;
                   private CharacterController _characterController;
                   private string              _characterID = "";
                   private string              _registryID  = "";
@@ -84,8 +83,8 @@ namespace game.world.character {
                   public void HandleDamageToPod(int index) { }
 
 
-                  internal Interface Init(Character.Data data, string characterID, string registryID, string zoneId) {
-                        RegisterCharacter(data, characterID, registryID, zoneId);
+                  internal Interface Init(Data data, string registryID, string zoneId) {
+                        RegisterCharacter(data, registryID, zoneId);
                         AssembleCharacter(data);
                         return this;
                   }
@@ -111,15 +110,18 @@ namespace game.world.character {
                   }
 
 
-                  private void RegisterCharacter(Character.Data data, string characterID, string registryID, string zoneId) {
-                        _characterID = characterID;
+                  private void RegisterCharacter(Data data, string registryID, string zoneId) {
+                        _characterID = data.ID;
                         _registryID  = registryID;
 
-                        WorldRegistry.GetRegistry(registryID).RegisterCharacter(characterID, zoneId, data);
+                        WorldRegistry.GetRegistry(registryID).RegisterCharacter(_characterID, zoneId, data);
                   }
 
 
-                  private void AssembleCharacter(Character.Data data) { }
+                  private void AssembleCharacter(Data data) {
+                        _animator            = gameObject.AddComponent<Animator>();
+                        _characterController = gameObject.AddComponent<CharacterController>();
+                  }
 
             }
 
