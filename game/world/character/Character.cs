@@ -1,3 +1,4 @@
+using System;
 using game.world.item;
 using UnityEngine;
 
@@ -69,12 +70,15 @@ namespace game.world.character {
 
             // Jump in the direction specified and apply any jump speed modifier if present.
             private static void Jump(Interface characterInterface, Vector3 direction, float modifier) {
-                  var registry   = WorldRegistry.GetRegistry(characterInterface.GetRegistryID());
-                  var data       = registry.GetCharacterData(characterInterface.GetCharacterID());
-                  var speed      = EvaluateJumpSpeed(data);
-                  var controller = characterInterface.GetController();
+                  var registry = WorldRegistry.GetRegistry(characterInterface.GetRegistryID());
+                  var data     = registry.GetCharacterData(characterInterface.GetCharacterID());
+                  var speed    = EvaluateJumpSpeed(data);
 
+                  var controller = characterInterface.GetController();
                   controller.Move(direction * modifier * speed);
+
+                  var animator = characterInterface.GetAnimator();
+                  animator.SetTrigger(Animation.Jump);
             }
 
 
@@ -91,8 +95,15 @@ namespace game.world.character {
 
 
             // Convert `Character Template` ScriptableObject to a Data object.
-            private static Data ConvertToData(Template template, string characterID) {
-                  return new Data();
+            private static Data ConvertToData(Template t, string characterID) {
+                  var data = new Data {
+                        ID     = characterID,
+                        Name   = t.characterName,
+                        Health = new Health {Current = t.maxHealth, Max = t.maxHealth, Modifiers = Array.Empty<string>()},
+                        Base   = t.skeleton.name,
+                  };
+
+                  return data;
             }
 
       }

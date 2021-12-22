@@ -12,6 +12,7 @@ namespace game.world.character {
 
                   public static readonly int Horizontal = Animator.StringToHash("MoveX");
                   public static readonly int Vertical   = Animator.StringToHash("MoveY");
+                  public static readonly int Jump       = Animator.StringToHash("Jump");
 
             }
 
