@@ -3,18 +3,24 @@ using UnityEngine;
 
 namespace game.world.character {
       public static class Character {
-            public static CharacterInterface Create(
-                  TCharacter template, string characterID, string registryID, string zoneID) {
-                  return Create(ToData(template), characterID, registryID, zoneID);
+            public static CharacterInterface Create(TCharacter template,
+                                                    string     characterID,
+                                                    string     registryID,
+                                                    string     zoneID) {
+                  var data = ToData(template);
+                  return Create(data, characterID, registryID, zoneID);
             }
 
-            public static CharacterInterface Create(
-                  CharacterData data, string characterID, string registryID, string zoneID) {
+            public static CharacterInterface Create(CharacterData data,
+                                                    string        characterID,
+                                                    string        registryID,
+                                                    string        zoneID) {
                   return Assemble(data).Init(data, characterID, registryID, zoneID);
             }
 
             public static CharacterInterface Assemble(TCharacter template) {
-                  return Assemble(ToData(template));
+                  var data = ToData(template);
+                  return Assemble(data);
             }
 
             public static CharacterInterface Assemble(CharacterData characterData) {
@@ -34,20 +40,28 @@ namespace game.world.character {
                   return Resources.Load<GameObject>($"/Character/{name}.fbx");
             }
 
-            internal static void Move(CharacterInterface @interface, Vector3 direction, float modifier) {
+            internal static void Move(CharacterInterface @interface,
+                                      Vector3            direction,
+                                      float              modifier) {
                   var data = WorldRegistry.GetRegistry(@interface.GetRegistryID())
                                           .GetCharacterData(@interface.GetCharacterID());
-                  var speed = EvaluateMovementSpeed(data);
 
-                  @interface.GetController().Move(direction * modifier * speed);
+                  var speed      = EvaluateMovementSpeed(data);
+                  var controller = @interface.GetController();
+
+                  controller.Move(direction * modifier * speed);
             }
 
-            internal static void Jump(CharacterInterface @interface, Vector3 direction, float modifier) {
+            internal static void Jump(CharacterInterface @interface,
+                                      Vector3            direction,
+                                      float              modifier) {
                   var data = WorldRegistry.GetRegistry(@interface.GetRegistryID())
                                           .GetCharacterData(@interface.GetCharacterID());
-                  var speed = EvaluateJumpSpeed(data);
 
-                  @interface.GetController().Move(direction * modifier * speed);
+                  var speed      = EvaluateJumpSpeed(data);
+                  var controller = @interface.GetController();
+
+                  controller.Move(direction * modifier * speed);
             }
 
             private static float EvaluateMovementSpeed(CharacterData characterData) {
