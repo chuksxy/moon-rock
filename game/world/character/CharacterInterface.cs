@@ -19,7 +19,7 @@ namespace game.world.character {
                   public void ResetCharacter() { }
 
 
-                  // Move the character in the directions supplied while applying the movement speed modifier.
+                  // Move the character in direction while applying the movement speed modifier.
                   public void Move(Vector3 direction, float modifier) {
                         Character.Move(this, direction, modifier);
                   }
@@ -51,7 +51,7 @@ namespace game.world.character {
                   public void CycleLeftPod() { }
 
 
-                  // Hover while in the air.
+                  // Hover while jumping or falling.
                   public void Hover() { }
 
 
