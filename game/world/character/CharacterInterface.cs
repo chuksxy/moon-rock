@@ -45,33 +45,33 @@ namespace game.world.character {
                   public void Interact() { }
 
 
-                  public Hat SwapHat(int index) {
-                        return new Hat();
+                  public Item.Hat SwapHat(int index) {
+                        return new Item.Hat();
                   }
 
 
-                  public BaseLayer SwapBaseLayer(int index) {
-                        return new BaseLayer();
+                  public Item.BaseLayer SwapBaseLayer(int index) {
+                        return new Item.BaseLayer();
                   }
 
 
-                  public Sleeve SwapLeftSleeve(int index) {
-                        return new Sleeve();
+                  public Item.Sleeve SwapLeftSleeve(int index) {
+                        return new Item.Sleeve();
                   }
 
 
-                  public Sleeve SwapRightSleeve(int index) {
-                        return new Sleeve();
+                  public Item.Sleeve SwapRightSleeve(int index) {
+                        return new Item.Sleeve();
                   }
 
 
-                  public OuterWear SwapOuterWear(int index) {
-                        return new OuterWear();
+                  public Item.OuterWear SwapOuterWear(int index) {
+                        return new Item.OuterWear();
                   }
 
 
-                  public Shoes SwapShoes(int index) {
-                        return new Shoes();
+                  public Item.Shoes SwapShoes(int index) {
+                        return new Item.Shoes();
                   }
 
 

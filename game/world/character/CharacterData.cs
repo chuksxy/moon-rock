@@ -13,12 +13,12 @@ namespace game.world.character {
 
                   public SkinnedMeshRenderer skeleton;
 
-                  public THat[]       head;
-                  public TBaseLayer[] body;
-                  public TSleeve[]    leftSleeve;
-                  public TSleeve[]    rightSleeve;
-                  public TOuterWear[] outerWear;
-                  public TShoes[]     shoes;
+                  public Item.THat[]       head;
+                  public Item.TBaseLayer[] body;
+                  public Item.TSleeve[]    leftSleeve;
+                  public Item.TSleeve[]    rightSleeve;
+                  public Item.TOuterWear[] outerWear;
+                  public Item.TShoes[]     shoes;
 
             }
 
@@ -32,26 +32,26 @@ namespace game.world.character {
                   public string Base { get; set; }
 
 
-                  public Hat[]       Hats        { get; set; }
-                  public BaseLayer[] BaseLayer   { get; set; }
-                  public Sleeve[]    LeftSleeve  { get; set; }
-                  public Sleeve[]    RightSleeve { get; set; }
-                  public OuterWear[] OuterWear   { get; set; }
-                  public Shoes[]     Shoes       { get; set; }
+                  public Item.Hat[]       Hats        { get; set; }
+                  public Item.BaseLayer[] BaseLayer   { get; set; }
+                  public Item.Sleeve[]    LeftSleeve  { get; set; }
+                  public Item.Sleeve[]    RightSleeve { get; set; }
+                  public Item.OuterWear[] OuterWear   { get; set; }
+                  public Item.Shoes[]     Shoes       { get; set; }
 
 
                   public Data(
-                        string      name,
-                        int         health,
-                        float       energy,
-                        string[]    modifiers,
-                        string      @base,
-                        Hat[]       hats,
-                        BaseLayer[] baseLayer,
-                        Sleeve[]    leftSleeve,
-                        Sleeve[]    rightSleeve,
-                        OuterWear[] outerWear,
-                        Shoes[]     shoes) {
+                        string           name,
+                        int              health,
+                        float            energy,
+                        string[]         modifiers,
+                        string           @base,
+                        Item.Hat[]       hats,
+                        Item.BaseLayer[] baseLayer,
+                        Item.Sleeve[]    leftSleeve,
+                        Item.Sleeve[]    rightSleeve,
+                        Item.OuterWear[] outerWear,
+                        Item.Shoes[]     shoes) {
                         Name        = name;
                         Health      = health;
                         Energy      = energy;
@@ -67,75 +67,75 @@ namespace game.world.character {
 
             }
 
-            public class CharacterBuilder {
+            public class Builder {
 
-                  private BaseLayer[] _baseLayer;
-                  private float       _energy;
-                  private Hat[]       _hats;
-                  private int         _health;
-                  private Sleeve[]    _leftSleeves;
-                  private string[]    _modifiers;
-                  private string      _name;
-                  private OuterWear[] _outerWear;
-                  private Sleeve[]    _rightSleeves;
-                  private Shoes[]     _shoes;
-                  private string      _skeleton;
+                  private Item.BaseLayer[] _baseLayer;
+                  private float            _energy;
+                  private Item.Hat[]       _hats;
+                  private int              _health;
+                  private Item.Sleeve[]    _leftSleeves;
+                  private string[]         _modifiers;
+                  private string           _name;
+                  private Item.OuterWear[] _outerWear;
+                  private Item.Sleeve[]    _rightSleeves;
+                  private Item.Shoes[]     _shoes;
+                  private string           _skeleton;
 
 
-                  public static CharacterBuilder Make() {
-                        return new CharacterBuilder();
+                  public static Builder Make() {
+                        return new Builder();
                   }
 
 
-                  public CharacterBuilder AddName(string name) {
+                  public Builder AddName(string name) {
                         _name = name;
                         return this;
                   }
 
 
-                  public CharacterBuilder AddHealth(int health) {
+                  public Builder AddHealth(int health) {
                         _health = health;
                         return this;
                   }
 
 
-                  public CharacterBuilder AddModifiers(string[] modifiers) {
+                  public Builder AddModifiers(string[] modifiers) {
                         _modifiers = modifiers;
                         return this;
                   }
 
 
-                  public CharacterBuilder AddHats(Hat[] hats) {
+                  public Builder AddHats(Item.Hat[] hats) {
                         _hats = hats;
                         return this;
                   }
 
 
-                  public CharacterBuilder AddBaseLayer(BaseLayer[] baseLayer) {
+                  public Builder AddBaseLayer(Item.BaseLayer[] baseLayer) {
                         _baseLayer = baseLayer;
                         return this;
                   }
 
 
-                  public CharacterBuilder AddLeftSleeves(Sleeve[] sleeves) {
+                  public Builder AddLeftSleeves(Item.Sleeve[] sleeves) {
                         _leftSleeves = sleeves;
                         return this;
                   }
 
 
-                  public CharacterBuilder AddRightSleeves(Sleeve[] sleeves) {
+                  public Builder AddRightSleeves(Item.Sleeve[] sleeves) {
                         _rightSleeves = sleeves;
                         return this;
                   }
 
 
-                  public CharacterBuilder AddOuterWear(OuterWear[] outerWear) {
+                  public Builder AddOuterWear(Item.OuterWear[] outerWear) {
                         _outerWear = outerWear;
                         return this;
                   }
 
 
-                  public CharacterBuilder AddShoes(Shoes[] shoes) {
+                  public Builder AddShoes(Item.Shoes[] shoes) {
                         _shoes = shoes;
                         return this;
                   }
