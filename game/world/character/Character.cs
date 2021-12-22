@@ -64,11 +64,11 @@ namespace game.world.character {
 
 
             // Jump in the direction specified and apply any jump speed modifier if present.
-            internal static void Jump(Interface @interface, Vector3 direction, float modifier) {
-                  var registry   = WorldRegistry.GetRegistry(@interface.GetRegistryID());
-                  var data       = registry.GetCharacterData(@interface.GetCharacterID());
+            internal static void Jump(Interface characterInterface, Vector3 direction, float modifier) {
+                  var registry   = WorldRegistry.GetRegistry(characterInterface.GetRegistryID());
+                  var data       = registry.GetCharacterData(characterInterface.GetCharacterID());
                   var speed      = EvaluateJumpSpeed(data);
-                  var controller = @interface.GetController();
+                  var controller = characterInterface.GetController();
 
                   controller.Move(direction * modifier * speed);
             }
