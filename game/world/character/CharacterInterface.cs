@@ -1,12 +1,22 @@
 using game.world.item;
 using UnityEngine;
 
-// Single Writer
+/*
+ * Character Interface with all Unity Engine related systems.
+ */
 namespace game.world.character {
 
       public static partial class Character {
 
+            public static class Animation {
+
+                  public static readonly int Horizontal = Animator.StringToHash("MoveX");
+                  public static readonly int Vertical   = Animator.StringToHash("MoveY");
+
+            }
+
             public class Interface : MonoBehaviour {
+
 
                   private Animator            _animator;
                   private CharacterController _characterController;
@@ -154,6 +164,7 @@ namespace game.world.character {
                   private void AssembleCharacter(Data data) {
                         _animator            = gameObject.AddComponent<Animator>();
                         _characterController = gameObject.AddComponent<CharacterController>();
+                        _rigidbodies         = gameObject.GetComponentsInChildren<Rigidbody>();
                   }
 
             }
