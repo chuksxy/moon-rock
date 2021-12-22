@@ -16,8 +16,7 @@ namespace game.world.character {
             }
 
 
-            // Load a character from `Character Data`(Persisted). Assign the ID and register the character within the 
-            // world.
+            // Load a character from `Character Data`(Persisted). Assign the ID and register the character within the world.
             public static CharacterInterface Load(CharacterData data, string characterID, string registryID, string zoneID) {
                   return Assemble(data).Init(data, characterID, registryID, zoneID);
             }
@@ -51,7 +50,7 @@ namespace game.world.character {
             }
 
 
-            // Move the character in a specific direction using the CharacterController. Also apply any speed modifier 
+            // Move the character in a specific direction using the CharacterController. Also apply any speed modifier
             // that is present.
             internal static void Move(CharacterInterface @interface, Vector3 direction, float modifier) {
                   var data = WorldRegistry.GetRegistry(@interface.GetRegistryID()).GetCharacterData(@interface.GetCharacterID());

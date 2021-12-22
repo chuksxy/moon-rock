@@ -21,9 +21,7 @@ namespace game.world.item {
             public static void Equip(GameObject character, Slot slot, IEnumerable<string> names) {
                   var items = names.Select(name => Load(slot, name)).ToArray();
                   for (var index = 0; index < items.Length; index++) {
-                        var renderer = character.transform
-                                                .Find(slot.ToString())
-                                                .GetComponentInChildren<SkinnedMeshRenderer>();
+                        var renderer = character.transform.Find(slot.ToString()).GetComponentInChildren<SkinnedMeshRenderer>();
 
                         renderer.sharedMesh          = items[index].sharedMesh;
                         renderer.material            = items[index].material;
