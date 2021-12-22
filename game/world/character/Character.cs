@@ -10,8 +10,7 @@ namespace game.world.character {
 
             public static CharacterInterface Create(
                   CharacterData data, string characterID, string registryID, string zoneID) {
-                  CharacterRegistry.GetRegistry(registryID).AddCharacter(characterID, zoneID, data);
-                  return Assemble(data);
+                  return Assemble(data).Init(data, characterID, registryID, zoneID);
             }
 
             public static CharacterInterface Assemble(TCharacter template) {
@@ -35,12 +34,28 @@ namespace game.world.character {
                   return Resources.Load<GameObject>($"/Character/{name}.fbx");
             }
 
-            public static float EvaluateMovementSpeed(CharacterData characterData) {
-                  return 0.0f;
+            internal static void Move(CharacterInterface @interface, Vector3 direction, float modifier) {
+                  var data = WorldRegistry.GetRegistry(@interface.GetRegistryID())
+                                          .GetCharacterData(@interface.GetCharacterID());
+                  var speed = EvaluateMovementSpeed(data);
+
+                  @interface.GetController().Move(direction * modifier * speed);
             }
 
-            public static float EvaluateJumpSpeed(CharacterData characterData) {
-                  return 0.0f;
+            internal static void Jump(CharacterInterface @interface, Vector3 direction, float modifier) {
+                  var data = WorldRegistry.GetRegistry(@interface.GetRegistryID())
+                                          .GetCharacterData(@interface.GetCharacterID());
+                  var speed = EvaluateJumpSpeed(data);
+
+                  @interface.GetController().Move(direction * modifier * speed);
+            }
+
+            private static float EvaluateMovementSpeed(CharacterData characterData) {
+                  return 12.0f;
+            }
+
+            private static float EvaluateJumpSpeed(CharacterData characterData) {
+                  return 8.0f;
             }
 
             private static CharacterData ToData(TCharacter template) {

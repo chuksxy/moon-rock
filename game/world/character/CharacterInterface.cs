@@ -4,25 +4,23 @@ using UnityEngine;
 // Single Writer
 namespace game.world.character {
       public class CharacterInterface : MonoBehaviour {
-            private readonly string _characterID;
-            private readonly string _registryID;
-            private readonly string _zoneId;
+            private string _characterID = "";
+            private string _registryID  = "";
+
+            private CharacterController _characterController;
+            private Rigidbody[]         _rigidbodies;
+            private Animator            _animator;
 
             public void SetPosition(Vector3 position) { }
 
             public void ResetCharacter() { }
 
-            public void Move(Vector3 direction) {
-                  var characterData = CharacterRegistry.GetRegistry(_registryID).GetData(_characterID);
-                  var speed         = Character.EvaluateMovementSpeed(characterData);
-
-                  // MoveCharacter
+            public void Move(Vector3 direction, float modifier) {
+                  Character.Move(this, direction, modifier);
             }
 
-
-            public void Jump() {
-                  var character = CharacterRegistry.GetRegistry(_registryID).GetData(_characterID);
-                  var jumpSpeed = Character.EvaluateJumpSpeed(character);
+            public void Jump(Vector3 direction, float modifier) {
+                  Character.Jump(this, direction, modifier);
             }
 
             public void UseLeftSleeve()  { }
@@ -70,5 +68,36 @@ namespace game.world.character {
             public void HandleDamageToFeet()         { }
             public void HandleFatalDamage()          { }
             public void HandleDamageToPod(int index) { }
+
+            internal CharacterInterface Init(CharacterData data, string characterID, string registryID, string zoneId) {
+                  RegisterCharacter(data, characterID, registryID, zoneId);
+                  AssembleCharacter(data);
+                  return this;
+            }
+
+            internal string GetCharacterID() {
+                  return _characterID;
+            }
+
+            internal string GetRegistryID() {
+                  return _registryID;
+            }
+
+            internal CharacterController GetController() {
+                  return _characterController;
+            }
+
+            internal Animator GetAnimator() {
+                  return _animator;
+            }
+
+            private void RegisterCharacter(CharacterData data, string characterID, string registryID, string zoneId) {
+                  _characterID = characterID;
+                  _registryID  = registryID;
+
+                  WorldRegistry.GetRegistry(registryID).RegisterCharacter(characterID, zoneId, data);
+            }
+
+            private void AssembleCharacter(CharacterData data) { }
       }
 }
