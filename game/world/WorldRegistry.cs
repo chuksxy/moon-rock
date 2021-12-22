@@ -5,11 +5,11 @@ namespace game.world.character {
       public class WorldRegistry {
 
             private readonly Dictionary<string, string>          _characterIDsToZoneIDs;
-            private readonly Dictionary<string, CharacterData>   _characters;
+            private readonly Dictionary<string, Character.Data>  _characters;
             private readonly Dictionary<string, HashSet<string>> _zoneIDsToCharactersIDs;
 
 
-            private WorldRegistry(Dictionary<string, CharacterData>   characters,
+            private WorldRegistry(Dictionary<string, Character.Data>  characters,
                                   Dictionary<string, string>          characterIDsToZoneIDs,
                                   Dictionary<string, HashSet<string>> zoneIDsToCharactersIDs) {
                   _characters             = characters;
@@ -19,15 +19,15 @@ namespace game.world.character {
 
 
             public static WorldRegistry GetRegistry(string registryID) {
-                  var characterIDs           = new Dictionary<string, CharacterData>();
+                  var characterIDs           = new Dictionary<string, Character.Data>();
                   var characterIDsToZoneIDs  = new Dictionary<string, string>();
                   var zoneIDsToCharactersIDs = new Dictionary<string, HashSet<string>>();
                   return new WorldRegistry(characterIDs, characterIDsToZoneIDs, zoneIDsToCharactersIDs);
             }
 
 
-            public void RegisterCharacter(string characterID, string zoneID, CharacterData characterData) {
-                  _characters.Add(characterID, characterData);
+            public void RegisterCharacter(string characterID, string zoneID, Character.Data data) {
+                  _characters.Add(characterID, data);
                   EnterZone(zoneID, characterID);
             }
 
@@ -38,7 +38,7 @@ namespace game.world.character {
             }
 
 
-            public CharacterData GetCharacterData(string characterID) {
+            public Character.Data GetCharacterData(string characterID) {
                   return _characters[characterID];
             }
 

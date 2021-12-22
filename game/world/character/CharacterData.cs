@@ -1,140 +1,163 @@
 using game.world.item;
+using UnityEngine;
 
 namespace game.world.character {
 
-      public struct CharacterData {
+      public static partial class Character {
 
-            public string   Name      { get; set; }
-            public int      Health    { get; set; }
-            public float    Energy    { get; set; }
-            public string[] Modifiers { get; set; }
+            public class Template : ScriptableObject {
 
-            public string Base { get; set; }
+                  public string characterName;
+                  public int    health;
+                  public float  energy;
 
+                  public SkinnedMeshRenderer skeleton;
 
-            public Hat[]       Hats        { get; set; }
-            public BaseLayer[] BaseLayer   { get; set; }
-            public Sleeve[]    LeftSleeve  { get; set; }
-            public Sleeve[]    RightSleeve { get; set; }
-            public OuterWear[] OuterWear   { get; set; }
-            public Shoes[]     Shoes       { get; set; }
+                  public THat[]       head;
+                  public TBaseLayer[] body;
+                  public TSleeve[]    leftSleeve;
+                  public TSleeve[]    rightSleeve;
+                  public TOuterWear[] outerWear;
+                  public TShoes[]     shoes;
 
-
-            public CharacterData(
-                  string      name,
-                  int         health,
-                  float       energy,
-                  string[]    modifiers,
-                  string      @base,
-                  Hat[]       hats,
-                  BaseLayer[] baseLayer,
-                  Sleeve[]    leftSleeve,
-                  Sleeve[]    rightSleeve,
-                  OuterWear[] outerWear,
-                  Shoes[]     shoes) {
-                  Name        = name;
-                  Health      = health;
-                  Energy      = energy;
-                  Modifiers   = modifiers;
-                  Base        = @base;
-                  Hats        = hats;
-                  BaseLayer   = baseLayer;
-                  LeftSleeve  = leftSleeve;
-                  RightSleeve = rightSleeve;
-                  OuterWear   = outerWear;
-                  Shoes       = shoes;
             }
 
-      }
+            public struct Data {
 
-      public class CharacterBuilder {
+                  public string   Name      { get; set; }
+                  public int      Health    { get; set; }
+                  public float    Energy    { get; set; }
+                  public string[] Modifiers { get; set; }
 
-            private BaseLayer[] _baseLayer;
-            private float       _energy;
-            private Hat[]       _hats;
-            private int         _health;
-            private Sleeve[]    _leftSleeves;
-            private string[]    _modifiers;
-            private string      _name;
-            private OuterWear[] _outerWear;
-            private Sleeve[]    _rightSleeves;
-            private Shoes[]     _shoes;
-            private string      _skeleton;
+                  public string Base { get; set; }
 
 
-            public static CharacterBuilder Make() {
-                  return new CharacterBuilder();
+                  public Hat[]       Hats        { get; set; }
+                  public BaseLayer[] BaseLayer   { get; set; }
+                  public Sleeve[]    LeftSleeve  { get; set; }
+                  public Sleeve[]    RightSleeve { get; set; }
+                  public OuterWear[] OuterWear   { get; set; }
+                  public Shoes[]     Shoes       { get; set; }
+
+
+                  public Data(
+                        string      name,
+                        int         health,
+                        float       energy,
+                        string[]    modifiers,
+                        string      @base,
+                        Hat[]       hats,
+                        BaseLayer[] baseLayer,
+                        Sleeve[]    leftSleeve,
+                        Sleeve[]    rightSleeve,
+                        OuterWear[] outerWear,
+                        Shoes[]     shoes) {
+                        Name        = name;
+                        Health      = health;
+                        Energy      = energy;
+                        Modifiers   = modifiers;
+                        Base        = @base;
+                        Hats        = hats;
+                        BaseLayer   = baseLayer;
+                        LeftSleeve  = leftSleeve;
+                        RightSleeve = rightSleeve;
+                        OuterWear   = outerWear;
+                        Shoes       = shoes;
+                  }
+
             }
 
+            public class CharacterBuilder {
 
-            public CharacterBuilder AddName(string name) {
-                  _name = name;
-                  return this;
+                  private BaseLayer[] _baseLayer;
+                  private float       _energy;
+                  private Hat[]       _hats;
+                  private int         _health;
+                  private Sleeve[]    _leftSleeves;
+                  private string[]    _modifiers;
+                  private string      _name;
+                  private OuterWear[] _outerWear;
+                  private Sleeve[]    _rightSleeves;
+                  private Shoes[]     _shoes;
+                  private string      _skeleton;
+
+
+                  public static CharacterBuilder Make() {
+                        return new CharacterBuilder();
+                  }
+
+
+                  public CharacterBuilder AddName(string name) {
+                        _name = name;
+                        return this;
+                  }
+
+
+                  public CharacterBuilder AddHealth(int health) {
+                        _health = health;
+                        return this;
+                  }
+
+
+                  public CharacterBuilder AddModifiers(string[] modifiers) {
+                        _modifiers = modifiers;
+                        return this;
+                  }
+
+
+                  public CharacterBuilder AddHats(Hat[] hats) {
+                        _hats = hats;
+                        return this;
+                  }
+
+
+                  public CharacterBuilder AddBaseLayer(BaseLayer[] baseLayer) {
+                        _baseLayer = baseLayer;
+                        return this;
+                  }
+
+
+                  public CharacterBuilder AddLeftSleeves(Sleeve[] sleeves) {
+                        _leftSleeves = sleeves;
+                        return this;
+                  }
+
+
+                  public CharacterBuilder AddRightSleeves(Sleeve[] sleeves) {
+                        _rightSleeves = sleeves;
+                        return this;
+                  }
+
+
+                  public CharacterBuilder AddOuterWear(OuterWear[] outerWear) {
+                        _outerWear = outerWear;
+                        return this;
+                  }
+
+
+                  public CharacterBuilder AddShoes(Shoes[] shoes) {
+                        _shoes = shoes;
+                        return this;
+                  }
+
+
+                  public Data Build() {
+                        return new Data(
+                              _name,
+                              _health,
+                              _energy,
+                              _modifiers,
+                              _skeleton,
+                              _hats,
+                              _baseLayer,
+                              _leftSleeves,
+                              _rightSleeves,
+                              _outerWear,
+                              _shoes);
+                  }
+
             }
 
-
-            public CharacterBuilder AddHealth(int health) {
-                  _health = health;
-                  return this;
-            }
-
-
-            public CharacterBuilder AddModifiers(string[] modifiers) {
-                  _modifiers = modifiers;
-                  return this;
-            }
-
-
-            public CharacterBuilder AddHats(Hat[] hats) {
-                  _hats = hats;
-                  return this;
-            }
-
-
-            public CharacterBuilder AddBaseLayer(BaseLayer[] baseLayer) {
-                  _baseLayer = baseLayer;
-                  return this;
-            }
-
-
-            public CharacterBuilder AddLeftSleeves(Sleeve[] sleeves) {
-                  _leftSleeves = sleeves;
-                  return this;
-            }
-
-
-            public CharacterBuilder AddRightSleeves(Sleeve[] sleeves) {
-                  _rightSleeves = sleeves;
-                  return this;
-            }
-
-
-            public CharacterBuilder AddOuterWear(OuterWear[] outerWear) {
-                  _outerWear = outerWear;
-                  return this;
-            }
-
-
-            public CharacterBuilder AddShoes(Shoes[] shoes) {
-                  _shoes = shoes;
-                  return this;
-            }
-
-
-            public CharacterData Build() {
-                  return new CharacterData(
-                        _name,
-                        _health,
-                        _energy,
-                        _modifiers,
-                        _skeleton,
-                        _hats,
-                        _baseLayer,
-                        _leftSleeves,
-                        _rightSleeves,
-                        _outerWear,
-                        _shoes);
-            }
 
       }
 
