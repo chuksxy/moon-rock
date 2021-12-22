@@ -3,15 +3,20 @@ using System.Linq;
 using UnityEngine;
 
 namespace game.world.item {
+
       public static class Item {
+
             public enum Slot {
+
                   Head,
                   Body,
                   Feet,
                   LeftSleeve,
                   RightSleeve,
                   OuterWear
+
             }
+
 
             public static void Equip(GameObject character, Slot slot, IEnumerable<string> names) {
                   var items = names.Select(name => Load(slot, name)).ToArray();
@@ -30,28 +35,36 @@ namespace game.world.item {
                   }
             }
 
+
             private static SkinnedMeshRenderer Load(Slot part, string item) {
                   return Resources.Load<GameObject>($"{part}/{item}.fbx").GetComponentInChildren<SkinnedMeshRenderer>();
             }
+
 
             public static IEnumerable<string> ExtractNames(IEnumerable<Hat> hats) {
                   return hats.Select(hat => hat.Name);
             }
 
+
             public static IEnumerable<string> ExtractNames(IEnumerable<BaseLayer> baseLayers) {
                   return baseLayers.Select(layer => layer.Name);
             }
+
 
             public static IEnumerable<string> ExtractNames(IEnumerable<Sleeve> sleeves) {
                   return sleeves.Select(sleeve => sleeve.Name);
             }
 
+
             public static IEnumerable<string> ExtractNames(IEnumerable<OuterWear> outerWears) {
                   return outerWears.Select(outerWear => outerWear.Name);
             }
 
+
             public static IEnumerable<string> ExtractNames(IEnumerable<Shoes> shoes) {
                   return shoes.Select(shoe => shoe.Name);
             }
+
       }
+
 }

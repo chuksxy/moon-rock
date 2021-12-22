@@ -2,7 +2,9 @@ using game.world.item;
 using UnityEngine;
 
 namespace game.world.character {
+
       public class TCharacter : ScriptableObject {
+
             public string characterName;
             public int    health;
             public float  energy;
@@ -15,5 +17,7 @@ namespace game.world.character {
             public TSleeve[]    rightSleeve;
             public TOuterWear[] outerWear;
             public TShoes[]     shoes;
+
       }
+
 }

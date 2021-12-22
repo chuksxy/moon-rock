@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace game.world.item {
-      public class TOuterWear : ScriptableObject {
-            
-      }
+
+      public class TOuterWear : ScriptableObject { }
+
 }

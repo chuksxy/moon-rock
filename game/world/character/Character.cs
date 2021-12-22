@@ -10,12 +10,7 @@ namespace game.world.character {
 
             // Create a character from a `Character Template` ScriptableObject. Give the character an ID and register 
             // the character within the world.
-            public static CharacterInterface Create(
-                  TCharacter template,
-                  string     characterID,
-                  string     registryID,
-                  string     zoneID
-            ) {
+            public static CharacterInterface Create(TCharacter template, string characterID, string registryID, string zoneID) {
                   var data = ConvertToData(template);
                   return Load(data, characterID, registryID, zoneID);
             }
@@ -23,12 +18,7 @@ namespace game.world.character {
 
             // Load a character from `Character Data`(Persisted). Assign the ID and register the character within the 
             // world.
-            public static CharacterInterface Load(
-                  CharacterData data,
-                  string        characterID,
-                  string        registryID,
-                  string        zoneID
-            ) {
+            public static CharacterInterface Load(CharacterData data, string characterID, string registryID, string zoneID) {
                   return Assemble(data).Init(data, characterID, registryID, zoneID);
             }
 
@@ -63,15 +53,9 @@ namespace game.world.character {
 
             // Move the character in a specific direction using the CharacterController. Also apply any speed modifier 
             // that is present.
-            internal static void Move(
-                  CharacterInterface @interface,
-                  Vector3            direction,
-                  float              modifier
-            ) {
-                  var data = WorldRegistry.GetRegistry(@interface.GetRegistryID())
-                                          .GetCharacterData(@interface.GetCharacterID());
-
-                  var speed      = EvaluateMovementSpeed(data);
+            internal static void Move(CharacterInterface @interface, Vector3 direction, float modifier) {
+                  var data = WorldRegistry.GetRegistry(@interface.GetRegistryID()).GetCharacterData(@interface.GetCharacterID());
+                  var speed = EvaluateMovementSpeed(data);
                   var controller = @interface.GetController();
 
                   controller.Move(direction * modifier * speed);
@@ -79,15 +63,9 @@ namespace game.world.character {
 
 
             // Jump in the direction specified and apply any jump speed modifier if present.
-            internal static void Jump(
-                  CharacterInterface @interface,
-                  Vector3            direction,
-                  float              modifier
-            ) {
-                  var data = WorldRegistry.GetRegistry(@interface.GetRegistryID())
-                                          .GetCharacterData(@interface.GetCharacterID());
-
-                  var speed      = EvaluateJumpSpeed(data);
+            internal static void Jump(CharacterInterface @interface, Vector3 direction, float modifier) {
+                  var data = WorldRegistry.GetRegistry(@interface.GetRegistryID()).GetCharacterData(@interface.GetCharacterID());
+                  var speed = EvaluateJumpSpeed(data);
                   var controller = @interface.GetController();
 
                   controller.Move(direction * modifier * speed);
@@ -110,6 +88,7 @@ namespace game.world.character {
             private static CharacterData ConvertToData(TCharacter template) {
                   return new CharacterData();
             }
+
       }
 
 }
