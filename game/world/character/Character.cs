@@ -2,7 +2,7 @@ using game.world.item;
 using UnityEngine;
 
 /*
- * This contains all necessary functions related to the Character management and behaviour.
+ * This contains all necessary functions related to character management and behaviour.
  */
 namespace game.world.character {
       public static class Character {
