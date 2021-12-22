@@ -53,9 +53,8 @@ namespace game.world.character {
             // Move the character in a specific direction using the CharacterController. Also apply any speed modifier
             // that is present.
             internal static void Move(Interface @interface, Vector3 direction, float modifier) {
-                  var registry = WorldRegistry.GetRegistry(@interface.GetRegistryID());
-                  var data     = registry.GetCharacterData(@interface.GetCharacterID());
-
+                  var registry   = WorldRegistry.GetRegistry(@interface.GetRegistryID());
+                  var data       = registry.GetCharacterData(@interface.GetCharacterID());
                   var speed      = EvaluateMovementSpeed(data);
                   var controller = @interface.GetController();
 
