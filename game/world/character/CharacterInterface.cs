@@ -14,12 +14,16 @@ namespace game.world.character {
                   private string              _registryID  = "";
                   private Rigidbody[]         _rigidbodies;
 
+
+                  // Set Position of character to the specified point in the world.
                   public void SetPosition(Vector3 position) { }
 
+
+                  // Reset Character to base state by restoring max health and energy. 
                   public void ResetCharacter() { }
 
 
-                  // Move the character in direction while applying the movement speed modifier.
+                  // Move character in direction while applying the movement speed modifier.
                   public void Move(Vector3 direction, float modifier) {
                         Character.Move(this, direction, modifier);
                   }
