@@ -4,6 +4,10 @@ namespace game.world {
 
       public static partial class World {
 
+            public const float MAX_WEIGHT         = 100.0f;
+            public const float MAX_MOVEMENT_SPEED = 160.0f;
+            public const float MAX_JUMP_SPEED     = 18.0f;
+
             public struct Data {
 
                   public static readonly Data Blank = new Data();
@@ -36,5 +40,12 @@ namespace game.world {
             public string[] Modifiers { get; set; }
 
       }
+
+      public interface IHaveWeight {
+
+            float Weight { get; }
+
+      }
+
 
 }

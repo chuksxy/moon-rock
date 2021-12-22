@@ -82,6 +82,36 @@ namespace game.world.item {
                   return shoes.Select(shoe => shoe.Name);
             }
 
+
+            public static float Weigh(IHaveWeight[] weights) {
+                  return weights.Select(hasWeight => hasWeight.Weight).Sum();
+            }
+
+
+            public static float Weigh(IEnumerable<Hat> hats) {
+                  return hats.Select(hat => hat.Weight).Sum();
+            }
+
+
+            public static float Weigh(IEnumerable<BaseLayer> baseLayers) {
+                  return baseLayers.Select(baseLayer => baseLayer.Weight).Sum();
+            }
+
+
+            public static float Weigh(IEnumerable<Sleeve> sleeves) {
+                  return sleeves.Select(sleeve => sleeve.Weight).Sum();
+            }
+
+
+            public static float Weigh(IEnumerable<OuterWear> outerWears) {
+                  return outerWears.Select(outerWear => outerWear.Weight).Sum();
+            }
+
+
+            public static float Weigh(IEnumerable<Shoes> allShoes) {
+                  return allShoes.Select(shoes => shoes.Weight).Sum();
+            }
+
       }
 
 }

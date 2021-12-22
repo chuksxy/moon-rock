@@ -82,15 +82,15 @@ namespace game.world.character {
             }
 
 
-            // Evaluate `Movement Speed` based off the character's current equipment and items in possession.
-            private static float EvaluateMovementSpeed(Data data) {
-                  return 12.0f;
+            // Evaluate `Jump Speed` based off the character's current equipment and items in possession.
+            private static float EvaluateJumpSpeed(Data data) {
+                  return EvaluateMovementSpeed(data) / 2.0f;
             }
 
 
-            // Evaluate `Jump Speed` based off the character's current equipment and items in possession.
-            private static float EvaluateJumpSpeed(Data data) {
-                  return 8.0f;
+            // Evaluate `Movement Speed` based off the character's current equipment and items in possession.
+            private static float EvaluateMovementSpeed(Data data) {
+                  return (1 - data.Weight / World.MAX_WEIGHT) * World.MAX_MOVEMENT_SPEED;
             }
 
 

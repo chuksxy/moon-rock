@@ -22,7 +22,7 @@ namespace game.world.character {
 
             }
 
-            public struct Data {
+            public struct Data : IHaveWeight {
 
                   public string   ID        { get; set; }
                   public string   Name      { get; set; }
@@ -68,6 +68,14 @@ namespace game.world.character {
                         OuterWear   = outerWear;
                         Shoes       = shoes;
                   }
+
+
+                  public float Weight => Item.Weigh(Hats)
+                                       + Item.Weigh(BaseLayer)
+                                       + Item.Weigh(LeftSleeve)
+                                       + Item.Weigh(RightSleeve)
+                                       + Item.Weigh(OuterWear)
+                                       + Item.Weigh(Shoes);
 
             }
 
