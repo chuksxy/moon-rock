@@ -1,14 +1,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using game.world;
-using game.world.zone;
 using UnityEngine;
 
 namespace game {
 
       public class Game : MonoBehaviour {
 
-            public List<TWorld> templates;
+            public List<World.Template> templates;
 
 
             private void Awake() {

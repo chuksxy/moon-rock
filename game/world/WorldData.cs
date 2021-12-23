@@ -1,4 +1,4 @@
-using game.world.zone;
+using UnityEngine;
 
 namespace game.world {
 
@@ -10,13 +10,24 @@ namespace game.world {
             public const float MAX_JUMP_SPEED                     = 18.0f;
             public const float MAX_JUMP_SPEED_AFTER_MODIFIERS     = 24.0f;
 
+            public class Template : ScriptableObject {
+
+                  [SerializeField] private long   seed;
+                  [SerializeField] private string worldName;
+
+
+                  public Data ToData() {
+                        return new Data {Name = worldName, Seed = seed};
+                  }
+
+            }
+
             public struct Data {
 
                   public static readonly Data Blank = new Data();
 
-                  public long       Seed  { get; set; }
-                  public string     Name  { get; set; }
-                  public ZoneData[] Zones { get; set; }
+                  public long   Seed { get; set; }
+                  public string Name { get; set; }
 
 
                   public bool IsBlank() {

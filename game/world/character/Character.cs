@@ -90,7 +90,7 @@ namespace game.world.character {
 
             // Evaluate `Jump Speed` based off the character's current equipment and items in possession.
             public static float EvaluateJumpSpeed(Data data) {
-                  return EvaluateMovementSpeed(data) / 2.0f;
+                  return Mathf.Min(World.MAX_JUMP_SPEED, EvaluateMovementSpeed(data) / 2.0f);
             }
 
 
