@@ -16,17 +16,23 @@ namespace game.world.character {
             }
 
 
+            // Reset Character's health and energy to the max.
+            public static void ResetCharacter(Interface characterInterface) {
+                  var registry = World.Registry.Get(characterInterface.GetRegistryID());
+                  var data     = registry.GetCharacterData(characterInterface.GetCharacterID());
+
+                  if (data.IsBlank()) return;
+
+                  data.Health.Current = data.Health.Max;
+                  data.Energy.Current = data.Energy.Max;
+            }
+
+
             // Create a character from a `Character Template` ScriptableObject. Give the character an ID and register 
             // the character within the world.
             public static Interface Create(Template template, string characterID, string registryID, string zoneID) {
                   var data = ConvertToData(template, characterID);
-                  return Load(data, registryID, zoneID);
-            }
-
-
-            // Load a character from `Character Data`(Persisted). Assign the ID and register the character within the world.
-            public static Interface Load(Data data, string registryID, string zoneID) {
-                  return Assemble(data, registryID).Init(data, registryID, zoneID);
+                  return RawLoad(data, registryID, zoneID);
             }
 
 
@@ -39,7 +45,7 @@ namespace game.world.character {
 
             // Assemble a character from `Character Data` with items/gear pre-populated.
             public static Interface Assemble(Data data, string registryID) {
-                  var character          = Load(data.Base);
+                  var character          = RawLoad(data.Base);
                   var characterInterface = character.AddComponent<Interface>().Init(data, registryID);
 
                   Item.Equip(characterInterface, Item.Slot.Head, Item.ExtractNames(data.Hats));
@@ -53,8 +59,14 @@ namespace game.world.character {
             }
 
 
-            // Load the Character's base fbx file from the `Resources` folder by name.
-            public static GameObject Load(string name) {
+            // Raw Load a character from `Character Data`(Persisted). Assign the ID and register the character within the world.
+            public static Interface RawLoad(Data data, string registryID, string zoneID) {
+                  return Assemble(data, registryID).Init(data, registryID, zoneID);
+            }
+
+
+            // Raw Load the Character's base fbx file from the `Resources` folder by name.
+            public static GameObject RawLoad(string name) {
                   var item = Resources.Load<GameObject>($"/Character/{name}.prefab");
                   return item == null ? Resources.Load<GameObject>($"/Character/{name}.fbx") : item;
             }

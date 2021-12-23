@@ -38,7 +38,7 @@ namespace game.world {
 
       }
 
-      public struct Health {
+      public class Health {
 
             public int      Max       { get; set; }
             public int      Current   { get; set; }
@@ -46,7 +46,7 @@ namespace game.world {
 
       }
 
-      public struct Energy {
+      public class Energy {
 
             public float    Max       { get; set; }
             public float    Current   { get; set; }

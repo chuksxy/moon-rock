@@ -33,12 +33,16 @@ namespace game.world.character {
                   }
 
 
-                  // Set Position of character to the specified point in the world.
-                  public void SetPosition(Vector3 position) { }
+                  // Set World Position of character to the specified point.
+                  public void SetWorldPosition(Vector3 position) {
+                        Character.SetWorldPosition(this, position);
+                  }
 
 
                   // Reset Character to base state by restoring max health and energy. 
-                  public void ResetCharacter() { }
+                  public void ResetCharacter() {
+                        Character.ResetCharacter(this);
+                  }
 
 
                   // Move character in direction while applying the movement speed modifier.
@@ -136,7 +140,7 @@ namespace game.world.character {
 
                   internal Interface Init(Data data, string registryID, string zoneId = "main.zone") {
                         RegisterCharacter(data, registryID, zoneId);
-                        AssembleCharacter(data);
+                        AssembleCharacter();
                         return this;
                   }
 
@@ -169,7 +173,7 @@ namespace game.world.character {
                   }
 
 
-                  private void AssembleCharacter(Data data) {
+                  private void AssembleCharacter() {
                         _animator            = gameObject.AddComponent<Animator>();
                         _characterController = gameObject.AddComponent<CharacterController>();
                         _rigidbodies         = gameObject.GetComponentsInChildren<Rigidbody>();
