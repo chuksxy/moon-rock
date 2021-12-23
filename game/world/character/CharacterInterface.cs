@@ -1,4 +1,5 @@
 using game.world.item;
+using UnityEditor;
 using UnityEngine;
 
 /*
@@ -95,32 +96,32 @@ namespace game.world.character {
 
 
                   // Swap Base Layer such as T-shirts, Compression Layers and Vests in stack.
-                  public Item.BaseLayer SwapBaseLayer(int index) {
-                        return new Item.BaseLayer();
+                  public Item.BaseLayer SwapBaseLayer(int index, Item.BaseLayer baseLayer) {
+                        return Character.SwapBaseLayer(this, index, baseLayer);
                   }
 
 
                   // Swap Left Sleeve in stack.
-                  public Item.Sleeve SwapLeftSleeve(int index) {
-                        return new Item.Sleeve();
+                  public Item.Sleeve SwapLeftSleeve(int index, Item.Sleeve sleeve) {
+                        return Character.SwapLeftSleeve(this, index, sleeve);
                   }
 
 
                   // Swap Right Sleeve in stack.
-                  public Item.Sleeve SwapRightSleeve(int index) {
-                        return new Item.Sleeve();
+                  public Item.Sleeve SwapRightSleeve(int index, Item.Sleeve sleeve) {
+                        return Character.SwapRightSleeve(this, index, sleeve);
                   }
 
 
                   // Swap Outer Wear such as Jackets, Sweaters and Coats in the stack.
-                  public Item.OuterWear SwapOuterWear(int index) {
-                        return new Item.OuterWear();
+                  public Item.OuterWear SwapOuterWear(int index, Item.OuterWear outerWear) {
+                        return Character.SwapOuterWear(this, index, outerWear);
                   }
 
 
                   // Swap Shoes such as Socks, Feet, Shoes and Boots in the stack.
-                  public Item.Shoes SwapShoes(int index) {
-                        return new Item.Shoes();
+                  public Item.Shoes SwapShoes(int index, Item.Shoes shoes) {
+                        return Character.SwapShoes(this, index, shoes);
                   }
 
 

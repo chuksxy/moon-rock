@@ -114,6 +114,72 @@ namespace game.world.character {
                   return data;
             }
 
+
+            public static Item.Hat SwapHat(Interface characterInterface, int index, Item.Hat hat) {
+                  var data = characterInterface.GetData();
+                  var prev = data.Hats[index];
+
+                  Item.Equip(characterInterface, Item.Slot.Head, index, hat.Name);
+                  data.Hats[index] = hat;
+
+                  return prev;
+            }
+
+
+            private static Item.BaseLayer SwapBaseLayer(Interface characterInterface, int index, Item.BaseLayer baseLayer) {
+                  var data = characterInterface.GetData();
+                  var prev = data.BaseLayer[index];
+
+                  Item.Equip(characterInterface, Item.Slot.Body, index, baseLayer.Name);
+                  data.BaseLayer[index] = baseLayer;
+
+                  return prev;
+            }
+
+
+            private static Item.Sleeve SwapLeftSleeve(Interface characterInterface, int index, Item.Sleeve sleeve) {
+                  var data = characterInterface.GetData();
+                  var prev = data.LeftSleeve[index];
+
+                  Item.Equip(characterInterface, Item.Slot.LeftSleeve, index, sleeve.Name);
+                  data.LeftSleeve[index] = sleeve;
+
+                  return prev;
+            }
+
+
+            private static Item.Sleeve SwapRightSleeve(Interface characterInterface, int index, Item.Sleeve sleeve) {
+                  var data = characterInterface.GetData();
+                  var prev = data.RightSleeve[index];
+
+                  Item.Equip(characterInterface, Item.Slot.RightSleeve, index, sleeve.Name);
+                  data.RightSleeve[index] = sleeve;
+
+                  return prev;
+            }
+
+
+            private static Item.OuterWear SwapOuterWear(Interface characterInterface, int index, Item.OuterWear outerWear) {
+                  var data = characterInterface.GetData();
+                  var prev = data.OuterWear[index];
+
+                  Item.Equip(characterInterface, Item.Slot.OuterWear, index, outerWear.Name);
+                  data.OuterWear[index] = outerWear;
+
+                  return prev;
+            }
+
+
+            private static Item.Shoes SwapShoes(Interface characterInterface, int index, Item.Shoes shoes) {
+                  var data = characterInterface.GetData();
+                  var prev = data.Shoes[index];
+
+                  Item.Equip(characterInterface, Item.Slot.Feet, index, shoes.Name);
+                  data.Shoes[index] = shoes;
+
+                  return prev;
+            }
+
       }
 
 }

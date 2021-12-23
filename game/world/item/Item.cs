@@ -40,30 +40,51 @@ namespace game.world.item {
 
                   RemoveAll(slot);
 
-                  var skinnedMeshes =
+                  var loadedSkinnedMeshes =
                         names.Select(name => Load(slotID, name).GetComponentInChildren<SkinnedMeshRenderer>()).ToArray();
 
-                  for (var index = 0; index < skinnedMeshes.Length; index++) {
+                  for (var index = 0; index < loadedSkinnedMeshes.Length; index++) {
                         var index_skinnedMesh = slot.AddComponent<SkinnedMeshRenderer>();
                         var index_interface   = slot.AddComponent<Interface>();
 
-                        if (index > 0 && !Item.CanStack(characterInterface.GetData(), slotID, index)) {
+                        if (index > 0 && !CanStack(characterInterface.GetData(), slotID, index)) {
                               continue;
                         }
+
+                        var loadedSkinnedMesh = loadedSkinnedMeshes[index];
 
                         index_interface.Init(
                               slotID, index, characterInterface.GetCharacterID(), characterInterface.GetRegistryID());
 
-                        index_skinnedMesh.sharedMesh          = skinnedMeshes[index].sharedMesh;
-                        index_skinnedMesh.material            = skinnedMeshes[index].material;
-                        index_skinnedMesh.sharedMaterial      = skinnedMeshes[index].sharedMaterial;
-                        index_skinnedMesh.quality             = skinnedMeshes[index].quality;
-                        index_skinnedMesh.updateWhenOffscreen = skinnedMeshes[index].updateWhenOffscreen;
-                        index_skinnedMesh.materials           = skinnedMeshes[index].materials;
-                        index_skinnedMesh.sortingOrder        = index;
+                        AssignMesh(index_skinnedMesh, loadedSkinnedMesh, index);
 
                         // Apply Modifiers here.
                   }
+            }
+
+
+            // Equip item in slot at position in stack.
+            public static void Equip(Character.Interface characterInterface, Slot slotID, int index, string name) {
+                  var slot = characterInterface.gameObject.transform.Find(slotID.ToString()).gameObject;
+
+                  RemoveAll(slot);
+
+                  var targetSkinnedMesh = slot.AddComponent<SkinnedMeshRenderer>();
+                  var loadedSkinnedMesh = Load(slotID, name).GetComponentInChildren<SkinnedMeshRenderer>();
+
+                  AssignMesh(targetSkinnedMesh, loadedSkinnedMesh, index);
+            }
+
+
+            // Assign Mesh Properties such as materials, skinning data, geometry etc...
+            private static void AssignMesh(SkinnedMeshRenderer target, SkinnedMeshRenderer loaded, int index) {
+                  target.sharedMesh          = loaded.sharedMesh;
+                  target.material            = loaded.material;
+                  target.sharedMaterial      = loaded.sharedMaterial;
+                  target.quality             = loaded.quality;
+                  target.updateWhenOffscreen = loaded.updateWhenOffscreen;
+                  target.materials           = loaded.materials;
+                  target.sortingOrder        = index;
             }
 
 
