@@ -57,7 +57,7 @@ namespace game.world.character {
             // Move the character in a specific direction using the CharacterController. Also apply any speed modifier
             // that is present.
             public static void Move(Interface characterInterface, Vector3 direction, float modifier) {
-                  var registry = WorldRegistry.GetRegistry(characterInterface.GetRegistryID());
+                  var registry = World.Registry.Get(characterInterface.GetRegistryID());
                   var data     = registry.GetCharacterData(characterInterface.GetCharacterID());
                   var speed    = Mathf.Min(World.MAX_MOVEMENT_SPEED_AFTER_MODIFIERS, EvaluateMovementSpeed(data) * modifier);
 
@@ -72,7 +72,7 @@ namespace game.world.character {
 
             // Jump in the direction specified and apply any jump speed modifier if present.
             public static void Jump(Interface characterInterface, Vector3 direction, float modifier) {
-                  var registry = WorldRegistry.GetRegistry(characterInterface.GetRegistryID());
+                  var registry = World.Registry.Get(characterInterface.GetRegistryID());
                   var data     = registry.GetCharacterData(characterInterface.GetCharacterID());
                   var speed    = Mathf.Min(World.MAX_JUMP_SPEED_AFTER_MODIFIERS, EvaluateJumpSpeed(data) * modifier);
 

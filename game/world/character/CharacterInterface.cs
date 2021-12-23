@@ -29,7 +29,7 @@ namespace game.world.character {
 
                   // GetData associated with the character such as ID, name, energy, items, equipment, etc...
                   public Data GetData() {
-                        return WorldRegistry.GetRegistry(_registryID).GetCharacterData(_characterID);
+                        return World.Registry.Get(_registryID).GetCharacterData(_characterID);
                   }
 
 
@@ -165,7 +165,7 @@ namespace game.world.character {
                         _characterID = data.ID;
                         _registryID  = registryID;
 
-                        WorldRegistry.GetRegistry(registryID).RegisterCharacter(_characterID, zoneId, data);
+                        World.Registry.Get(registryID).RegisterCharacter(_characterID, zoneId, data);
                   }
 
 

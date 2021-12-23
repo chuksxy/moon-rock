@@ -5,8 +5,11 @@ using game.world.zone;
 using UnityEngine;
 
 namespace game {
+
       public class Game : MonoBehaviour {
+
             public List<TWorld> templates;
+
 
             private void Awake() {
                   var worlds = templates.Select(World.Create);
@@ -16,5 +19,7 @@ namespace game {
                         first.Begin();
                   }
             }
+
       }
+
 }
