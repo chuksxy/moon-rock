@@ -8,8 +8,8 @@ namespace game.world {
 
       public static partial class World {
 
-            private static readonly Registry                Main              = Registry.LoadMain();
-            private static readonly Table<string, Registry> _cachedRegistries = new Table<string, Registry>();
+            private static readonly Registry                Main             = Registry.LoadMain();
+            private static readonly Table<string, Registry> CachedRegistries = new Table<string, Registry>();
 
             public class Registry {
 
@@ -42,10 +42,10 @@ namespace game.world {
                   public static Registry Get(string registryID) {
                         if ("main.registry".Equals(registryID)) return Main;
 
-                        if (_cachedRegistries.ContainsKey(registryID)) return _cachedRegistries[registryID];
+                        if (CachedRegistries.ContainsKey(registryID)) return CachedRegistries[registryID];
 
                         var loadedRegistry = Load(registryID);
-                        if (loadedRegistry != null) _cachedRegistries.Add(registryID, loadedRegistry);
+                        if (loadedRegistry != null) CachedRegistries.Add(registryID, loadedRegistry);
                         return loadedRegistry ?? Main;
                   }
 
