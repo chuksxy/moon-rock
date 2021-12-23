@@ -60,6 +60,18 @@ namespace game.world.character {
             }
 
 
+            // Set World Position of the character.
+            public static void SetWorldPosition(Interface characterInterface, Vector3 position) {
+                  var registry = World.Registry.Get(characterInterface.GetRegistryID());
+                  var data     = registry.GetCharacterData(characterInterface.GetCharacterID());
+
+                  if (data.IsBlank()) return;
+
+                  characterInterface.gameObject.transform.position = position;
+                  data.WorldPosition                               = position;
+            }
+
+
             // Move the character in a specific direction using the CharacterController. Also apply any speed modifier
             // that is present.
             public static void Move(Interface characterInterface, Vector3 direction, float modifier) {

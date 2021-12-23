@@ -31,13 +31,15 @@ namespace game.world.item {
             public struct Hat : IHaveWeight, ICanStack, IAmAnObject {
 
 
-                  public string[] Tags      { get; set; }
-                  public string[] Modifiers { get; set; }
-                  public string   ID        { get; set; }
-                  public string   Name      { get; set; }
-                  public Health   Health    { get; set; }
-                  public float    Weight    { get; set; }
-                  public bool     CanStack  { get; }
+                  public string[] Tags          { get; set; }
+                  public string[] Modifiers     { get; set; }
+                  public string   ID            { get; set; }
+                  public Vector3  WorldPosition { get; set; }
+                  public Vector3  WorldRotation { get; set; }
+                  public string   Name          { get; set; }
+                  public Health   Health        { get; set; }
+                  public float    Weight        { get; set; }
+                  public bool     CanStack      { get; }
 
             }
 
@@ -64,13 +66,15 @@ namespace game.world.item {
 
             public struct BaseLayer : IHaveWeight, ICanStack, IAmAnObject {
 
-                  public string[] Tags      { get; set; }
-                  public string[] Modifiers { get; set; }
-                  public string   ID        { get; set; }
-                  public string   Name      { get; set; }
-                  public Health   Health    { get; set; }
-                  public float    Weight    { get; set; }
-                  public bool     CanStack  { get; }
+                  public string[] Tags          { get; set; }
+                  public string[] Modifiers     { get; set; }
+                  public string   ID            { get; set; }
+                  public Vector3  WorldPosition { get; set; }
+                  public Vector3  WorldRotation { get; set; }
+                  public string   Name          { get; set; }
+                  public Health   Health        { get; set; }
+                  public float    Weight        { get; set; }
+                  public bool     CanStack      { get; }
 
             }
 
@@ -97,13 +101,15 @@ namespace game.world.item {
 
             public struct OuterWear : IHaveWeight, ICanStack, IAmAnObject {
 
-                  public string[] Tags      { get; set; }
-                  public string[] Modifiers { get; set; }
-                  public string   ID        { get; set; }
-                  public string   Name      { get; set; }
-                  public Health   Health    { get; set; }
-                  public float    Weight    { get; set; }
-                  public bool     CanStack  { get; }
+                  public string[] Tags          { get; set; }
+                  public string[] Modifiers     { get; set; }
+                  public string   ID            { get; set; }
+                  public Vector3  WorldPosition { get; set; }
+                  public Vector3  WorldRotation { get; set; }
+                  public string   Name          { get; set; }
+                  public Health   Health        { get; set; }
+                  public float    Weight        { get; set; }
+                  public bool     CanStack      { get; }
 
             }
 
@@ -130,13 +136,15 @@ namespace game.world.item {
 
             public struct Shoes : IHaveWeight, ICanStack, IAmAnObject {
 
-                  public string[] Tags      { get; set; }
-                  public string[] Modifiers { get; set; }
-                  public string   ID        { get; set; }
-                  public string   Name      { get; set; }
-                  public Health   Health    { get; set; }
-                  public float    Weight    { get; set; }
-                  public bool     CanStack  { get; }
+                  public string[] Tags          { get; set; }
+                  public string[] Modifiers     { get; set; }
+                  public string   ID            { get; set; }
+                  public Vector3  WorldPosition { get; set; }
+                  public Vector3  WorldRotation { get; set; }
+                  public string   Name          { get; set; }
+                  public Health   Health        { get; set; }
+                  public float    Weight        { get; set; }
+                  public bool     CanStack      { get; }
 
             }
 
@@ -163,13 +171,15 @@ namespace game.world.item {
 
             public struct Sleeve : IHaveWeight, ICanStack, IAmAnObject {
 
-                  public string[] Tags      { get; set; }
-                  public string[] Modifiers { get; set; }
-                  public string   ID        { get; set; }
-                  public string   Name      { get; set; }
-                  public Health   Health    { get; set; }
-                  public float    Weight    { get; set; }
-                  public bool     CanStack  { get; }
+                  public string[] Tags          { get; set; }
+                  public string[] Modifiers     { get; set; }
+                  public string   ID            { get; set; }
+                  public Vector3  WorldPosition { get; set; }
+                  public Vector3  WorldRotation { get; set; }
+                  public string   Name          { get; set; }
+                  public Health   Health        { get; set; }
+                  public float    Weight        { get; set; }
+                  public bool     CanStack      { get; }
 
             }
 

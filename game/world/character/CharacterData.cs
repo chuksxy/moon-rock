@@ -25,7 +25,7 @@ namespace game.world.character {
 
             }
 
-            public struct Data : IHaveWeight {
+            public struct Data : IHaveWeight, IAmAnObject {
 
                   private static readonly Data Blank = new Data();
 
@@ -36,6 +36,9 @@ namespace game.world.character {
 
                   public string[] Tags      { get; set; }
                   public string[] Modifiers { get; set; }
+
+                  public Vector3 WorldPosition { get; set; }
+                  public Vector3 WorldRotation { get; set; }
 
                   public string Base { get; set; }
 
