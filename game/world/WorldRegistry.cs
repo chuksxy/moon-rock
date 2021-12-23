@@ -6,8 +6,9 @@ namespace game.world {
 
       public static partial class World {
 
-            private static Registry Cached;
-            private static Registry Main;
+            private static readonly Registry Main = Registry.LoadMain();
+
+            private static Registry _cached;
 
             public class Registry {
 
@@ -39,10 +40,16 @@ namespace game.world {
                   // Get Registry that has already loaded else fallback and load it or use the main one.
                   public static Registry Get(string registryID) {
                         if ("main.registry".Equals(registryID)) return Main;
-                        if (Cached != null) return Cached;
+                        if (_cached != null) return _cached;
 
-                        Cached = Load(registryID);
-                        return Cached ?? Main;
+                        _cached = Load(registryID);
+                        return _cached ?? Main;
+                  }
+
+
+                  // Load Main registry from disk.
+                  public static Registry LoadMain() {
+                        return Load("main.registry");
                   }
 
 
