@@ -6,14 +6,17 @@ namespace game.world {
 
       public static partial class World {
 
+            private static Registry Cached;
+            private static Registry Main;
+
             public class Registry {
 
-                  // Character Tables for characters located in the world.
+                  // `Character Tables` for characters located in the world.
                   private readonly Dictionary<string, Character.Data>  _characters;
                   private readonly Dictionary<string, string>          _characterIDsToZoneIDs;
                   private readonly Dictionary<string, HashSet<string>> _zoneIDsToCharactersIDs;
 
-                  // Item Tables for items located in the world.
+                  // `Item Tables` for items located in the world.
                   private readonly Dictionary<string, string>          _itemIDsToZoneIDs;
                   private readonly Dictionary<string, HashSet<string>> _zoneIDsToItemIDs;
 
@@ -33,8 +36,18 @@ namespace game.world {
                   }
 
 
-                  // Get Registry by ID from Disk.
+                  // Get Registry that has already loaded else fallback and load it or use the main one.
                   public static Registry Get(string registryID) {
+                        if ("main.registry".Equals(registryID)) return Main;
+                        if (Cached != null) return Cached;
+
+                        Cached = Load(registryID);
+                        return Cached ?? Main;
+                  }
+
+
+                  // Load registry by ID from disk.
+                  public static Registry Load(string registryID) {
                         var characterIDs           = new Dictionary<string, Character.Data>();
                         var characterIDsToZoneIDs  = new Dictionary<string, string>();
                         var zoneIDsToCharactersIDs = new Dictionary<string, HashSet<string>>();
