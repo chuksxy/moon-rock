@@ -7,8 +7,9 @@ namespace game.world.item {
 
             public class Interface : MonoBehaviour {
 
-                  private string _characterID = "";
-                  private string _registryID  = "";
+                  private string _itemID      = "no.item.ID";
+                  private string _characterID = "no.character.ID";
+                  private string _registryID  = "main.registry";
                   private Slot   _slotID      = Slot.None;
                   private int    _slotIndex   = -1;
 
@@ -33,6 +34,9 @@ namespace game.world.item {
 
                   // Init item in the world.
                   internal Interface Init(Slot slotID, string itemID, string registryID) {
+                        _slotID     = slotID;
+                        _itemID     = itemID;
+                        _registryID = registryID;
                         return this;
                   }
 
