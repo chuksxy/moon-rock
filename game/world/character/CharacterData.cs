@@ -27,6 +27,8 @@ namespace game.world.character {
 
             public struct Data : IHaveWeight {
 
+                  private static readonly Data Blank = new Data();
+
                   public string ID     { get; set; }
                   public string Name   { get; set; }
                   public Health Health { get; set; }
@@ -50,6 +52,11 @@ namespace game.world.character {
                                        + Item.Weigh(RightSleeve)
                                        + Item.Weigh(OuterWear)
                                        + Item.Weigh(Shoes);
+
+
+                  public bool IsBlank() {
+                        return this.Equals(Blank);
+                  }
 
             }
 

@@ -30,39 +30,51 @@ namespace game.world {
 
 
                   public void RegisterCharacter(string characterID, string zoneID, Character.Data data) {
+                        if (_characters.ContainsKey(characterID)) return;
+
                         _characters.Add(characterID, data);
                         EnterZone(zoneID, characterID);
                   }
 
 
                   public void DeRegisterCharacter(string characterID) {
+                        if (!_characters.ContainsKey(characterID)) return;
+
                         _characters.Remove(characterID);
                         LeaveZone(GetZoneID(characterID), characterID);
                   }
 
 
                   public Character.Data GetCharacterData(string characterID) {
-                        return _characters[characterID];
+                        return !_characters.ContainsKey(characterID) ? new Character.Data() : _characters[characterID];
                   }
 
 
                   public string GetZoneID(string characterID) {
-                        return _characterIDsToZoneIDs[characterID];
+                        return !_characterIDsToZoneIDs.ContainsKey(characterID)
+                              ? "no.zone.ID"
+                              : _characterIDsToZoneIDs[characterID];
                   }
 
 
                   public HashSet<string> GetAllCharactersInZone(string zoneID) {
-                        return _zoneIDsToCharactersIDs[zoneID];
+                        return !_zoneIDsToCharactersIDs.ContainsKey(zoneID)
+                              ? new HashSet<string>()
+                              : _zoneIDsToCharactersIDs[zoneID];
                   }
 
 
                   public void EnterZone(string zoneID, string characterID) {
+                        if (_characterIDsToZoneIDs.ContainsKey(characterID)) return;
+
                         _characterIDsToZoneIDs.Add(characterID, zoneID);
                         _zoneIDsToCharactersIDs[zoneID].Add(characterID);
                   }
 
 
                   public void LeaveZone(string zoneId, string characterID) {
+                        if (!_characterIDsToZoneIDs.ContainsKey(characterID)) return;
+
                         _characterIDsToZoneIDs.Remove(characterID);
                         _zoneIDsToCharactersIDs[zoneId].Remove(characterID);
                   }
