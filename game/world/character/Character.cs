@@ -32,7 +32,7 @@ namespace game.world.character {
 
             // Assemble a character from a `Character Template` ScriptableObject, with items/gear pre-populated.
             public static Interface Assemble(Template template) {
-                  var data = ConvertToData(template, "no.character.id");
+                  var data = ConvertToData(template, "no.character.ID");
                   return Assemble(data, "main.registry");
             }
 

@@ -1,33 +1,34 @@
 using System.Collections.Generic;
+using game.table;
 using game.world.character;
 using game.world.item;
+using UnityEngine.Rendering;
 
 namespace game.world {
 
       public static partial class World {
 
-            private static readonly Registry Main = Registry.LoadMain();
-
-            private static Registry _cached;
+            private static readonly Registry                Main              = Registry.LoadMain();
+            private static readonly Table<string, Registry> _cachedRegistries = new Table<string, Registry>();
 
             public class Registry {
 
                   // `Character Tables` for characters located in the world.
-                  private readonly Dictionary<string, Character.Data>  _characters;
-                  private readonly Dictionary<string, string>          _characterIDsToZoneIDs;
-                  private readonly Dictionary<string, HashSet<string>> _zoneIDsToCharactersIDs;
+                  private readonly Table<string, Character.Data>  _characters;
+                  private readonly Table<string, string>          _characterIDsToZoneIDs;
+                  private readonly Table<string, HashSet<string>> _zoneIDsToCharactersIDs;
 
                   // `Item Tables` for items located in the world.
-                  private readonly Dictionary<string, string>          _itemIDsToZoneIDs;
-                  private readonly Dictionary<string, HashSet<string>> _zoneIDsToItemIDs;
+                  private readonly Table<string, string>          _itemIDsToZoneIDs;
+                  private readonly Table<string, HashSet<string>> _zoneIDsToItemIDs;
 
 
                   private Registry(
-                        Dictionary<string, Character.Data>  characters,
-                        Dictionary<string, string>          characterIDsToZoneIDs,
-                        Dictionary<string, HashSet<string>> zoneIDsToCharactersIDs,
-                        Dictionary<string, string>          itemIDsToZoneIDs,
-                        Dictionary<string, HashSet<string>> zoneIDsToItemIDs
+                        Table<string, Character.Data>  characters,
+                        Table<string, string>          characterIDsToZoneIDs,
+                        Table<string, HashSet<string>> zoneIDsToCharactersIDs,
+                        Table<string, string>          itemIDsToZoneIDs,
+                        Table<string, HashSet<string>> zoneIDsToItemIDs
                   ) {
                         _characterIDsToZoneIDs  = characterIDsToZoneIDs;
                         _characters             = characters;
@@ -40,10 +41,12 @@ namespace game.world {
                   // Get Registry that has already loaded else fallback and load it or use the main one.
                   public static Registry Get(string registryID) {
                         if ("main.registry".Equals(registryID)) return Main;
-                        if (_cached != null) return _cached;
 
-                        _cached = Load(registryID);
-                        return _cached ?? Main;
+                        if (_cachedRegistries.ContainsKey(registryID)) return _cachedRegistries[registryID];
+
+                        var loadedRegistry = Load(registryID);
+                        if (loadedRegistry != null) _cachedRegistries.Add(registryID, loadedRegistry);
+                        return loadedRegistry ?? Main;
                   }
 
 
@@ -55,11 +58,11 @@ namespace game.world {
 
                   // Load registry by ID from disk.
                   public static Registry Load(string registryID) {
-                        var characterIDs           = new Dictionary<string, Character.Data>();
-                        var characterIDsToZoneIDs  = new Dictionary<string, string>();
-                        var zoneIDsToCharactersIDs = new Dictionary<string, HashSet<string>>();
-                        var itemIDsToZoneIDs       = new Dictionary<string, string>();
-                        var zoneIDsToItemIDs       = new Dictionary<string, HashSet<string>>();
+                        var characterIDs           = new Table<string, Character.Data>();
+                        var characterIDsToZoneIDs  = new Table<string, string>();
+                        var zoneIDsToCharactersIDs = new Table<string, HashSet<string>>();
+                        var itemIDsToZoneIDs       = new Table<string, string>();
+                        var zoneIDsToItemIDs       = new Table<string, HashSet<string>>();
                         return new Registry(
                               characterIDs, characterIDsToZoneIDs, zoneIDsToCharactersIDs, itemIDsToZoneIDs, zoneIDsToItemIDs);
                   }
@@ -116,6 +119,9 @@ namespace game.world {
                         _characterIDsToZoneIDs.Remove(characterID);
                         _zoneIDsToCharactersIDs[zoneId].Remove(characterID);
                   }
+
+
+                  public void Persist() { }
 
             }
 
