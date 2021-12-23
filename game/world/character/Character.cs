@@ -108,7 +108,8 @@ namespace game.world.character {
                         Hats        = t.head.Select(h => h.ToData()).ToArray(),
                         LeftSleeve  = t.leftSleeve.Select(l => l.ToData()).ToArray(),
                         RightSleeve = t.rightSleeve.Select(r => r.ToData()).ToArray(),
-                        Modifiers   = t.modifiers
+                        Modifiers   = t.modifiers,
+                        Tags        = t.tags
                   };
 
                   return data;
