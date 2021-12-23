@@ -24,14 +24,14 @@ namespace game.world.character {
             }
 
 
-            // Assemble a character from a `Character Template` ScriptableObject.
+            // Assemble a character from a `Character Template` ScriptableObject, with items/gear pre-populated.
             public static Interface Assemble(Template template) {
                   var data = ConvertToData(template, "no.character.id");
                   return Assemble(data, "main.registry");
             }
 
 
-            // Assemble a character from `Character Data`.
+            // Assemble a character from `Character Data` with items/gear pre-populated.
             public static Interface Assemble(Data data, string registryID) {
                   var character          = Load(data.Base);
                   var characterInterface = character.AddComponent<Interface>().Init(data, registryID);

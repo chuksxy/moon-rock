@@ -16,6 +16,7 @@ namespace game.world.item {
                   private Collider  _collider;
 
 
+                  // Init item that has already been assigned to a character.
                   internal Interface Init(Slot slotID, int slotIndex, string characterID, string registryID) {
                         _characterID = characterID;
                         _registryID  = registryID;
@@ -26,6 +27,12 @@ namespace game.world.item {
                         var col = gameObject.AddComponent<Collider>();
 
                         // Configure according to data
+                        return this;
+                  }
+
+
+                  // Init item in the world.
+                  internal Interface Init(Slot slotID, string itemID, string registryID) {
                         return this;
                   }
 

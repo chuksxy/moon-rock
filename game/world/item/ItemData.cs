@@ -33,6 +33,7 @@ namespace game.world.item {
 
                   public string[] Tags      { get; set; }
                   public string[] Modifiers { get; set; }
+                  public string   ID        { get; set; }
                   public string   Name      { get; set; }
                   public Health   Health    { get; set; }
                   public float    Weight    { get; set; }
@@ -65,6 +66,7 @@ namespace game.world.item {
 
                   public string[] Tags      { get; set; }
                   public string[] Modifiers { get; set; }
+                  public string   ID        { get; set; }
                   public string   Name      { get; set; }
                   public Health   Health    { get; set; }
                   public float    Weight    { get; set; }
@@ -97,6 +99,7 @@ namespace game.world.item {
 
                   public string[] Tags      { get; set; }
                   public string[] Modifiers { get; set; }
+                  public string   ID        { get; set; }
                   public string   Name      { get; set; }
                   public Health   Health    { get; set; }
                   public float    Weight    { get; set; }
@@ -129,6 +132,7 @@ namespace game.world.item {
 
                   public string[] Tags      { get; set; }
                   public string[] Modifiers { get; set; }
+                  public string   ID        { get; set; }
                   public string   Name      { get; set; }
                   public Health   Health    { get; set; }
                   public float    Weight    { get; set; }
@@ -161,6 +165,7 @@ namespace game.world.item {
 
                   public string[] Tags      { get; set; }
                   public string[] Modifiers { get; set; }
+                  public string   ID        { get; set; }
                   public string   Name      { get; set; }
                   public Health   Health    { get; set; }
                   public float    Weight    { get; set; }

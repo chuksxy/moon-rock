@@ -34,6 +34,12 @@ namespace game.world.item {
             }
 
 
+            // Generate ID for item by the slot they occupy.
+            public static string GenerateID(Slot slotID) {
+                  return $"{slotID.ToString().ToLower()}_{Guid.NewGuid().ToString().ToLower()}";
+            }
+
+
             // Equip items in an assigned slot, allowing multiple items in the same slot if they can be stacked.
             public static void Equip(Character.Interface characterInterface, Slot slotID, IEnumerable<string> names) {
                   var slot = characterInterface.gameObject.transform.Find(slotID.ToString()).gameObject;
@@ -103,8 +109,8 @@ namespace game.world.item {
 
 
             // Load an item from an existing pre-made template.
-            public static Interface LoadFromTemplate(Slot slotID, string templateName) {
-                  var path = $"{slotID}/{templateName}";
+            public static Interface LoadFromTemplate(Slot slotID, string template, string registryID = "main.registry") {
+                  var path = $"{slotID}/{template}";
 
                   GameObject prefab = null;
                   switch (slotID) {
@@ -131,9 +137,11 @@ namespace game.world.item {
                               break;
                   }
 
+                  var itemID = GenerateID(slotID);
+
                   return prefab == null
                         ? new GameObject().AddComponent<Interface>()
-                        : prefab.AddComponent<Interface>().Init(slotID, 0, "no.character.id", "main.registry");
+                        : prefab.AddComponent<Interface>().Init(slotID, itemID, registryID);
             }
 
 

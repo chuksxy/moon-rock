@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using game.world.character;
+using game.world.item;
 
 namespace game.world {
 
@@ -7,28 +8,44 @@ namespace game.world {
 
             public class Registry {
 
-                  private readonly Dictionary<string, string>          _characterIDsToZoneIDs;
+                  // Character Tables for characters located in the world.
                   private readonly Dictionary<string, Character.Data>  _characters;
+                  private readonly Dictionary<string, string>          _characterIDsToZoneIDs;
                   private readonly Dictionary<string, HashSet<string>> _zoneIDsToCharactersIDs;
 
+                  // Item Tables for items located in the world.
+                  private readonly Dictionary<string, string>          _itemIDsToZoneIDs;
+                  private readonly Dictionary<string, HashSet<string>> _zoneIDsToItemIDs;
 
-                  private Registry(Dictionary<string, Character.Data>  characters,
-                                   Dictionary<string, string>          characterIDsToZoneIDs,
-                                   Dictionary<string, HashSet<string>> zoneIDsToCharactersIDs) {
-                        _characters             = characters;
+
+                  private Registry(
+                        Dictionary<string, Character.Data>  characters,
+                        Dictionary<string, string>          characterIDsToZoneIDs,
+                        Dictionary<string, HashSet<string>> zoneIDsToCharactersIDs,
+                        Dictionary<string, string>          itemIDsToZoneIDs,
+                        Dictionary<string, HashSet<string>> zoneIDsToItemIDs
+                  ) {
                         _characterIDsToZoneIDs  = characterIDsToZoneIDs;
+                        _characters             = characters;
                         _zoneIDsToCharactersIDs = zoneIDsToCharactersIDs;
+                        _itemIDsToZoneIDs       = itemIDsToZoneIDs;
+                        _zoneIDsToItemIDs       = zoneIDsToItemIDs;
                   }
 
 
+                  // Get Registry by ID from Disk.
                   public static Registry Get(string registryID) {
                         var characterIDs           = new Dictionary<string, Character.Data>();
                         var characterIDsToZoneIDs  = new Dictionary<string, string>();
                         var zoneIDsToCharactersIDs = new Dictionary<string, HashSet<string>>();
-                        return new Registry(characterIDs, characterIDsToZoneIDs, zoneIDsToCharactersIDs);
+                        var itemIDsToZoneIDs       = new Dictionary<string, string>();
+                        var zoneIDsToItemIDs       = new Dictionary<string, HashSet<string>>();
+                        return new Registry(
+                              characterIDs, characterIDsToZoneIDs, zoneIDsToCharactersIDs, itemIDsToZoneIDs, zoneIDsToItemIDs);
                   }
 
 
+                  // Register Character by ID in a Zone.
                   public void RegisterCharacter(string characterID, string zoneID, Character.Data data) {
                         if (_characters.ContainsKey(characterID)) return;
 
@@ -37,6 +54,7 @@ namespace game.world {
                   }
 
 
+                  // De-Register Character by ID.
                   public void DeRegisterCharacter(string characterID) {
                         if (!_characters.ContainsKey(characterID)) return;
 
