@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using game.world.item;
 using UnityEngine;
 
@@ -98,10 +99,16 @@ namespace game.world.character {
             // Convert `Character Template` ScriptableObject to a Data object.
             private static Data ConvertToData(Template t, string characterID) {
                   var data = new Data {
-                        ID     = characterID,
-                        Name   = t.characterName,
-                        Health = new Health {Current = t.maxHealth, Max = t.maxHealth, Modifiers = Array.Empty<string>()},
-                        Base   = t.skeleton.name,
+                        ID          = characterID,
+                        Name        = t.characterName,
+                        Health      = new Health {Current = t.maxHealth, Max = t.maxHealth, Modifiers = Array.Empty<string>()},
+                        Energy      = new Energy {Current = t.maxEnergy, Max = t.maxEnergy},
+                        Base        = t.skeleton.name,
+                        BaseLayer   = t.body.Select(b => b.ToData()).ToArray(),
+                        Hats        = t.head.Select(h => h.ToData()).ToArray(),
+                        LeftSleeve  = t.leftSleeve.Select(l => l.ToData()).ToArray(),
+                        RightSleeve = t.rightSleeve.Select(r => r.ToData()).ToArray(),
+                        Modifiers   = t.modifiers
                   };
 
                   return data;

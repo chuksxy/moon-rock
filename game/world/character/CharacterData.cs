@@ -1,3 +1,4 @@
+using System;
 using game.world.item;
 using UnityEngine;
 
@@ -7,9 +8,11 @@ namespace game.world.character {
 
             public class Template : ScriptableObject {
 
-                  public string characterName;
-                  public int    maxHealth;
-                  public float  maxEnergy;
+                  public string   characterName;
+                  public int      maxHealth;
+                  public float    maxEnergy;
+                  public string[] tags;
+                  public string[] modifiers;
 
                   public SkinnedMeshRenderer skeleton;
 

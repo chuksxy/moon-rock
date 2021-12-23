@@ -61,6 +61,8 @@ namespace game.world.item {
                         index_skinnedMesh.updateWhenOffscreen = skinnedMeshes[index].updateWhenOffscreen;
                         index_skinnedMesh.materials           = skinnedMeshes[index].materials;
                         index_skinnedMesh.sortingOrder        = index;
+
+                        // Apply Modifiers here.
                   }
             }
 
@@ -72,7 +74,7 @@ namespace game.world.item {
             }
 
 
-            // Load an item's `.fbx` or `.prefab` file from the `Resources` folder ane extract the SkinMeshRenderer.
+            // Load an item's `.fbx` or `.prefab` file from the `Resources` folder.
             private static GameObject Load(Slot part, string name) {
                   var item = Resources.Load<GameObject>($"{part}/{name}.prefab");
                   return item == null ? Resources.Load<GameObject>($"{part}/{name}.fbx") : item;

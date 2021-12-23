@@ -38,7 +38,7 @@ namespace game.world {
       public struct Energy {
 
             public float    Max       { get; set; }
-            public int      Current   { get; set; }
+            public float    Current   { get; set; }
             public string[] Modifiers { get; set; }
 
       }
