@@ -90,8 +90,8 @@ namespace game.world.character {
 
 
                   // Swap Hat such as Balaclavas, Shades, Masks and Scarves in stack.
-                  public Item.Hat SwapHat(int index) {
-                        return new Item.Hat();
+                  public Item.Hat SwapHat(int index, Item.Hat hat) {
+                        return Character.SwapHat(this, index, hat);
                   }
 
 

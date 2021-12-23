@@ -56,7 +56,7 @@ namespace game.world.character {
 
             // Move the character in a specific direction using the CharacterController. Also apply any speed modifier
             // that is present.
-            private static void Move(Interface characterInterface, Vector3 direction, float modifier) {
+            public static void Move(Interface characterInterface, Vector3 direction, float modifier) {
                   var registry = WorldRegistry.GetRegistry(characterInterface.GetRegistryID());
                   var data     = registry.GetCharacterData(characterInterface.GetCharacterID());
                   var speed    = Mathf.Min(World.MAX_MOVEMENT_SPEED_AFTER_MODIFIERS, EvaluateMovementSpeed(data) * modifier);
@@ -71,7 +71,7 @@ namespace game.world.character {
 
 
             // Jump in the direction specified and apply any jump speed modifier if present.
-            private static void Jump(Interface characterInterface, Vector3 direction, float modifier) {
+            public static void Jump(Interface characterInterface, Vector3 direction, float modifier) {
                   var registry = WorldRegistry.GetRegistry(characterInterface.GetRegistryID());
                   var data     = registry.GetCharacterData(characterInterface.GetCharacterID());
                   var speed    = Mathf.Min(World.MAX_JUMP_SPEED_AFTER_MODIFIERS, EvaluateJumpSpeed(data) * modifier);
@@ -85,19 +85,19 @@ namespace game.world.character {
 
 
             // Evaluate `Jump Speed` based off the character's current equipment and items in possession.
-            private static float EvaluateJumpSpeed(Data data) {
+            public static float EvaluateJumpSpeed(Data data) {
                   return EvaluateMovementSpeed(data) / 2.0f;
             }
 
 
             // Evaluate `Movement Speed` based off the character's current equipment and items in possession.
-            private static float EvaluateMovementSpeed(Data data) {
+            public static float EvaluateMovementSpeed(Data data) {
                   return (1 - data.Weight / World.MAX_WEIGHT) * World.MAX_MOVEMENT_SPEED;
             }
 
 
             // Convert `Character Template` ScriptableObject to a Data object.
-            private static Data ConvertToData(Template t, string characterID) {
+            public static Data ConvertToData(Template t, string characterID) {
                   var data = new Data {
                         ID          = characterID,
                         Name        = t.characterName,
