@@ -22,7 +22,7 @@ namespace game.world.character {
 
                   private Animator            _animator;
                   private CharacterController _characterController;
-                  private string              _characterID = "no.character.id";
+                  private string              _characterID = "no.character.ID";
                   private string              _registryID  = "main.registry";
                   private Rigidbody[]         _rigidbodies;
 

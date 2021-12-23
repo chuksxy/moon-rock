@@ -10,6 +10,12 @@ namespace game.world.character {
 
       public static partial class Character {
 
+            // Generate ID for a character.
+            public static string GenerateID() {
+                  return $"character_{Guid.NewGuid().ToString().ToLower()}";
+            }
+
+
             // Create a character from a `Character Template` ScriptableObject. Give the character an ID and register 
             // the character within the world.
             public static Interface Create(Template template, string characterID, string registryID, string zoneID) {
