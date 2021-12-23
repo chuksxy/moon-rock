@@ -89,16 +89,51 @@ namespace game.world.item {
 
 
             // Remove All items equipped in slot.
-            private static void RemoveAll(GameObject slot) {
+            public static void RemoveAll(GameObject slot) {
                   slot.GetComponentsInChildren<SkinnedMeshRenderer>().ToList().ForEach(Object.Destroy);
                   slot.GetComponentsInChildren<Interface>().ToList().ForEach(Object.Destroy);
             }
 
 
             // Load an item's `.fbx` or `.prefab` file from the `Resources` folder.
-            private static GameObject Load(Slot part, string name) {
-                  var item = Resources.Load<GameObject>($"{part}/{name}.prefab");
-                  return item == null ? Resources.Load<GameObject>($"{part}/{name}.fbx") : item;
+            public static GameObject Load(Slot slot, string name) {
+                  var item = Resources.Load<GameObject>($"{slot}/{name}.prefab");
+                  return item == null ? Resources.Load<GameObject>($"{slot}/{name}.fbx") : item;
+            }
+
+
+            // Load an item from an existing pre-made template.
+            public static Interface LoadFromTemplate(Slot slotID, string templateName) {
+                  var path = $"{slotID}/{templateName}";
+
+                  GameObject prefab = null;
+                  switch (slotID) {
+                        case Slot.Head:
+                              prefab = Object.Instantiate(Resources.Load<THat>(path).prefab);
+                              break;
+                        case Slot.Body:
+                              prefab = Object.Instantiate(Resources.Load<TBaseLayer>(path).prefab);
+                              break;
+                        case Slot.Feet:
+                              prefab = Object.Instantiate(Resources.Load<TShoes>(path).prefab);
+                              break;
+                        case Slot.LeftSleeve:
+                              prefab = Object.Instantiate(Resources.Load<TSleeve>(path).prefab);
+                              break;
+                        case Slot.RightSleeve:
+                              prefab = Object.Instantiate(Resources.Load<TSleeve>(path).prefab);
+                              break;
+                        case Slot.OuterWear:
+                              prefab = Object.Instantiate(Resources.Load<TOuterWear>(path).prefab);
+                              break;
+                        case Slot.None:
+                        default:
+                              break;
+                  }
+
+                  return prefab == null
+                        ? new GameObject().AddComponent<Interface>()
+                        : prefab.AddComponent<Interface>().Init(slotID, 0, "no.character.id", "main.registry");
             }
 
 
@@ -170,17 +205,17 @@ namespace game.world.item {
             public static bool CanStack(Character.Data data, Slot slotId, int index) {
                   switch (slotId) {
                         case Slot.Head:
-                              return data.Hats[index].CanStack;
+                              return index < data.Hats.Length && data.Hats[index].CanStack;
                         case Slot.Body:
-                              return data.BaseLayer[index].CanStack;
+                              return index < data.BaseLayer.Length && data.BaseLayer[index].CanStack;
                         case Slot.Feet:
-                              return data.Shoes[index].CanStack;
+                              return index < data.Shoes.Length && data.Shoes[index].CanStack;
                         case Slot.LeftSleeve:
-                              return data.LeftSleeve[index].CanStack;
+                              return index < data.LeftSleeve.Length && data.LeftSleeve[index].CanStack;
                         case Slot.RightSleeve:
-                              return data.RightSleeve[index].CanStack;
+                              return index < data.RightSleeve.Length && data.RightSleeve[index].CanStack;
                         case Slot.OuterWear:
-                              return data.OuterWear[index].CanStack;
+                              return index < data.OuterWear.Length && data.OuterWear[index].CanStack;
                         case Slot.None:
                         default:
                               return false;

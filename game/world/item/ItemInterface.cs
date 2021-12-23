@@ -16,7 +16,7 @@ namespace game.world.item {
                   private Collider  _collider;
 
 
-                  internal void Init(Slot slotID, int slotIndex, string characterID, string registryID) {
+                  internal Interface Init(Slot slotID, int slotIndex, string characterID, string registryID) {
                         _characterID = characterID;
                         _registryID  = registryID;
                         _slotID      = slotID;
@@ -26,6 +26,7 @@ namespace game.world.item {
                         var col = gameObject.AddComponent<Collider>();
 
                         // Configure according to data
+                        return this;
                   }
 
             }

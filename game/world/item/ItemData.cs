@@ -9,10 +9,12 @@ namespace game.world.item {
 
             public class THat : ScriptableObject {
 
-                  [SerializeField] private string   itemName;
-                  [SerializeField] private int      health;
-                  [SerializeField] private float    weight;
-                  [SerializeField] private string[] modifiers;
+                  public string     itemName;
+                  public int        health;
+                  public float      weight;
+                  public string[]   modifiers;
+                  public GameObject prefab;
+                  public Texture2D  icon;
 
 
                   internal Hat ToData() {
@@ -40,10 +42,12 @@ namespace game.world.item {
 
             public class TBaseLayer : ScriptableObject {
 
-                  [SerializeField] private string   itemName;
-                  [SerializeField] private int      health;
-                  [SerializeField] private float    weight;
-                  [SerializeField] private string[] modifiers;
+                  public string     itemName;
+                  public int        health;
+                  public float      weight;
+                  public string[]   modifiers;
+                  public GameObject prefab;
+                  public Texture2D  icon;
 
 
                   internal BaseLayer ToData() {
@@ -70,10 +74,12 @@ namespace game.world.item {
 
             public class TOuterWear : ScriptableObject {
 
-                  [SerializeField] private string   itemName;
-                  [SerializeField] private int      health;
-                  [SerializeField] private float    weight;
-                  [SerializeField] private string[] modifiers;
+                  public string     itemName;
+                  public int        health;
+                  public float      weight;
+                  public string[]   modifiers;
+                  public GameObject prefab;
+                  public Texture2D  icon;
 
 
                   internal OuterWear ToData() {
@@ -100,10 +106,12 @@ namespace game.world.item {
 
             public class TShoes : ScriptableObject {
 
-                  [SerializeField] private string   itemName;
-                  [SerializeField] private int      health;
-                  [SerializeField] private float    weight;
-                  [SerializeField] private string[] modifiers;
+                  public string     itemName;
+                  public int        health;
+                  public float      weight;
+                  public string[]   modifiers;
+                  public GameObject prefab;
+                  public Texture2D  icon;
 
 
                   internal Shoes ToData() {
@@ -130,10 +138,12 @@ namespace game.world.item {
 
             public class TSleeve : MonoBehaviour {
 
-                  [SerializeField] private string   itemName;
-                  [SerializeField] private int      health;
-                  [SerializeField] private float    weight;
-                  [SerializeField] private string[] modifiers;
+                  public string     itemName;
+                  public int        health;
+                  public float      weight;
+                  public string[]   modifiers;
+                  public GameObject prefab;
+                  public Texture2D  icon;
 
 
                   internal Sleeve ToData() {
