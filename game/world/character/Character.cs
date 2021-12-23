@@ -102,7 +102,7 @@ namespace game.world.character {
                         ID          = characterID,
                         Name        = t.characterName,
                         Health      = new Health {Current = t.maxHealth, Max = t.maxHealth, Modifiers = Array.Empty<string>()},
-                        Energy      = new Energy {Current = t.maxEnergy, Max = t.maxEnergy},
+                        Energy      = new Energy {Current = t.maxEnergy, Max = t.maxEnergy, Modifiers = Array.Empty<string>()},
                         Base        = t.skeleton.name,
                         BaseLayer   = t.body.Select(b => b.ToData()).ToArray(),
                         Hats        = t.head.Select(h => h.ToData()).ToArray(),
