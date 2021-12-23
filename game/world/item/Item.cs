@@ -34,7 +34,7 @@ namespace game.world.item {
             }
 
 
-            // Generate ID for item by the slot they occupy.
+            // Generate ID for item by the slot on the character they occupy.
             public static string GenerateID(Slot slotID) {
                   return $"{slotID.ToString().ToLower()}_{Guid.NewGuid().ToString().ToLower()}";
             }
