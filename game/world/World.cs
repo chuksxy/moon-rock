@@ -1,8 +1,15 @@
+using System;
 using UnityEngine;
 
 namespace game.world {
 
       public static partial class World {
+
+            // Generate ID to represent an object in the world.
+            public static string GenerateID() {
+                  return $"world_{Guid.NewGuid().ToString().ToLower()}";
+            }
+
 
             public static Interface Create(Template template) {
                   return Build(template.ToData());

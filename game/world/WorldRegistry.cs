@@ -19,22 +19,22 @@ namespace game.world {
                   private readonly Table<string, HashSet<string>> _zoneIDsToCharactersIDs;
 
                   // `Item Tables` for items located in the world.
-                  private readonly Table<string, string>          _itemIDsToZoneIDs;
-                  private readonly Table<string, HashSet<string>> _zoneIDsToItemIDs;
+                  private readonly Table<string, IAmAnObject>     _objects;
+                  private readonly Table<string, HashSet<string>> _zoneIDsToObjectsIDs;
 
 
                   private Registry(
                         Table<string, Character.Data>  characters,
                         Table<string, string>          characterIDsToZoneIDs,
                         Table<string, HashSet<string>> zoneIDsToCharactersIDs,
-                        Table<string, string>          itemIDsToZoneIDs,
-                        Table<string, HashSet<string>> zoneIDsToItemIDs
+                        Table<string, IAmAnObject>     objects,
+                        Table<string, HashSet<string>> zoneIDsToObjectsIDs
                   ) {
                         _characterIDsToZoneIDs  = characterIDsToZoneIDs;
                         _characters             = characters;
                         _zoneIDsToCharactersIDs = zoneIDsToCharactersIDs;
-                        _itemIDsToZoneIDs       = itemIDsToZoneIDs;
-                        _zoneIDsToItemIDs       = zoneIDsToItemIDs;
+                        _objects                = objects;
+                        _zoneIDsToObjectsIDs    = zoneIDsToObjectsIDs;
                   }
 
 
@@ -58,13 +58,18 @@ namespace game.world {
 
                   // Load registry by ID from disk.
                   public static Registry Load(string registryID) {
-                        var characterIDs           = new Table<string, Character.Data>();
+                        var characters             = new Table<string, Character.Data>();
                         var characterIDsToZoneIDs  = new Table<string, string>();
                         var zoneIDsToCharactersIDs = new Table<string, HashSet<string>>();
-                        var itemIDsToZoneIDs       = new Table<string, string>();
-                        var zoneIDsToItemIDs       = new Table<string, HashSet<string>>();
+                        var objects                = new Table<string, IAmAnObject>();
+                        var zoneIDsToObjectIDs     = new Table<string, HashSet<string>>();
                         return new Registry(
-                              characterIDs, characterIDsToZoneIDs, zoneIDsToCharactersIDs, itemIDsToZoneIDs, zoneIDsToItemIDs);
+                              characters,
+                              characterIDsToZoneIDs,
+                              zoneIDsToCharactersIDs,
+                              objects,
+                              zoneIDsToObjectIDs
+                        );
                   }
 
 
@@ -109,19 +114,52 @@ namespace game.world {
                         if (_characterIDsToZoneIDs.ContainsKey(characterID)) return;
 
                         _characterIDsToZoneIDs.Add(characterID, zoneID);
+
+                        ReadyZoneForCharacters(zoneID);
                         _zoneIDsToCharactersIDs[zoneID].Add(characterID);
                   }
 
 
-                  public void LeaveZone(string zoneId, string characterID) {
+                  public void LeaveZone(string zoneID, string characterID) {
                         if (!_characterIDsToZoneIDs.ContainsKey(characterID)) return;
 
                         _characterIDsToZoneIDs.Remove(characterID);
-                        _zoneIDsToCharactersIDs[zoneId].Remove(characterID);
+
+                        ReadyZoneForCharacters(zoneID);
+                        _zoneIDsToCharactersIDs[zoneID].Remove(characterID);
                   }
 
 
-                  public void Persist() { }
+                  public void RegisterObject(string objectID, string zoneID, IAmAnObject @object) {
+                        if (_objects.ContainsKey(objectID)) return;
+
+                        _objects.Add(objectID, @object);
+
+                        ReadyZoneForObjects(zoneID);
+                        _zoneIDsToObjectsIDs[zoneID].Add(objectID);
+                  }
+
+
+                  // Ready Zone specified by `ID` to store characters.
+                  private void ReadyZoneForCharacters(string zoneID) {
+                        if (_zoneIDsToCharactersIDs[zoneID] == null) {
+                              _zoneIDsToCharactersIDs.Add(zoneID, new HashSet<string>());
+                        }
+                  }
+
+
+                  // Ready the Zone specified by `ID` to store Objects.
+                  private void ReadyZoneForObjects(string zoneID) {
+                        if (_zoneIDsToObjectsIDs[zoneID] == null) {
+                              _zoneIDsToObjectsIDs.Add(zoneID, new HashSet<string>());
+                        }
+                  }
+
+
+                  public void Persist(string registryID) {
+                        if (!CachedRegistries.ContainsKey(registryID)) return;
+                        // Save the Registry to Disk using ES3 Save.
+                  }
 
             }
 

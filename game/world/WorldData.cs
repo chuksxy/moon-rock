@@ -66,4 +66,6 @@ namespace game.world {
 
       }
 
+      public interface IAmAnObject { }
+
 }

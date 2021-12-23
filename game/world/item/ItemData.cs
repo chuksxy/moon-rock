@@ -28,7 +28,7 @@ namespace game.world.item {
 
             }
 
-            public struct Hat : IHaveWeight, ICanStack {
+            public struct Hat : IHaveWeight, ICanStack, IAmAnObject {
 
 
                   public string[] Tags      { get; set; }
@@ -62,7 +62,7 @@ namespace game.world.item {
 
             }
 
-            public struct BaseLayer : IHaveWeight, ICanStack {
+            public struct BaseLayer : IHaveWeight, ICanStack, IAmAnObject {
 
                   public string[] Tags      { get; set; }
                   public string[] Modifiers { get; set; }
@@ -95,7 +95,7 @@ namespace game.world.item {
 
             }
 
-            public struct OuterWear : IHaveWeight, ICanStack {
+            public struct OuterWear : IHaveWeight, ICanStack, IAmAnObject {
 
                   public string[] Tags      { get; set; }
                   public string[] Modifiers { get; set; }
@@ -128,7 +128,7 @@ namespace game.world.item {
 
             }
 
-            public struct Shoes : IHaveWeight, ICanStack {
+            public struct Shoes : IHaveWeight, ICanStack, IAmAnObject {
 
                   public string[] Tags      { get; set; }
                   public string[] Modifiers { get; set; }
@@ -161,7 +161,7 @@ namespace game.world.item {
 
             }
 
-            public struct Sleeve : IHaveWeight, ICanStack {
+            public struct Sleeve : IHaveWeight, ICanStack, IAmAnObject {
 
                   public string[] Tags      { get; set; }
                   public string[] Modifiers { get; set; }

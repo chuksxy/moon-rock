@@ -47,7 +47,7 @@ namespace game.world.item {
                   RemoveAll(slot);
 
                   var loadedSkinnedMeshes =
-                        names.Select(name => Load(slotID, name).GetComponentInChildren<SkinnedMeshRenderer>()).ToArray();
+                        names.Select(name => RawLoad(slotID, name).GetComponentInChildren<SkinnedMeshRenderer>()).ToArray();
 
                   for (var index = 0; index < loadedSkinnedMeshes.Length; index++) {
                         var index_skinnedMesh = slot.AddComponent<SkinnedMeshRenderer>();
@@ -76,7 +76,7 @@ namespace game.world.item {
                   RemoveAll(slot);
 
                   var targetSkinnedMesh = slot.AddComponent<SkinnedMeshRenderer>();
-                  var loadedSkinnedMesh = Load(slotID, name).GetComponentInChildren<SkinnedMeshRenderer>();
+                  var loadedSkinnedMesh = RawLoad(slotID, name).GetComponentInChildren<SkinnedMeshRenderer>();
 
                   AssignMesh(targetSkinnedMesh, loadedSkinnedMesh, index);
             }
@@ -101,47 +101,63 @@ namespace game.world.item {
             }
 
 
-            // Load an item's `.fbx` or `.prefab` file from the `Resources` folder.
-            public static GameObject Load(Slot slot, string name) {
+            // Raw Load an item's `.fbx` or `.prefab` file from the `Resources` folder.
+            public static GameObject RawLoad(Slot slot, string name) {
                   var item = Resources.Load<GameObject>($"{slot}/{name}.prefab");
                   return item == null ? Resources.Load<GameObject>($"{slot}/{name}.fbx") : item;
             }
 
 
             // Load an item from an existing pre-made template.
-            public static Interface LoadFromTemplate(Slot slotID, string template, string registryID = "main.registry") {
+            public static Interface Load(
+                  Slot slotID, string template, string registryID = "main.registry", string zoneID = "no.zone.ID") {
                   var path = $"{slotID}/{template}";
 
-                  GameObject prefab = null;
+                  GameObject  prefab  = null;
+                  IAmAnObject @object = null;
+
                   switch (slotID) {
                         case Slot.Head:
-                              prefab = Object.Instantiate(Resources.Load<THat>(path).prefab);
+                              var tHat = Resources.Load<THat>(path);
+                              @object = tHat.ToData();
+                              prefab  = Object.Instantiate(tHat.prefab);
                               break;
                         case Slot.Body:
-                              prefab = Object.Instantiate(Resources.Load<TBaseLayer>(path).prefab);
+                              var tBaseLayer = Resources.Load<TBaseLayer>(path);
+                              @object = tBaseLayer.ToData();
+                              prefab  = Object.Instantiate(tBaseLayer.prefab);
                               break;
                         case Slot.Feet:
-                              prefab = Object.Instantiate(Resources.Load<TShoes>(path).prefab);
+                              var tShoes = Resources.Load<TShoes>(path);
+                              @object = tShoes.ToData();
+                              prefab  = Object.Instantiate(tShoes.prefab);
                               break;
                         case Slot.LeftSleeve:
-                              prefab = Object.Instantiate(Resources.Load<TSleeve>(path).prefab);
+                              var tLSleeve = Resources.Load<TSleeve>(path);
+                              @object = tLSleeve.ToData();
+                              prefab  = Object.Instantiate(tLSleeve.prefab);
                               break;
                         case Slot.RightSleeve:
-                              prefab = Object.Instantiate(Resources.Load<TSleeve>(path).prefab);
+                              var tRSleeve = Resources.Load<TSleeve>(path);
+                              @object = tRSleeve.ToData();
+                              prefab  = Object.Instantiate(tRSleeve.prefab);
                               break;
                         case Slot.OuterWear:
-                              prefab = Object.Instantiate(Resources.Load<TOuterWear>(path).prefab);
+                              var tOuterWear = Resources.Load<TOuterWear>(path);
+                              @object = tOuterWear.ToData();
+                              prefab  = Object.Instantiate(tOuterWear.prefab);
                               break;
                         case Slot.None:
                         default:
                               break;
                   }
 
-                  var itemID = GenerateID(slotID);
+                  var objectID = World.GenerateID();
+                  var itemID   = GenerateID(slotID);
 
                   return prefab == null
                         ? new GameObject().AddComponent<Interface>()
-                        : prefab.AddComponent<Interface>().Init(slotID, itemID, registryID);
+                        : prefab.AddComponent<Interface>().Init(slotID, objectID, itemID, registryID, zoneID, @object);
             }
 
 
