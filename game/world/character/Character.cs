@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using game.world.item;
 using game.world.property;
@@ -90,11 +91,7 @@ namespace game.world.character {
                   var registry = World.Registry.Get(characterInterface.GetRegistryID());
                   var data     = registry.GetCharacterData(characterInterface.GetCharacterID());
 
-                  if (data.IsBlank()) return new Property.Health();
-
-                  var modifiers = data.Health.Modifiers;
-                  return modifiers.Select(Property.GetModifier<Property.Health, Property.Health>)
-                                  .Aggregate(data.Health, (currentHealth, modifier) => modifier.Apply(currentHealth));
+                  return data.IsBlank() ? new Property.Health() : data.Health;
             }
 
 
@@ -154,9 +151,9 @@ namespace game.world.character {
                         ID   = characterID,
                         Name = t.characterName,
                         Health = new Property.Health
-                              {Current = t.maxHealth, Max = t.maxHealth, Modifiers = Array.Empty<string>()},
+                              {Current = t.maxHealth, Max = t.maxHealth, Modifiers = t.modifiers.ToList()},
                         Energy = new Property.Energy
-                              {Current = t.maxEnergy, Max = t.maxEnergy, Modifiers = Array.Empty<string>()},
+                              {Current = t.maxEnergy, Max = t.maxEnergy, Modifiers = t.modifiers.ToList()},
                         Base        = t.skeleton.name,
                         BaseLayer   = t.body.Select(b => b.ToData()).ToArray(),
                         Hats        = t.head.Select(h => h.ToData()).ToArray(),

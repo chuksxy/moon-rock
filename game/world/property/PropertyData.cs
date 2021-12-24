@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Linq;
+using game.world.item;
 using UnityEngine;
 
 /*
@@ -49,11 +51,180 @@ namespace game.world.property {
 
             public class Health {
 
-                  public int Max     { get; set; }
-                  public int Current { get; set; }
+                  public interface IHealthEvent {
 
-                  public string[] Events    { get; set; }
-                  public string[] Modifiers { get; set; }
+                        string ID { get; }
+
+                        float Value { get; }
+
+
+                        // Eval current health and max by replaying all event, then set them respectively.
+                        Health Eval(Health current, float value);
+
+                  }
+
+                  public struct Restored : IHealthEvent {
+
+                        public string ID    => "health.current.restore.";
+                        public float  Value { get; set; }
+
+
+                        public Health Eval(Health current, float value) {
+                              return Full
+                                    ? current.UpdateCurrent(current.Max)
+                                    : current.UpdateCurrent(value);
+                        }
+
+
+                        public bool Full { get; set; }
+
+                  }
+
+                  public struct Decreased : IHealthEvent {
+
+                        private const string EVENT_ID = "health.current.decreased.";
+                        public        string ID    => EVENT_ID;
+                        public        float  Value { get; set; }
+
+
+                        public Health Eval(Health current, float value) {
+                              return current.UpdateCurrent(current.Current - value);
+                        }
+
+                  }
+
+                  public struct Increased : IHealthEvent {
+
+                        private const string EVENT_ID = "health.current.increased.";
+                        public        string ID    => EVENT_ID;
+                        public        float  Value { get; set; }
+
+
+                        public Health Eval(Health current, float value) {
+                              return current.UpdateCurrent(current.Current + value);
+                        }
+
+                  }
+
+                  public struct MaxDecreasedBy : IHealthEvent {
+
+                        private const string EVENT_ID = "health.max.decreased.";
+
+                        public string ID => EVENT_ID;
+
+                        // This should already be evaluated to (0.values) such as 0.25, 0.95;
+                        public float Value { get; set; }
+
+
+                        public Health Eval(Health current, float percent) {
+                              return current.UpdateMax(current.Max - percent * current.Max);
+                        }
+
+                  }
+
+                  public struct MaxIncreasedBy : IHealthEvent {
+
+                        private const string EVENT_ID = "health.max.increased.";
+
+                        public string ID => EVENT_ID;
+
+                        // This should already be evaluated to (0.values) such as 0.25, 0.95;
+                        public float Value { get; set; }
+
+
+                        public Health Eval(Health current, float value) {
+                              return current.UpdateMax(current.Max + value * current.Max);
+                        }
+
+                  }
+
+                  public float Max     { get; set; }
+                  public float Current { get; set; }
+
+                  public bool                Disabled  { get; set; }
+                  public Queue<IHealthEvent> Events    { get; set; }
+                  public List<string>        Modifiers { get; set; }
+
+
+                  // Restore Health to amount, or to full health.
+                  public Health Restore(bool full, float value) {
+                        Events.Enqueue(new Restored {Value = value, Full = full});
+                        return this;
+                  }
+
+
+                  // Decrease Health by amount specified by appending a decrease event in the `Event Log`.
+                  public Health Decrease(float amount) {
+                        Events.Enqueue(new Decreased() {Value = amount});
+                        return this;
+                  }
+
+
+                  // Increase Health by amount specified by appending an increase event in the `Event Log`.
+                  public Health Increase(float amount) {
+                        Events.Enqueue(new Increased() {Value = amount});
+                        return this;
+                  }
+
+
+                  // Increase Health by amount specified by appending an increase event in the `Event Log`.
+                  public Health MaxIncreaseBy(float amount) {
+                        Events.Enqueue(new Increased() {Value = amount});
+                        return this;
+                  }
+
+
+                  // Read Current Health by evaluating all events in the log.
+                  public float ReadCurrent() {
+                        return Read().Current;
+                  }
+
+
+                  // Read Max Health by evaluating all events in the log.
+                  public float ReadMax() {
+                        return Read().Max;
+                  }
+
+
+                  // Read Health Snapshot with current and max evaluated then populated.
+                  public Health Read() {
+                        return Events.Aggregate(new Health(), (acc, healthEvent) => healthEvent.Eval(acc, healthEvent.Value));
+                  }
+
+
+                  internal Health UpdateCurrent(float value) {
+                        return new Health {
+                              Current = value, Max = Max, Disabled = Disabled, Events = Events, Modifiers = Modifiers
+                        };
+                  }
+
+
+                  internal Health UpdateMax(float value) {
+                        return new Health {
+                              Current = Current, Max = value, Disabled = Disabled, Events = Events, Modifiers = Modifiers
+                        };
+                  }
+
+
+                  internal Health UpdateEvents(Queue<IHealthEvent> value) {
+                        return new Health {
+                              Current = Current, Max = Max, Disabled = Disabled, Events = value, Modifiers = Modifiers
+                        };
+                  }
+
+
+                  internal Health UpdateDisabled(bool value) {
+                        return new Health {
+                              Current = Current, Max = Max, Disabled = value, Events = Events, Modifiers = Modifiers
+                        };
+                  }
+
+
+                  internal Health UpdateModifiers(List<string> value) {
+                        return new Health {
+                              Current = Current, Max = Max, Disabled = Disabled, Events = Events, Modifiers = value
+                        };
+                  }
 
             }
 
@@ -68,20 +239,11 @@ namespace game.world.property {
 
                   // Apply Multiplier to max health and restore current health once.
                   public Health Apply(Health health) {
-                        if (health.Current <= 0 || health.Max <= 0) {
+                        if (health.Disabled) {
                               return health;
                         }
 
-                        var maxHealth = Mathf.RoundToInt(health.Max * Multiplier);
-                        if (!Restore)
-                              return new Health {
-                                    Max = maxHealth, Current = maxHealth, Modifiers = new string[1] {NAME}
-                              };
-
-                        Restore = false;
-                        return new Health {
-                              Max = maxHealth, Current = health.Current, Modifiers = new string[1] {NAME}
-                        };
+                        return Restore ? health.Restore(true, 1).MaxIncreaseBy(Multiplier) : health.MaxIncreaseBy(Multiplier);
                   }
 
             }
@@ -91,8 +253,8 @@ namespace game.world.property {
                   public float Max     { get; set; }
                   public float Current { get; set; }
 
-                  public string[] Events    { get; set; }
-                  public string[] Modifiers { get; set; }
+                  public List<float>  Events    { get; set; }
+                  public List<string> Modifiers { get; set; }
 
             }
 
@@ -100,9 +262,9 @@ namespace game.world.property {
 
                   public const string NAME = "multiplier.energy.max";
 
-                  public  string ID         => NAME;
-                  private float  Multiplier { get; set; }
-                  private bool   Restore    { get; set; }
+                  public   string ID         => NAME;
+                  internal float  Multiplier { get; set; }
+                  internal bool   Restore    { get; set; }
 
 
                   // Apply Multiplier to max energy and restore max energy once.
@@ -114,12 +276,12 @@ namespace game.world.property {
                         var maxEnergy = energy.Max * Multiplier;
                         if (!Restore)
                               return new Energy {
-                                    Max = maxEnergy, Current = energy.Current, Modifiers = new string[1] {NAME}
+                                    Max = maxEnergy, Current = energy.Current, Modifiers = new List<string>() {NAME}
                               };
 
                         Restore = false;
                         return new Energy {
-                              Max = maxEnergy, Current = maxEnergy, Modifiers = new string[1] {NAME}
+                              Max = maxEnergy, Current = maxEnergy, Modifiers = new List<string>() {NAME}
                         };
                   }
 
