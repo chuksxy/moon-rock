@@ -1,21 +1,27 @@
 using UnityEngine;
 
+/*
+ * Properties of Objects that exist in the world and their respective modifiers.
+ */
 namespace game.world.property {
 
       public static partial class Property {
 
+            // I Have Weight, so I am affected by gravity and physics.
             public interface IHaveWeight {
 
                   float Weight { get; }
 
             }
 
+            // I Can Stack, so I can be stacked with other items in the same category/slot.
             public interface ICanStack {
 
                   bool CanStack { get; }
 
             }
 
+            // I Am an Object in this world, so I should persist within this world.
             public interface IAmAnObject { }
 
             public interface IModify<in TInput, out TOutput> {
@@ -42,6 +48,7 @@ namespace game.world.property {
                   public bool  Restore    { get; set; }
 
 
+                  // Apply Multiplier to max health and restore current once.
                   public Health Apply(Health health) {
                         if (health.Current <= 0 || health.Max <= 0) {
                               return health;
@@ -79,6 +86,7 @@ namespace game.world.property {
                   private bool  Restore    { get; set; }
 
 
+                  // Apply Multiplier to max energy and restore max energy once.
                   public Energy Apply(Energy energy) {
                         if (energy.Current <= 0.0f || energy.Max <= 0.0f) {
                               return energy;
