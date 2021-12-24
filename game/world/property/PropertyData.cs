@@ -8,17 +8,6 @@ namespace game.world.property {
 
       public partial class Property {
 
-            private static readonly Dictionary<string, IModify<object, object>> AllModifiers =
-                  new Dictionary<string, IModify<object, object>>();
-
-
-            static Property() {
-                  AllModifiers.Add(IdentityModifier.NAME, IdentityModifier.Identity);
-                  AllModifiers.Add(MaxHealthMultiplier.NAME, new MaxHealthMultiplier());
-                  AllModifiers.Add(MaxEnergyMultiplier.NAME, new MaxEnergyMultiplier());
-            }
-
-
             // I Have Weight, so I am affected by gravity and physics.
             public interface IHaveWeight {
 
@@ -66,19 +55,13 @@ namespace game.world.property {
 
             }
 
-            public class MaxHealthMultiplier : IModify<Health, Health>, IModify<object, object> {
+            public class MaxHealthMultiplier : IModify<Health, Health> {
 
                   public const string NAME = "multiplier.health.max";
 
                   public string ID         => NAME;
                   public float  Multiplier { get; set; }
                   public bool   Restore    { get; set; }
-
-
-                  // Apply Modifier to Health, but first cast to `Health`.
-                  public object Apply(object health) {
-                        return Apply(health as Health);
-                  }
 
 
                   // Apply Multiplier to max health and restore current health once.
@@ -109,19 +92,13 @@ namespace game.world.property {
 
             }
 
-            public class MaxEnergyMultiplier : IModify<Energy, Energy>, IModify<object, object> {
+            public class MaxEnergyMultiplier : IModify<Energy, Energy> {
 
                   public const string NAME = "multiplier.energy.max";
 
                   public  string ID         => NAME;
                   private float  Multiplier { get; set; }
                   private bool   Restore    { get; set; }
-
-
-                  // Apply Multiplier to object, but first cast to `Energy`.
-                  public object Apply(object energy) {
-                        return Apply(energy as Energy);
-                  }
 
 
                   // Apply Multiplier to max energy and restore max energy once.
