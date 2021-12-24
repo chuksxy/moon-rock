@@ -49,8 +49,10 @@ namespace game.world.property {
 
             public class Health {
 
-                  public int      Max       { get; set; }
-                  public int      Current   { get; set; }
+                  public int Max     { get; set; }
+                  public int Current { get; set; }
+
+                  public string[] Events    { get; set; }
                   public string[] Modifiers { get; set; }
 
             }
@@ -86,8 +88,10 @@ namespace game.world.property {
 
             public class Energy {
 
-                  public float    Max       { get; set; }
-                  public float    Current   { get; set; }
+                  public float Max     { get; set; }
+                  public float Current { get; set; }
+
+                  public string[] Events    { get; set; }
                   public string[] Modifiers { get; set; }
 
             }

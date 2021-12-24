@@ -85,6 +85,19 @@ namespace game.world.character {
             }
 
 
+            // Get Health of character and apply all existing health modifiers.
+            public static Property.Health GetHealth(Interface characterInterface) {
+                  var registry = World.Registry.Get(characterInterface.GetRegistryID());
+                  var data     = registry.GetCharacterData(characterInterface.GetCharacterID());
+
+                  if (data.IsBlank()) return new Property.Health();
+
+                  var modifiers = data.Health.Modifiers;
+                  return modifiers.Select(Property.GetModifier<Property.Health, Property.Health>)
+                                  .Aggregate(data.Health, (currentHealth, modifier) => modifier.Apply(currentHealth));
+            }
+
+
             // Move the character in a specific direction using the CharacterController. Also apply any speed modifier
             // that is present.
             public static void Move(Interface characterInterface, Vector3 direction, float modifier) {
