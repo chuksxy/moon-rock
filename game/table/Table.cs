@@ -2,6 +2,6 @@ using UnityEngine.Rendering;
 
 namespace game.table {
 
-      public class Table<K, V> : SerializedDictionary<K, V> { }
+      public class Table<TK, TV> : SerializedDictionary<TK, TV> { }
 
 }

@@ -1,5 +1,6 @@
 using System;
 using game.world.item;
+using game.world.property;
 using UnityEngine;
 
 namespace game.world.character {
@@ -25,14 +26,14 @@ namespace game.world.character {
 
             }
 
-            public struct Data : IHaveWeight, IAmAnObject {
+            public struct Data : Property.IHaveWeight, Property.IAmAnObject {
 
                   private static readonly Data Blank = new Data();
 
-                  public string ID     { get; set; }
-                  public string Name   { get; set; }
-                  public Health Health { get; set; }
-                  public Energy Energy { get; set; }
+                  public string          ID     { get; set; }
+                  public string          Name   { get; set; }
+                  public Property.Health Health { get; set; }
+                  public Property.Energy Energy { get; set; }
 
                   public string[] Tags      { get; set; }
                   public string[] Modifiers { get; set; }

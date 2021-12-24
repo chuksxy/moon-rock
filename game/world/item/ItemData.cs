@@ -1,5 +1,4 @@
-using System;
-using System.Collections.Generic;
+using game.world.property;
 using UnityEngine;
 
 namespace game.world.item {
@@ -20,7 +19,7 @@ namespace game.world.item {
                   internal Hat ToData() {
                         return new Hat() {
                               Name      = itemName,
-                              Health    = new Health() {Current = health, Max = health},
+                              Health    = new Property.Health() {Current = health, Max = health},
                               Weight    = weight,
                               Modifiers = modifiers
                         };
@@ -28,18 +27,18 @@ namespace game.world.item {
 
             }
 
-            public struct Hat : IHaveWeight, ICanStack, IAmAnObject {
+            public struct Hat : Property.IHaveWeight, Property.ICanStack, Property.IAmAnObject {
 
 
-                  public string[] Tags          { get; set; }
-                  public string[] Modifiers     { get; set; }
-                  public string   ID            { get; set; }
-                  public Vector3  WorldPosition { get; set; }
-                  public Vector3  WorldRotation { get; set; }
-                  public string   Name          { get; set; }
-                  public Health   Health        { get; set; }
-                  public float    Weight        { get; set; }
-                  public bool     CanStack      { get; }
+                  public string[]        Tags          { get; set; }
+                  public string[]        Modifiers     { get; set; }
+                  public string          ID            { get; set; }
+                  public Vector3         WorldPosition { get; set; }
+                  public Vector3         WorldRotation { get; set; }
+                  public string          Name          { get; set; }
+                  public Property.Health Health        { get; set; }
+                  public float           Weight        { get; set; }
+                  public bool            CanStack      { get; }
 
             }
 
@@ -56,7 +55,7 @@ namespace game.world.item {
                   internal BaseLayer ToData() {
                         return new BaseLayer {
                               Name      = itemName,
-                              Health    = new Health() {Current = health, Max = health},
+                              Health    = new Property.Health() {Current = health, Max = health},
                               Weight    = weight,
                               Modifiers = modifiers
                         };
@@ -64,17 +63,17 @@ namespace game.world.item {
 
             }
 
-            public struct BaseLayer : IHaveWeight, ICanStack, IAmAnObject {
+            public struct BaseLayer : Property.IHaveWeight, Property.ICanStack, Property.IAmAnObject {
 
-                  public string[] Tags          { get; set; }
-                  public string[] Modifiers     { get; set; }
-                  public string   ID            { get; set; }
-                  public Vector3  WorldPosition { get; set; }
-                  public Vector3  WorldRotation { get; set; }
-                  public string   Name          { get; set; }
-                  public Health   Health        { get; set; }
-                  public float    Weight        { get; set; }
-                  public bool     CanStack      { get; }
+                  public string[]        Tags          { get; set; }
+                  public string[]        Modifiers     { get; set; }
+                  public string          ID            { get; set; }
+                  public Vector3         WorldPosition { get; set; }
+                  public Vector3         WorldRotation { get; set; }
+                  public string          Name          { get; set; }
+                  public Property.Health Health        { get; set; }
+                  public float           Weight        { get; set; }
+                  public bool            CanStack      { get; }
 
             }
 
@@ -91,7 +90,7 @@ namespace game.world.item {
                   internal OuterWear ToData() {
                         return new OuterWear {
                               Name      = itemName,
-                              Health    = new Health() {Current = health, Max = health},
+                              Health    = new Property.Health() {Current = health, Max = health},
                               Weight    = weight,
                               Modifiers = modifiers
                         };
@@ -99,17 +98,17 @@ namespace game.world.item {
 
             }
 
-            public struct OuterWear : IHaveWeight, ICanStack, IAmAnObject {
+            public struct OuterWear : Property.IHaveWeight, Property.ICanStack, Property.IAmAnObject {
 
-                  public string[] Tags          { get; set; }
-                  public string[] Modifiers     { get; set; }
-                  public string   ID            { get; set; }
-                  public Vector3  WorldPosition { get; set; }
-                  public Vector3  WorldRotation { get; set; }
-                  public string   Name          { get; set; }
-                  public Health   Health        { get; set; }
-                  public float    Weight        { get; set; }
-                  public bool     CanStack      { get; }
+                  public string[]        Tags          { get; set; }
+                  public string[]        Modifiers     { get; set; }
+                  public string          ID            { get; set; }
+                  public Vector3         WorldPosition { get; set; }
+                  public Vector3         WorldRotation { get; set; }
+                  public string          Name          { get; set; }
+                  public Property.Health Health        { get; set; }
+                  public float           Weight        { get; set; }
+                  public bool            CanStack      { get; }
 
             }
 
@@ -126,7 +125,7 @@ namespace game.world.item {
                   internal Shoes ToData() {
                         return new Shoes() {
                               Name      = itemName,
-                              Health    = new Health() {Current = health, Max = health},
+                              Health    = new Property.Health() {Current = health, Max = health},
                               Weight    = weight,
                               Modifiers = modifiers
                         };
@@ -134,17 +133,17 @@ namespace game.world.item {
 
             }
 
-            public struct Shoes : IHaveWeight, ICanStack, IAmAnObject {
+            public struct Shoes : Property.IHaveWeight, Property.ICanStack, Property.IAmAnObject {
 
-                  public string[] Tags          { get; set; }
-                  public string[] Modifiers     { get; set; }
-                  public string   ID            { get; set; }
-                  public Vector3  WorldPosition { get; set; }
-                  public Vector3  WorldRotation { get; set; }
-                  public string   Name          { get; set; }
-                  public Health   Health        { get; set; }
-                  public float    Weight        { get; set; }
-                  public bool     CanStack      { get; }
+                  public string[]        Tags          { get; set; }
+                  public string[]        Modifiers     { get; set; }
+                  public string          ID            { get; set; }
+                  public Vector3         WorldPosition { get; set; }
+                  public Vector3         WorldRotation { get; set; }
+                  public string          Name          { get; set; }
+                  public Property.Health Health        { get; set; }
+                  public float           Weight        { get; set; }
+                  public bool            CanStack      { get; }
 
             }
 
@@ -161,7 +160,7 @@ namespace game.world.item {
                   internal Sleeve ToData() {
                         return new Sleeve {
                               Name      = itemName,
-                              Health    = new Health() {Current = health, Max = health},
+                              Health    = new Property.Health() {Current = health, Max = health},
                               Weight    = weight,
                               Modifiers = modifiers
                         };
@@ -169,17 +168,17 @@ namespace game.world.item {
 
             }
 
-            public struct Sleeve : IHaveWeight, ICanStack, IAmAnObject {
+            public struct Sleeve : Property.IHaveWeight, Property.ICanStack, Property.IAmAnObject {
 
-                  public string[] Tags          { get; set; }
-                  public string[] Modifiers     { get; set; }
-                  public string   ID            { get; set; }
-                  public Vector3  WorldPosition { get; set; }
-                  public Vector3  WorldRotation { get; set; }
-                  public string   Name          { get; set; }
-                  public Health   Health        { get; set; }
-                  public float    Weight        { get; set; }
-                  public bool     CanStack      { get; }
+                  public string[]        Tags          { get; set; }
+                  public string[]        Modifiers     { get; set; }
+                  public string          ID            { get; set; }
+                  public Vector3         WorldPosition { get; set; }
+                  public Vector3         WorldRotation { get; set; }
+                  public string          Name          { get; set; }
+                  public Property.Health Health        { get; set; }
+                  public float           Weight        { get; set; }
+                  public bool            CanStack      { get; }
 
             }
 

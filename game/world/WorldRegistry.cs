@@ -1,8 +1,7 @@
 using System.Collections.Generic;
 using game.table;
 using game.world.character;
-using game.world.item;
-using UnityEngine.Rendering;
+using game.world.property;
 
 namespace game.world {
 
@@ -19,16 +18,16 @@ namespace game.world {
                   private readonly Table<string, HashSet<string>> _zoneIDsToCharactersIDs;
 
                   // `Item Tables` for items located in the world.
-                  private readonly Table<string, IAmAnObject>     _objects;
-                  private readonly Table<string, HashSet<string>> _zoneIDsToObjectsIDs;
+                  private readonly Table<string, Property.IAmAnObject> _objects;
+                  private readonly Table<string, HashSet<string>>      _zoneIDsToObjectsIDs;
 
 
                   private Registry(
-                        Table<string, Character.Data>  characters,
-                        Table<string, string>          characterIDsToZoneIDs,
-                        Table<string, HashSet<string>> zoneIDsToCharactersIDs,
-                        Table<string, IAmAnObject>     objects,
-                        Table<string, HashSet<string>> zoneIDsToObjectsIDs
+                        Table<string, Character.Data>       characters,
+                        Table<string, string>               characterIDsToZoneIDs,
+                        Table<string, HashSet<string>>      zoneIDsToCharactersIDs,
+                        Table<string, Property.IAmAnObject> objects,
+                        Table<string, HashSet<string>>      zoneIDsToObjectsIDs
                   ) {
                         _characterIDsToZoneIDs  = characterIDsToZoneIDs;
                         _characters             = characters;
@@ -61,7 +60,7 @@ namespace game.world {
                         var characters             = new Table<string, Character.Data>();
                         var characterIDsToZoneIDs  = new Table<string, string>();
                         var zoneIDsToCharactersIDs = new Table<string, HashSet<string>>();
-                        var objects                = new Table<string, IAmAnObject>();
+                        var objects                = new Table<string, Property.IAmAnObject>();
                         var zoneIDsToObjectIDs     = new Table<string, HashSet<string>>();
                         return new Registry(
                               characters,
@@ -130,7 +129,7 @@ namespace game.world {
                   }
 
 
-                  public void RegisterObject(string objectID, string zoneID, IAmAnObject @object) {
+                  public void RegisterObject(string objectID, string zoneID, Property.IAmAnObject @object) {
                         if (_objects.ContainsKey(objectID)) return;
 
                         _objects.Add(objectID, @object);

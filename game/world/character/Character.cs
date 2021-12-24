@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using game.world.item;
+using game.world.property;
 using UnityEngine;
 
 /*
@@ -96,6 +97,8 @@ namespace game.world.character {
                   var controller = characterInterface.GetController();
                   controller.Move(direction * modifier * speed * Time.deltaTime);
 
+                  data.WorldPosition = controller.gameObject.transform.position;
+
                   var animator = characterInterface.GetAnimator();
                   animator.SetFloat(Animation.Horizontal, direction.x * speed);
                   animator.SetFloat(Animation.Vertical, direction.y * speed);
@@ -112,6 +115,8 @@ namespace game.world.character {
                   var speed      = Mathf.Min(World.MAX_JUMP_SPEED_AFTER_MODIFIERS, EvaluateJumpSpeed(data) * modifier);
                   var controller = characterInterface.GetController();
                   controller.Move(direction * modifier * speed);
+
+                  data.WorldPosition = controller.gameObject.transform.position;
 
                   var animator = characterInterface.GetAnimator();
                   animator.SetTrigger(Animation.Jump);
@@ -133,10 +138,12 @@ namespace game.world.character {
             // Convert `Character Template` ScriptableObject to a Data object.
             public static Data ConvertToData(Template t, string characterID) {
                   var data = new Data {
-                        ID          = characterID,
-                        Name        = t.characterName,
-                        Health      = new Health {Current = t.maxHealth, Max = t.maxHealth, Modifiers = Array.Empty<string>()},
-                        Energy      = new Energy {Current = t.maxEnergy, Max = t.maxEnergy, Modifiers = Array.Empty<string>()},
+                        ID   = characterID,
+                        Name = t.characterName,
+                        Health = new Property.Health
+                              {Current = t.maxHealth, Max = t.maxHealth, Modifiers = Array.Empty<string>()},
+                        Energy = new Property.Energy
+                              {Current = t.maxEnergy, Max = t.maxEnergy, Modifiers = Array.Empty<string>()},
                         Base        = t.skeleton.name,
                         BaseLayer   = t.body.Select(b => b.ToData()).ToArray(),
                         Hats        = t.head.Select(h => h.ToData()).ToArray(),

@@ -1,4 +1,4 @@
-using game.world.character;
+using game.world.property;
 using UnityEngine;
 
 namespace game.world.item {
@@ -35,12 +35,12 @@ namespace game.world.item {
 
                   // Init item in the world.
                   internal Interface Init(
-                        Slot        slotID,
-                        string      objectID,
-                        string      itemID,
-                        string      registryID,
-                        string      zoneID,
-                        IAmAnObject @object
+                        Slot                 slotID,
+                        string               objectID,
+                        string               itemID,
+                        string               registryID,
+                        string               zoneID,
+                        Property.IAmAnObject @object
                   ) {
                         _slotID     = slotID;
                         _objectID   = objectID;

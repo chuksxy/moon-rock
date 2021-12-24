@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using game.world.character;
+using game.world.property;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -113,8 +114,8 @@ namespace game.world.item {
                   Slot slotID, string template, string registryID = "main.registry", string zoneID = "no.zone.ID") {
                   var path = $"{slotID}/{template}";
 
-                  GameObject  prefab  = null;
-                  IAmAnObject @object = null;
+                  GameObject           prefab  = null;
+                  Property.IAmAnObject @object = null;
 
                   switch (slotID) {
                         case Slot.Head:
@@ -191,7 +192,7 @@ namespace game.world.item {
             }
 
 
-            public static float Weigh(IHaveWeight[] weights) {
+            public static float Weigh(Property.IHaveWeight[] weights) {
                   return weights.Select(hasWeight => hasWeight.Weight).Sum();
             }
 
