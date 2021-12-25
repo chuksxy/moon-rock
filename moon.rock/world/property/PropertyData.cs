@@ -1,12 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
-using game.world.item;
-using UnityEngine;
 
 /*
  * Properties of Objects that exist in the world and their respective modifiers.
  */
-namespace game.world.property {
+namespace moon.rock.world.property {
 
       public partial class Property {
 

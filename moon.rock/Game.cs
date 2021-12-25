@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
-using game.world;
+using moon.rock.world;
 using UnityEngine;
 
-namespace game {
+namespace moon.rock {
 
       public class Game : MonoBehaviour {
 

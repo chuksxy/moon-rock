@@ -1,15 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using game.world.character;
-using game.world.property;
+using moon.rock.world.property;
 using UnityEngine;
+using Character = moon.rock.world.character.Character;
 using Object = UnityEngine.Object;
 
 /*
  * Item management and behaviours.
  */
-namespace game.world.item {
+namespace moon.rock.world.item {
 
       public static partial class Item {
 

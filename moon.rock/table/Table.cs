@@ -1,6 +1,6 @@
 using UnityEngine.Rendering;
 
-namespace game.table {
+namespace moon.rock.table {
 
       public class Table<TK, TV> : SerializedDictionary<TK, TV> { }
 

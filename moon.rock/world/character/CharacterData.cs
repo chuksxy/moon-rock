@@ -1,9 +1,8 @@
-using System;
-using game.world.item;
-using game.world.property;
+using moon.rock.world.item;
+using moon.rock.world.property;
 using UnityEngine;
 
-namespace game.world.character {
+namespace moon.rock.world.character {
 
       public static partial class Character {
 

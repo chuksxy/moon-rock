@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace game.world {
+namespace moon.rock.world {
 
       public static partial class World {
 

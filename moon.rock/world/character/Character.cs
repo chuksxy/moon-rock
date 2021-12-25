@@ -1,14 +1,13 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using game.world.item;
-using game.world.property;
+using moon.rock.world.item;
+using moon.rock.world.property;
 using UnityEngine;
 
 /*
  * Character Management and Behaviour.
  */
-namespace game.world.character {
+namespace moon.rock.world.character {
 
       public static partial class Character {
 
@@ -19,7 +18,7 @@ namespace game.world.character {
 
 
             // Reset Character's health and energy to the max.
-            public static void ResetCharacter(Interface characterInterface) {
+            public static void ResetCharacter(Character.Interface characterInterface) {
                   var registry = World.Registry.Get(characterInterface.GetRegistryID());
                   var data     = registry.GetCharacterData(characterInterface.GetCharacterID());
 
@@ -32,23 +31,23 @@ namespace game.world.character {
 
             // Create a character from a `Character Template` ScriptableObject. Give the character an ID and register 
             // the character within the world.
-            public static Interface Create(Template template, string characterID, string registryID, string zoneID) {
+            public static Character.Interface Create(Character.Template template, string characterID, string registryID, string zoneID) {
                   var data = ConvertToData(template, characterID);
                   return RawLoad(data, registryID, zoneID);
             }
 
 
             // Assemble a character from a `Character Template` ScriptableObject, with items/gear pre-populated.
-            public static Interface Assemble(Template template) {
+            public static Character.Interface Assemble(Character.Template template) {
                   var data = ConvertToData(template, "no.character.ID");
                   return Assemble(data, "main.registry");
             }
 
 
             // Assemble a character from `Character Data` with items/gear pre-populated.
-            public static Interface Assemble(Data data, string registryID) {
+            public static Character.Interface Assemble(Character.Data data, string registryID) {
                   var character          = RawLoad(data.Base);
-                  var characterInterface = character.AddComponent<Interface>().Init(data, registryID);
+                  var characterInterface = character.AddComponent<Character.Interface>().Init(data, registryID);
 
                   Item.Equip(characterInterface, Item.Slot.Head, Item.ExtractNames(data.Hats));
                   Item.Equip(characterInterface, Item.Slot.Body, Item.ExtractNames(data.BaseLayer));
@@ -62,7 +61,7 @@ namespace game.world.character {
 
 
             // Raw Load a character from `Character Data`(Persisted). Assign the ID and register the character within the world.
-            public static Interface RawLoad(Data data, string registryID, string zoneID) {
+            public static Character.Interface RawLoad(Character.Data data, string registryID, string zoneID) {
                   return Assemble(data, registryID).Init(data, registryID, zoneID);
             }
 
@@ -75,7 +74,7 @@ namespace game.world.character {
 
 
             // Set World Position of the character.
-            public static void SetWorldPosition(Interface characterInterface, Vector3 position) {
+            public static void SetWorldPosition(Character.Interface characterInterface, Vector3 position) {
                   var registry = World.Registry.Get(characterInterface.GetRegistryID());
                   var data     = registry.GetCharacterData(characterInterface.GetCharacterID());
 
@@ -87,7 +86,7 @@ namespace game.world.character {
 
 
             // Get Health of character and apply all existing health modifiers.
-            public static Property.Health GetHealth(Interface characterInterface) {
+            public static Property.Health GetHealth(Character.Interface characterInterface) {
                   var registry = World.Registry.Get(characterInterface.GetRegistryID());
                   var data     = registry.GetCharacterData(characterInterface.GetCharacterID());
 
@@ -97,7 +96,7 @@ namespace game.world.character {
 
             // Move the character in a specific direction using the CharacterController. Also apply any speed modifier
             // that is present.
-            public static void Move(Interface characterInterface, Vector3 direction, float modifier) {
+            public static void Move(Character.Interface characterInterface, Vector3 direction, float modifier) {
                   var registry = World.Registry.Get(characterInterface.GetRegistryID());
                   var data     = registry.GetCharacterData(characterInterface.GetCharacterID());
 
@@ -110,13 +109,13 @@ namespace game.world.character {
                   data.WorldPosition = controller.gameObject.transform.position;
 
                   var animator = characterInterface.GetAnimator();
-                  animator.SetFloat(Animation.Horizontal, direction.x * speed);
-                  animator.SetFloat(Animation.Vertical, direction.y * speed);
+                  animator.SetFloat(Character.Animation.Horizontal, direction.x * speed);
+                  animator.SetFloat(Character.Animation.Vertical, direction.y * speed);
             }
 
 
             // Jump in the direction specified and apply any jump speed modifier if present.
-            public static void Jump(Interface characterInterface, Vector3 direction, float modifier) {
+            public static void Jump(Character.Interface characterInterface, Vector3 direction, float modifier) {
                   var registry = World.Registry.Get(characterInterface.GetRegistryID());
                   var data     = registry.GetCharacterData(characterInterface.GetCharacterID());
 
@@ -129,25 +128,25 @@ namespace game.world.character {
                   data.WorldPosition = controller.gameObject.transform.position;
 
                   var animator = characterInterface.GetAnimator();
-                  animator.SetTrigger(Animation.Jump);
+                  animator.SetTrigger(Character.Animation.Jump);
             }
 
 
             // Evaluate `Jump Speed` based off the character's current equipment and items in possession.
-            public static float EvaluateJumpSpeed(Data data) {
+            public static float EvaluateJumpSpeed(Character.Data data) {
                   return Mathf.Min(World.MAX_JUMP_SPEED, EvaluateMovementSpeed(data) / 2.0f);
             }
 
 
             // Evaluate `Movement Speed` based off the character's current equipment and items in possession.
-            public static float EvaluateMovementSpeed(Data data) {
+            public static float EvaluateMovementSpeed(Character.Data data) {
                   return (1 - data.Weight / World.MAX_WEIGHT) * World.MAX_MOVEMENT_SPEED;
             }
 
 
             // Convert `Character Template` ScriptableObject to a Data object.
-            public static Data ConvertToData(Template t, string characterID) {
-                  var data = new Data {
+            public static Character.Data ConvertToData(Character.Template t, string characterID) {
+                  var data = new Character.Data {
                         ID   = characterID,
                         Name = t.characterName,
                         Health = new Property.Health
@@ -167,7 +166,7 @@ namespace game.world.character {
             }
 
 
-            public static Item.Hat SwapHat(Interface characterInterface, int index, Item.Hat hat) {
+            public static Item.Hat SwapHat(Character.Interface characterInterface, int index, Item.Hat hat) {
                   var data = characterInterface.GetData();
                   var prev = data.Hats[index];
 
@@ -178,7 +177,7 @@ namespace game.world.character {
             }
 
 
-            private static Item.BaseLayer SwapBaseLayer(Interface characterInterface, int index, Item.BaseLayer baseLayer) {
+            private static Item.BaseLayer SwapBaseLayer(Character.Interface characterInterface, int index, Item.BaseLayer baseLayer) {
                   var data = characterInterface.GetData();
                   var prev = data.BaseLayer[index];
 
@@ -189,7 +188,7 @@ namespace game.world.character {
             }
 
 
-            private static Item.Sleeve SwapLeftSleeve(Interface characterInterface, int index, Item.Sleeve sleeve) {
+            private static Item.Sleeve SwapLeftSleeve(Character.Interface characterInterface, int index, Item.Sleeve sleeve) {
                   var data = characterInterface.GetData();
                   var prev = data.LeftSleeve[index];
 
@@ -200,7 +199,7 @@ namespace game.world.character {
             }
 
 
-            private static Item.Sleeve SwapRightSleeve(Interface characterInterface, int index, Item.Sleeve sleeve) {
+            private static Item.Sleeve SwapRightSleeve(Character.Interface characterInterface, int index, Item.Sleeve sleeve) {
                   var data = characterInterface.GetData();
                   var prev = data.RightSleeve[index];
 
@@ -211,7 +210,7 @@ namespace game.world.character {
             }
 
 
-            private static Item.OuterWear SwapOuterWear(Interface characterInterface, int index, Item.OuterWear outerWear) {
+            private static Item.OuterWear SwapOuterWear(Character.Interface characterInterface, int index, Item.OuterWear outerWear) {
                   var data = characterInterface.GetData();
                   var prev = data.OuterWear[index];
 
@@ -222,7 +221,7 @@ namespace game.world.character {
             }
 
 
-            private static Item.Shoes SwapShoes(Interface characterInterface, int index, Item.Shoes shoes) {
+            private static Item.Shoes SwapShoes(Character.Interface characterInterface, int index, Item.Shoes shoes) {
                   var data = characterInterface.GetData();
                   var prev = data.Shoes[index];
 

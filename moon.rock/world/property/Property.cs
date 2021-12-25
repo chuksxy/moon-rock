@@ -1,10 +1,9 @@
-using System;
-using System.Collections.Generic;
+
 
 /*
  * Property behaviours and management.
  */
-namespace game.world.property {
+namespace moon.rock.world.property {
 
       public static partial class Property {
 

@@ -1,9 +1,9 @@
 using System.Collections.Generic;
-using game.table;
-using game.world.character;
-using game.world.property;
+using moon.rock.table;
+using moon.rock.world.property;
+using Character = moon.rock.world.character.Character;
 
-namespace game.world {
+namespace moon.rock.world {
 
       public static partial class World {
 

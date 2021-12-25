@@ -1,7 +1,7 @@
-using game.world.property;
+using moon.rock.world.property;
 using UnityEngine;
 
-namespace game.world.item {
+namespace moon.rock.world.item {
 
       public static partial class Item {
 
