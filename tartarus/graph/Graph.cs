@@ -36,8 +36,7 @@ namespace tartarus.graph {
                   };
 
                   return new Graph {
-                        EntryNode = node,
-                        ExitNode  = node
+                        EntryNode = node, ExitNode = node
                   };
             }
 
@@ -61,10 +60,10 @@ namespace tartarus.graph {
             }
 
 
-            // Node housing various properties for form an entity in the world.
+            // Node housing various properties for an entity in the world.
             public class Node {
 
-                  private static readonly Node BLANK = new Node("no.node.ID") {
+                  private static readonly Node Empty = new Node("no.node.ID") {
                         Position    = new Point(),
                         Props       = Properties.Empty(),
                         Connections = new SerializedDictionary<string, Connection>()
@@ -122,7 +121,7 @@ namespace tartarus.graph {
 
 
                   public bool IsBlank() {
-                        return BLANK.Equals(this);
+                        return Empty.Equals(this);
                   }
 
 
