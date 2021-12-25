@@ -5,7 +5,10 @@ using moon.rock.table;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-namespace tatarus.graph {
+/*
+ * Graph management, utils and behaviour.
+ */
+namespace tartarus.graph {
 
       public class Graph {
 
@@ -67,17 +70,18 @@ namespace tatarus.graph {
                         Connections = new SerializedDictionary<string, Connection>()
                   };
 
+
+                  public Node(string nodeID) {
+                        ID = nodeID;
+                  }
+
+
                   public string                                   ID          { get; }
                   public SerializedDictionary<string, Connection> Connections { get; set; }
                   public Properties                               Props       { get; set; }
                   public bool                                     Visited     { get; set; }
 
                   public Point Position { get; set; }
-
-
-                  public Node(string nodeID) {
-                        ID = nodeID;
-                  }
 
 
                   public override bool Equals(object obj) {
@@ -167,9 +171,7 @@ namespace tatarus.graph {
                         Connections ??= new SerializedDictionary<string, Connection>();
                         Connections.Add(connection.ID, connection);
 
-                        if (connection.IsBiDirectional) {
-                              connection.To.Add(connection);
-                        }
+                        if (connection.IsBiDirectional) connection.To.Add(connection);
                   }
 
 
@@ -185,9 +187,7 @@ namespace tatarus.graph {
                         };
                         Connections.Add(connectionID, connection);
 
-                        if (bidirectional) {
-                              to.Add(connection);
-                        }
+                        if (bidirectional) to.Add(connection);
                   }
 
 
@@ -198,13 +198,9 @@ namespace tatarus.graph {
 
 
                   public int CountAll() {
-                        if (Visited) {
-                              return 0;
-                        }
+                        if (Visited) return 0;
 
-                        if (IsBlank() || Connections == null || Connections.Count == 0) {
-                              return 1;
-                        }
+                        if (IsBlank() || Connections == null || Connections.Count == 0) return 1;
 
                         Visited = true;
                         var count = Connections.Values

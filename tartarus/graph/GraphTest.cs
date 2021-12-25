@@ -1,7 +1,6 @@
-using System;
 using UnityEngine;
 
-namespace tatarus.graph {
+namespace tartarus.graph {
 
       public class GraphTest : MonoBehaviour {
 
