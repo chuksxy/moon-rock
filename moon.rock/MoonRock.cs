@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace moon.rock {
 
-      public class Game : MonoBehaviour {
+      public class MoonRock : MonoBehaviour {
 
             public List<World.Template> templates;
 
