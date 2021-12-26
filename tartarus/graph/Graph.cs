@@ -22,7 +22,7 @@ namespace tartarus.graph {
                   var noPrefix = string.IsNullOrEmpty(prefix) || "no.graph.ID".Equals(prefix);
                   var p        = noPrefix ? "default" : prefix;
 
-                  return $"graph_{p}_{Guid.NewGuid().ToString()}";
+                  return $"graph|{p}|{Guid.NewGuid().ToString()}";
             }
 
 
@@ -134,7 +134,7 @@ namespace tartarus.graph {
                   public static string GenerateID(string prefix) {
                         var noPrefix = prefix == null || "no.prefix".Equals(prefix) || prefix == "";
                         var p        = noPrefix ? "default" : prefix;
-                        return $"node_{p}_{Guid.NewGuid().ToString()}";
+                        return $"node|{p}|{Guid.NewGuid().ToString()}";
                   }
 
 
@@ -224,7 +224,7 @@ namespace tartarus.graph {
 
 
                         public static Connection Create(Node from, Node to, float weight = 1.0f, bool bidirectional = false) {
-                              var connectionID = $"connect::[{from.ID}]:[{to.ID}]";
+                              var connectionID = $"connect|[{from.ID}]|to|[{to.ID}]";
                               var connection = new Connection {
                                     ID              = connectionID,
                                     Weight          = weight,
@@ -241,7 +241,7 @@ namespace tartarus.graph {
 
 
                         public static string GenerateID() {
-                              return $"connection_{Guid.NewGuid().ToString()}";
+                              return $"connection|{Guid.NewGuid().ToString()}";
                         }
 
 
