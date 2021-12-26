@@ -19,22 +19,22 @@ namespace moon.rock.world.property {
             }
 
 
-            public static class HealthPoint {
+            public static class Armour {
 
                   public static Props.Boolean Enabled(bool enabled) {
                         return new Props.Boolean {
-                              ID = "health.enabled", Value = enabled
+                              ID = "armour.enabled", Value = enabled
                         };
                   }
 
 
                   public static Props.Float Current(float current) {
-                        return new Props.Float {ID = "health.current", Value = current};
+                        return new Props.Float {ID = "armour.current", Value = current};
                   }
 
 
                   public static Props.Float Max(float max) {
-                        return new Props.Float {ID = "health.max", Value = max};
+                        return new Props.Float {ID = "armour.max", Value = max};
                   }
 
             }

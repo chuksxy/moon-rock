@@ -10,12 +10,13 @@ namespace moon.rock {
             private void Start() {
                   var suit = Graph.Create("red.flesh.exo.suit");
 
-                  // A frame/chassis with health.
+                  // A frame/chassis with armour.
                   var frame = Graph.Create("frame");
-                  frame.Entry.Props.Floats.Add(Property.HealthPoint.Current(100.0f));
-                  frame.Entry.Props.Floats.Add(Property.HealthPoint.Max(100.0f));
-                  frame.Entry.Props.Booleans.Add(Property.HealthPoint.Enabled(true));
+                  frame.Entry.Props.Floats.Add(Property.Armour.Current(100.0f));
+                  frame.Entry.Props.Floats.Add(Property.Armour.Max(100.0f));
+                  frame.Entry.Props.Booleans.Add(Property.Armour.Enabled(true));
 
+                  // Destroying sub components should add a de-buff.
                   var armL = Graph.Create("arm.l");
                   armL.Add(Graph.Node.New("main.processing.unit"))
                       .ConnectAll(new[] {
