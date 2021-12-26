@@ -54,7 +54,7 @@ namespace tartarus.graph {
             }
 
 
-            // Add an existing node to the graph, then return it.s
+            // Add an existing node to the graph, then return it.
             public Node Add(Node node, float weight = 1.0f, bool bidirectional = false) {
                   Entry.Connect(node, weight, bidirectional);
                   return node;
