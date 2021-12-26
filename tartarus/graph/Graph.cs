@@ -124,6 +124,14 @@ namespace tartarus.graph {
                   }
 
 
+                  // Swap Place by transferring all edges from source to target node.
+                  public Dictionary<string, Edge> SwapInPlace(Node source, Node target) {
+                        target.Edges = source.Edges;
+                        source.Edges = new Table<string, Edge>();
+                        return target.Edges;
+                  }
+
+
                   // Deep Clone a Node and all nodes connected to it. Cloning a large graph could be costly.
                   public Node DeepClone() {
                         return DeepClone(new Dictionary<string, Node>(), new Table<string, Edge>());
