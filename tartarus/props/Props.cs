@@ -20,6 +20,17 @@ namespace tartarus.props {
             }
 
 
+            // Clone property values. Could have side effects!
+            public Props Clone() {
+                  return new Props {
+                        Floats   = new HashSet<Float>(Floats),
+                        Booleans = new HashSet<Boolean>(Booleans),
+                        Ints     = new HashSet<Int>(Ints),
+                        Strings  = new HashSet<String>(Strings)
+                  };
+            }
+
+
             public struct Boolean {
 
                   public string ID    { get; set; }

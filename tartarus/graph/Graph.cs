@@ -124,6 +124,32 @@ namespace tartarus.graph {
                   }
 
 
+                  // Deep Clone a Node and all nodes connected to it. Cloning a large graph could be costly.
+                  public Node DeepClone() {
+                        return DeepClone(new Dictionary<string, Node>(), new Table<string, Edge>());
+                  }
+
+
+                  // Deep Clone a Node and all nodes connected to it. Cloning a large graph could be costly.
+                  private Node DeepClone(Dictionary<string, Node> nodesVisited, Table<string, Edge> edgesVisited) {
+                        if (nodesVisited.ContainsKey(ID)) return nodesVisited[ID];
+
+                        var clone = new Node(GenerateID("clone"), Name) {
+                              Edges    = edgesVisited,
+                              Props    = Props.Clone(),
+                              Position = Position.Clone()
+                        };
+                        nodesVisited.Add(ID, clone);
+
+                        var edges = Edges.Values
+                                         .Where(edge => !edgesVisited.ContainsKey(edge.ID))
+                                         .Select(edge => edge.DeepClone(nodesVisited, edgesVisited))
+                                         .ToDictionary(edgeClone => edgeClone.ID);
+
+                        return clone;
+                  }
+
+
                   // Empty Node with all fields initialized.
                   public static Node Blank() {
                         return new Node("no.node.ID", "") {
@@ -173,7 +199,7 @@ namespace tartarus.graph {
                         Edges ??= new Table<string, Edge>();
                         Edges.Add(edge.ID, edge);
 
-                        if (edge.IsBiDirectional) edge.To.Add(edge);
+                        if (edge.BiDirectional) edge.To.Add(edge);
                   }
 
 
@@ -182,10 +208,10 @@ namespace tartarus.graph {
                         if (Edges.ContainsKey(edgeID)) return;
 
                         var edge = new Edge {
-                              ID              = edgeID,
-                              Weight          = weight,
-                              To              = to,
-                              IsBiDirectional = bidirectional
+                              ID            = edgeID,
+                              Weight        = weight,
+                              To            = to,
+                              BiDirectional = bidirectional
                         };
                         Edges.Add(edgeID, edge);
 
@@ -224,9 +250,9 @@ namespace tartarus.graph {
                         public string ID     { get; set; }
                         public float  Weight { get; set; }
 
-                        public Node From            { get; set; }
-                        public Node To              { get; set; }
-                        public bool IsBiDirectional { get; set; }
+                        public Node From          { get; set; }
+                        public Node To            { get; set; }
+                        public bool BiDirectional { get; set; }
 
 
                         // Create Single Connection with empty `to` node.
@@ -238,11 +264,11 @@ namespace tartarus.graph {
                         public static Edge Create(Node from, Node to, float weight = 1.0f, bool bidirectional = false) {
                               var edgeID = $"connect|[{from.ID}]|to|[{to.ID}]";
                               var edge = new Edge {
-                                    ID              = edgeID,
-                                    Weight          = weight,
-                                    From            = from,
-                                    To              = to,
-                                    IsBiDirectional = bidirectional
+                                    ID            = edgeID,
+                                    Weight        = weight,
+                                    From          = from,
+                                    To            = to,
+                                    BiDirectional = bidirectional
                               };
 
                               from.Add(edge);
@@ -256,6 +282,24 @@ namespace tartarus.graph {
                               return $"edge|{Guid.NewGuid().ToString()}";
                         }
 
+
+                        internal Edge DeepClone(Dictionary<string, Node> nodesVisited, Table<string, Edge> edgesVisited) {
+                              if (edgesVisited.ContainsKey(ID)) return edgesVisited[ID];
+
+                              var clone = new Edge {
+                                    ID            = GenerateID(),
+                                    Weight        = Weight,
+                                    From          = From.DeepClone(nodesVisited, edgesVisited),
+                                    To            = To.DeepClone(nodesVisited, edgesVisited),
+                                    BiDirectional = BiDirectional
+                              };
+                              if (!edgesVisited.ContainsKey(ID)) {
+                                    edgesVisited.Add(ID, clone);
+                              }
+
+                              return clone;
+                        }
+
                   }
 
                   public struct Point {
@@ -264,12 +308,33 @@ namespace tartarus.graph {
 
                         public Vector3 Local { get; set; }
 
+
+                        // Clone Point.
+                        public Point Clone() {
+                              return new Point {
+                                    World = new Vector3 {
+                                          x = World.x, y = World.y, z = World.z
+                                    },
+                                    Local = new Vector3 {
+                                          x = Local.x, y = Local.y, z = Local.z
+                                    }
+                              };
+                        }
+
                   }
 
             }
 
       }
 
-      public class Table<TK, TV> : SerializedDictionary<TK, TV> { }
+      public class Table<TK, TV> : SerializedDictionary<TK, TV> {
+
+            public static Table<TK, TV> From(Dictionary<TK, TV> dictionary) {
+                  var table = new Table<TK, TV>();
+                  dictionary.ToList().ForEach(entry => table.Add(entry.Key, entry.Value));
+                  return table;
+            }
+
+      }
 
 }
