@@ -58,7 +58,7 @@ namespace moon.rock.world.character {
 
 
                   public bool IsBlank() {
-                        return this.Equals(Blank);
+                        return Equals(Blank);
                   }
 
             }

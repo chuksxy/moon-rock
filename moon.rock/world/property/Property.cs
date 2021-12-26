@@ -1,8 +1,9 @@
-
-
 /*
  * Property behaviours and management.
  */
+
+using tartarus.props;
+
 namespace moon.rock.world.property {
 
       public static partial class Property {
@@ -15,6 +16,27 @@ namespace moon.rock.world.property {
                         MaxEnergyMultiplier.NAME => new MaxEnergyMultiplier() as IModify<TIn, TOut>,
                         _                        => IdentityModifier.Identity as IModify<TIn, TOut>
                   };
+            }
+
+
+            public static class HealthPoint {
+
+                  public static Props.Boolean Enabled(bool enabled) {
+                        return new Props.Boolean {
+                              ID = "health.enabled", Value = enabled
+                        };
+                  }
+
+
+                  public static Props.Float Current(float current) {
+                        return new Props.Float {ID = "health.current", Value = current};
+                  }
+
+
+                  public static Props.Float Max(float max) {
+                        return new Props.Float {ID = "health.max", Value = max};
+                  }
+
             }
 
       }

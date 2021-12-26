@@ -14,9 +14,7 @@ namespace moon.rock {
                   var worlds = templates.Select(World.Create);
                   var first  = worlds.First();
 
-                  if (first != null) {
-                        first.Begin();
-                  }
+                  if (first != null) first.Begin();
             }
 
       }

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using moon.rock.table;
+using moon.rock.world.character;
 using moon.rock.world.property;
-using Character = moon.rock.world.character.Character;
 
 namespace moon.rock.world {
 
@@ -12,13 +12,14 @@ namespace moon.rock.world {
 
             public class Registry {
 
+                  private readonly Table<string, string> _characterIDsToZoneIDs;
+
                   // `Character Tables` for characters located in the world.
-                  private readonly Table<string, Character.Data>  _characters;
-                  private readonly Table<string, string>          _characterIDsToZoneIDs;
-                  private readonly Table<string, HashSet<string>> _zoneIDsToCharactersIDs;
+                  private readonly Table<string, Character.Data> _characters;
 
                   // `Item Tables` for items located in the world.
                   private readonly Table<string, Property.IAmAnObject> _objects;
+                  private readonly Table<string, HashSet<string>>      _zoneIDsToCharactersIDs;
                   private readonly Table<string, HashSet<string>>      _zoneIDsToObjectsIDs;
 
 
@@ -141,17 +142,13 @@ namespace moon.rock.world {
 
                   // Ready Zone specified by `ID` to store characters.
                   private void ReadyZoneForCharacters(string zoneID) {
-                        if (_zoneIDsToCharactersIDs[zoneID] == null) {
-                              _zoneIDsToCharactersIDs.Add(zoneID, new HashSet<string>());
-                        }
+                        if (_zoneIDsToCharactersIDs[zoneID] == null) _zoneIDsToCharactersIDs.Add(zoneID, new HashSet<string>());
                   }
 
 
                   // Ready the Zone specified by `ID` to store Objects.
                   private void ReadyZoneForObjects(string zoneID) {
-                        if (_zoneIDsToObjectsIDs[zoneID] == null) {
-                              _zoneIDsToObjectsIDs.Add(zoneID, new HashSet<string>());
-                        }
+                        if (_zoneIDsToObjectsIDs[zoneID] == null) _zoneIDsToObjectsIDs.Add(zoneID, new HashSet<string>());
                   }
 
 

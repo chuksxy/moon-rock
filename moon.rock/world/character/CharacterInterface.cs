@@ -34,25 +34,25 @@ namespace moon.rock.world.character {
 
                   // Set World Position of character to the specified point.
                   public void SetWorldPosition(Vector3 position) {
-                        moon.rock.world.character.Character.SetWorldPosition(this, position);
+                        Character.SetWorldPosition(this, position);
                   }
 
 
                   // Reset Character to base state by restoring max health and energy. 
                   public void ResetCharacter() {
-                        moon.rock.world.character.Character.ResetCharacter(this);
+                        Character.ResetCharacter(this);
                   }
 
 
                   // Move character in direction while applying the movement speed modifier.
                   public void Move(Vector3 direction, float modifier) {
-                        moon.rock.world.character.Character.Move(this, direction, modifier);
+                        Character.Move(this, direction, modifier);
                   }
 
 
                   // Jump in direction while applying the jump speed modifier.
                   public void Jump(Vector3 direction, float modifier) {
-                        moon.rock.world.character.Character.Jump(this, direction, modifier);
+                        Character.Jump(this, direction, modifier);
                   }
 
 
@@ -94,37 +94,37 @@ namespace moon.rock.world.character {
 
                   // Swap Hat such as Balaclavas, Shades, Masks and Scarves in stack.
                   public Item.Hat SwapHat(int index, Item.Hat hat) {
-                        return moon.rock.world.character.Character.SwapHat(this, index, hat);
+                        return Character.SwapHat(this, index, hat);
                   }
 
 
                   // Swap Base Layer such as T-shirts, Compression Layers and Vests in stack.
                   public Item.BaseLayer SwapBaseLayer(int index, Item.BaseLayer baseLayer) {
-                        return moon.rock.world.character.Character.SwapBaseLayer(this, index, baseLayer);
+                        return Character.SwapBaseLayer(this, index, baseLayer);
                   }
 
 
                   // Swap Left Sleeve in stack.
                   public Item.Sleeve SwapLeftSleeve(int index, Item.Sleeve sleeve) {
-                        return moon.rock.world.character.Character.SwapLeftSleeve(this, index, sleeve);
+                        return Character.SwapLeftSleeve(this, index, sleeve);
                   }
 
 
                   // Swap Right Sleeve in stack.
                   public Item.Sleeve SwapRightSleeve(int index, Item.Sleeve sleeve) {
-                        return moon.rock.world.character.Character.SwapRightSleeve(this, index, sleeve);
+                        return Character.SwapRightSleeve(this, index, sleeve);
                   }
 
 
                   // Swap Outer Wear such as Jackets, Sweaters and Coats in the stack.
                   public Item.OuterWear SwapOuterWear(int index, Item.OuterWear outerWear) {
-                        return moon.rock.world.character.Character.SwapOuterWear(this, index, outerWear);
+                        return Character.SwapOuterWear(this, index, outerWear);
                   }
 
 
                   // Swap Shoes such as Socks, Feet, Shoes and Boots in the stack.
                   public Item.Shoes SwapShoes(int index, Item.Shoes shoes) {
-                        return moon.rock.world.character.Character.SwapShoes(this, index, shoes);
+                        return Character.SwapShoes(this, index, shoes);
                   }
 
 

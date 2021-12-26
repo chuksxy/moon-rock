@@ -7,15 +7,16 @@ namespace moon.rock.world.item {
 
             public class Interface : MonoBehaviour {
 
-                  private string _itemID      = "no.item.ID";
-                  private string _objectID    = "no.object.ID";
-                  private string _characterID = "no.character.ID";
-                  private string _registryID  = "main.registry";
-                  private Slot   _slotID      = Slot.None;
-                  private int    _slotIndex   = -1;
+                  private string   _characterID = "no.character.ID";
+                  private Collider _collider;
+
+                  private string _itemID     = "no.item.ID";
+                  private string _objectID   = "no.object.ID";
+                  private string _registryID = "main.registry";
 
                   private Rigidbody _rigidbody;
-                  private Collider  _collider;
+                  private Slot      _slotID    = Slot.None;
+                  private int       _slotIndex = -1;
 
 
                   // Init item that has already been assigned to a character.

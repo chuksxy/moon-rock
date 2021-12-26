@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using moon.rock.world.character;
 using moon.rock.world.property;
 using UnityEngine;
-using Character = moon.rock.world.character.Character;
 using Object = UnityEngine.Object;
 
 /*
@@ -12,14 +12,6 @@ using Object = UnityEngine.Object;
 namespace moon.rock.world.item {
 
       public static partial class Item {
-
-            // Address for locating item in `Character Data` via it's Slot (Head, Body, etc.) and Index in the stack.
-            public struct Address {
-
-                  public Slot SlotID { get; set; }
-                  public int  Index  { get; set; }
-
-            }
 
             // Slots for equipping body parts and gear.
             public enum Slot {
@@ -54,9 +46,7 @@ namespace moon.rock.world.item {
                         var index_skinnedMesh = slot.AddComponent<SkinnedMeshRenderer>();
                         var index_interface   = slot.AddComponent<Interface>();
 
-                        if (index > 0 && !CanStack(characterInterface.GetData(), slotID, index)) {
-                              continue;
-                        }
+                        if (index > 0 && !CanStack(characterInterface.GetData(), slotID, index)) continue;
 
                         var loadedSkinnedMesh = loadedSkinnedMeshes[index];
 
@@ -245,6 +235,15 @@ namespace moon.rock.world.item {
                         default:
                               return false;
                   }
+            }
+
+
+            // Address for locating item in `Character Data` via it's Slot (Head, Body, etc.) and Index in the stack.
+            public struct Address {
+
+                  public Slot SlotID { get; set; }
+                  public int  Index  { get; set; }
+
             }
 
       }

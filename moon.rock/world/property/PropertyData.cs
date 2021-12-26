@@ -49,6 +49,95 @@ namespace moon.rock.world.property {
 
             public class Health {
 
+                  public float Max     { get; set; }
+                  public float Current { get; set; }
+
+                  public bool                Disabled  { get; set; }
+                  public Queue<IHealthEvent> Events    { get; set; }
+                  public List<string>        Modifiers { get; set; }
+
+
+                  // Restore Health to amount, or to full health.
+                  public Health Restore(bool full, float value) {
+                        Events.Enqueue(new Restored {Value = value, Full = full});
+                        return this;
+                  }
+
+
+                  // Decrease Health by amount specified by appending a decrease event in the `Event Log`.
+                  public Health Decrease(float amount) {
+                        Events.Enqueue(new Decreased {Value = amount});
+                        return this;
+                  }
+
+
+                  // Increase Health by amount specified by appending an increase event in the `Event Log`.
+                  public Health Increase(float amount) {
+                        Events.Enqueue(new Increased {Value = amount});
+                        return this;
+                  }
+
+
+                  // Increase Health by amount specified by appending an increase event in the `Event Log`.
+                  public Health MaxIncreaseBy(float amount) {
+                        Events.Enqueue(new Increased {Value = amount});
+                        return this;
+                  }
+
+
+                  // Read Current Health by evaluating all events in the log.
+                  public float ReadCurrent() {
+                        return Read().Current;
+                  }
+
+
+                  // Read Max Health by evaluating all events in the log.
+                  public float ReadMax() {
+                        return Read().Max;
+                  }
+
+
+                  // Read Health Snapshot with current and max evaluated then populated.
+                  public Health Read() {
+                        return Events.Aggregate(new Health(), (acc, healthEvent) => healthEvent.Eval(acc, healthEvent.Value));
+                  }
+
+
+                  internal Health UpdateCurrent(float value) {
+                        return new Health {
+                              Current = value, Max = Max, Disabled = Disabled, Events = Events, Modifiers = Modifiers
+                        };
+                  }
+
+
+                  internal Health UpdateMax(float value) {
+                        return new Health {
+                              Current = Current, Max = value, Disabled = Disabled, Events = Events, Modifiers = Modifiers
+                        };
+                  }
+
+
+                  internal Health UpdateEvents(Queue<IHealthEvent> value) {
+                        return new Health {
+                              Current = Current, Max = Max, Disabled = Disabled, Events = value, Modifiers = Modifiers
+                        };
+                  }
+
+
+                  internal Health UpdateDisabled(bool value) {
+                        return new Health {
+                              Current = Current, Max = Max, Disabled = value, Events = Events, Modifiers = Modifiers
+                        };
+                  }
+
+
+                  internal Health UpdateModifiers(List<string> value) {
+                        return new Health {
+                              Current = Current, Max = Max, Disabled = Disabled, Events = Events, Modifiers = value
+                        };
+                  }
+
+
                   public interface IHealthEvent {
 
                         string ID { get; }
@@ -136,110 +225,20 @@ namespace moon.rock.world.property {
 
                   }
 
-                  public float Max     { get; set; }
-                  public float Current { get; set; }
-
-                  public bool                Disabled  { get; set; }
-                  public Queue<IHealthEvent> Events    { get; set; }
-                  public List<string>        Modifiers { get; set; }
-
-
-                  // Restore Health to amount, or to full health.
-                  public Health Restore(bool full, float value) {
-                        Events.Enqueue(new Restored {Value = value, Full = full});
-                        return this;
-                  }
-
-
-                  // Decrease Health by amount specified by appending a decrease event in the `Event Log`.
-                  public Health Decrease(float amount) {
-                        Events.Enqueue(new Decreased() {Value = amount});
-                        return this;
-                  }
-
-
-                  // Increase Health by amount specified by appending an increase event in the `Event Log`.
-                  public Health Increase(float amount) {
-                        Events.Enqueue(new Increased() {Value = amount});
-                        return this;
-                  }
-
-
-                  // Increase Health by amount specified by appending an increase event in the `Event Log`.
-                  public Health MaxIncreaseBy(float amount) {
-                        Events.Enqueue(new Increased() {Value = amount});
-                        return this;
-                  }
-
-
-                  // Read Current Health by evaluating all events in the log.
-                  public float ReadCurrent() {
-                        return Read().Current;
-                  }
-
-
-                  // Read Max Health by evaluating all events in the log.
-                  public float ReadMax() {
-                        return Read().Max;
-                  }
-
-
-                  // Read Health Snapshot with current and max evaluated then populated.
-                  public Health Read() {
-                        return Events.Aggregate(new Health(), (acc, healthEvent) => healthEvent.Eval(acc, healthEvent.Value));
-                  }
-
-
-                  internal Health UpdateCurrent(float value) {
-                        return new Health {
-                              Current = value, Max = Max, Disabled = Disabled, Events = Events, Modifiers = Modifiers
-                        };
-                  }
-
-
-                  internal Health UpdateMax(float value) {
-                        return new Health {
-                              Current = Current, Max = value, Disabled = Disabled, Events = Events, Modifiers = Modifiers
-                        };
-                  }
-
-
-                  internal Health UpdateEvents(Queue<IHealthEvent> value) {
-                        return new Health {
-                              Current = Current, Max = Max, Disabled = Disabled, Events = value, Modifiers = Modifiers
-                        };
-                  }
-
-
-                  internal Health UpdateDisabled(bool value) {
-                        return new Health {
-                              Current = Current, Max = Max, Disabled = value, Events = Events, Modifiers = Modifiers
-                        };
-                  }
-
-
-                  internal Health UpdateModifiers(List<string> value) {
-                        return new Health {
-                              Current = Current, Max = Max, Disabled = Disabled, Events = Events, Modifiers = value
-                        };
-                  }
-
             }
 
             public class MaxHealthMultiplier : IModify<Health, Health> {
 
                   public const string NAME = "multiplier.health.max";
+                  public       float  Multiplier { get; set; }
+                  public       bool   Restore    { get; set; }
 
-                  public string ID         => NAME;
-                  public float  Multiplier { get; set; }
-                  public bool   Restore    { get; set; }
+                  public string ID => NAME;
 
 
                   // Apply Multiplier to max health and restore current health once.
                   public Health Apply(Health health) {
-                        if (health.Disabled) {
-                              return health;
-                        }
+                        if (health.Disabled) return health;
 
                         return Restore ? health.Restore(true, 1).MaxIncreaseBy(Multiplier) : health.MaxIncreaseBy(Multiplier);
                   }
@@ -259,27 +258,25 @@ namespace moon.rock.world.property {
             public class MaxEnergyMultiplier : IModify<Energy, Energy> {
 
                   public const string NAME = "multiplier.energy.max";
+                  internal     float  Multiplier { get; set; }
+                  internal     bool   Restore    { get; set; }
 
-                  public   string ID         => NAME;
-                  internal float  Multiplier { get; set; }
-                  internal bool   Restore    { get; set; }
+                  public string ID => NAME;
 
 
                   // Apply Multiplier to max energy and restore max energy once.
                   public Energy Apply(Energy energy) {
-                        if (energy.Current <= 0.0f || energy.Max <= 0.0f) {
-                              return energy;
-                        }
+                        if (energy.Current <= 0.0f || energy.Max <= 0.0f) return energy;
 
                         var maxEnergy = energy.Max * Multiplier;
                         if (!Restore)
                               return new Energy {
-                                    Max = maxEnergy, Current = energy.Current, Modifiers = new List<string>() {NAME}
+                                    Max = maxEnergy, Current = energy.Current, Modifiers = new List<string> {NAME}
                               };
 
                         Restore = false;
                         return new Energy {
-                              Max = maxEnergy, Current = maxEnergy, Modifiers = new List<string>() {NAME}
+                              Max = maxEnergy, Current = maxEnergy, Modifiers = new List<string> {NAME}
                         };
                   }
 

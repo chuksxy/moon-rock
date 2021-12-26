@@ -1,1 +1,3 @@
-file_header_template=Copyright 2021 Yeshua Black. \n {license}
+file_header_template = Copyright 2021 Yeshua Black
+
+. \n {license}

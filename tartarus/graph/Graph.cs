@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using tartarus.props;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -36,7 +37,7 @@ namespace tartarus.graph {
             internal static Graph Create(string graphID, string name) {
                   var node = new Node(graphID, name) {
                         Edges    = new Table<string, Node.Edge>(),
-                        Props    = Node.Properties.Empty(),
+                        Props    = Props.Empty(),
                         Position = new Node.Point()
                   };
 
@@ -70,7 +71,7 @@ namespace tartarus.graph {
 
                   private static readonly Node Empty = new Node("no.node.ID", "") {
                         Position = new Point(),
-                        Props    = Properties.Empty(),
+                        Props    = Props.Empty(),
                         Edges    = new Table<string, Edge>()
                   };
 
@@ -84,7 +85,7 @@ namespace tartarus.graph {
                   public string              ID    { get; }
                   public string              Name  { get; }
                   public Table<string, Edge> Edges { get; set; }
-                  public Properties          Props { get; set; }
+                  public Props               Props { get; set; }
 
                   public Point Position { get; set; }
 
@@ -110,7 +111,7 @@ namespace tartarus.graph {
                   public static Node New(string nodeID, string name) {
                         return new Node(nodeID, name) {
                               Edges    = new Table<string, Edge>(),
-                              Props    = Properties.Empty(),
+                              Props    = Props.Empty(),
                               Position = new Point()
                         };
                   }
@@ -120,7 +121,7 @@ namespace tartarus.graph {
                   public static Node Blank() {
                         return new Node("no.node.ID", "") {
                               Position = new Point(),
-                              Props    = Properties.Empty(),
+                              Props    = Props.Empty(),
                               Edges    = new Table<string, Edge>()
                         };
                   }
@@ -246,56 +247,6 @@ namespace tartarus.graph {
 
                         public static string GenerateID() {
                               return $"edge|{Guid.NewGuid().ToString()}";
-                        }
-
-
-                  }
-
-                  public struct Properties {
-
-
-                        public List<Float>   Floats   { get; set; }
-                        public List<Boolean> Booleans { get; set; }
-                        public List<Int>     Ints     { get; set; }
-                        public List<String>  Strings  { get; set; }
-
-
-                        public static Properties Empty() {
-                              return new Properties {
-                                    Floats   = new List<Float>(),
-                                    Booleans = new List<Boolean>(),
-                                    Ints     = new List<Int>(),
-                                    Strings  = new List<String>()
-                              };
-                        }
-
-
-                        public struct Boolean {
-
-                              public string ID    { get; set; }
-                              public bool   Value { get; set; }
-
-                        }
-
-                        public struct Int {
-
-                              public string ID    { get; set; }
-                              public bool   Value { get; set; }
-
-                        }
-
-                        public struct Float {
-
-                              public string ID    { get; set; }
-                              public bool   Value { get; set; }
-
-                        }
-
-                        public struct String {
-
-                              public string ID    { get; set; }
-                              public bool   Value { get; set; }
-
                         }
 
                   }

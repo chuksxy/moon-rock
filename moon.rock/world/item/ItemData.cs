@@ -17,9 +17,9 @@ namespace moon.rock.world.item {
 
 
                   internal Hat ToData() {
-                        return new Hat() {
+                        return new Hat {
                               Name      = itemName,
-                              Health    = new Property.Health() {Current = health, Max = health},
+                              Health    = new Property.Health {Current = health, Max = health},
                               Weight    = weight,
                               Modifiers = modifiers
                         };
@@ -55,7 +55,7 @@ namespace moon.rock.world.item {
                   internal BaseLayer ToData() {
                         return new BaseLayer {
                               Name      = itemName,
-                              Health    = new Property.Health() {Current = health, Max = health},
+                              Health    = new Property.Health {Current = health, Max = health},
                               Weight    = weight,
                               Modifiers = modifiers
                         };
@@ -90,7 +90,7 @@ namespace moon.rock.world.item {
                   internal OuterWear ToData() {
                         return new OuterWear {
                               Name      = itemName,
-                              Health    = new Property.Health() {Current = health, Max = health},
+                              Health    = new Property.Health {Current = health, Max = health},
                               Weight    = weight,
                               Modifiers = modifiers
                         };
@@ -123,9 +123,9 @@ namespace moon.rock.world.item {
 
 
                   internal Shoes ToData() {
-                        return new Shoes() {
+                        return new Shoes {
                               Name      = itemName,
-                              Health    = new Property.Health() {Current = health, Max = health},
+                              Health    = new Property.Health {Current = health, Max = health},
                               Weight    = weight,
                               Modifiers = modifiers
                         };
@@ -160,7 +160,7 @@ namespace moon.rock.world.item {
                   internal Sleeve ToData() {
                         return new Sleeve {
                               Name      = itemName,
-                              Health    = new Property.Health() {Current = health, Max = health},
+                              Health    = new Property.Health {Current = health, Max = health},
                               Weight    = weight,
                               Modifiers = modifiers
                         };
