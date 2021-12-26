@@ -11,10 +11,10 @@ namespace tartarus.graph {
 
       public class Graph {
 
-            public Node EntryNode { get; set; }
-            public Node ExitNode  { get; set; }
+            public Node Entry { get; set; }
+            public Node Exit  { get; set; }
 
-            public string ID => EntryNode.ID;
+            public string ID => Entry.ID;
 
 
             // Generate ID with the [prefix] supplied.
@@ -41,27 +41,27 @@ namespace tartarus.graph {
                   };
 
                   return new Graph {
-                        EntryNode = node, ExitNode = node
+                        Entry = node, Exit = node
                   };
             }
 
 
             // Add a graph within this graph.
             public void Add(Graph graph) {
-                  graph.ExitNode = EntryNode;
-                  graph.EntryNode.Connect(EntryNode, bidirectional: true);
+                  graph.Exit = Entry;
+                  graph.Entry.Connect(Entry, bidirectional: true);
             }
 
 
-            public int CountConnections() {
-                  var entryNodeCount = EntryNode.Edges?.Count ?? 0;
-                  var exitNodeCount  = ExitNode.Edges?.Count ?? 0;
-                  return EntryNode.Equals(ExitNode) ? entryNodeCount : entryNodeCount + exitNodeCount;
+            public int EdgeCount() {
+                  var entryNodeCount = Entry.Edges?.Count ?? 0;
+                  var exitNodeCount  = Exit.Edges?.Count ?? 0;
+                  return Entry.Equals(Exit) ? entryNodeCount : entryNodeCount + exitNodeCount;
             }
 
 
-            public int CountNodes(int depth) {
-                  return EntryNode.CountAll(depth);
+            public int NodeCount(int depth) {
+                  return Entry.CountAll(depth);
             }
 
 
@@ -89,6 +89,7 @@ namespace tartarus.graph {
                   public Point Position { get; set; }
 
 
+                  // Equals another node if the [ID]s are the same.
                   public override bool Equals(object obj) {
                         return ((Node) obj)!.ID.Equals(ID);
                   }
@@ -125,6 +126,7 @@ namespace tartarus.graph {
                   }
 
 
+                  // Is Blank with all fields initialised and set to default values..
                   public bool IsBlank() {
                         return Empty.Equals(this);
                   }
@@ -138,13 +140,13 @@ namespace tartarus.graph {
                   }
 
 
-                  // Connect Chain to node and return the node `connected to`.
-                  public Node ConnectChain(Node node, float weight = 1.0f, bool bidirectional = false) {
-                        return Connect(node, weight, bidirectional).To;
+                  // Connect Chain from one node to the other node and then return the other one.
+                  public Node ConnectChain(Node from, float weight = 1.0f, bool bidirectional = false) {
+                        return Connect(from, weight, bidirectional).To;
                   }
 
 
-                  // Chain All nodes node to current node.
+                  // Connect All nodes to the node supplied.
                   public void ConnectAll(IEnumerable<Node> nodes, float weight = 1.0f, bool bidirectional = false) {
                         nodes.ToList().ForEach(node => Connect(node, weight, bidirectional));
                   }
@@ -183,12 +185,14 @@ namespace tartarus.graph {
                   }
 
 
+                  // Remove an existing edge.
                   public void Remove(string edgeID) {
                         if (!Edges.ContainsKey(edgeID)) return;
                         Edges.Remove(edgeID);
                   }
 
 
+                  // Count All nodes up to a specific depth.
                   public int CountAll(int depth) {
                         return CountAll(depth, new HashSet<string>(), new HashSet<string>());
                   }
