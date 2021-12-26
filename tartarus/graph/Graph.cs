@@ -124,11 +124,14 @@ namespace tartarus.graph {
                   }
 
 
-                  // Swap Place by transferring all edges from source to target node.
-                  public Dictionary<string, Edge> SwapInPlace(Node source, Node target) {
-                        target.Edges = source.Edges;
-                        source.Edges = new Table<string, Edge>();
-                        return target.Edges;
+                  // Swap Place by transferring all edges from old to new source.
+                  public Dictionary<string, Edge> SwapInPlace(Node oldNode, Node newNode, bool keepCurrentEdges = true) {
+                        newNode.Edges = keepCurrentEdges
+                              ? Table<string, Edge>.MergeRight(newNode.Edges, oldNode.Edges)
+                              : oldNode.Edges;
+                        oldNode.Edges = new Table<string, Edge>();
+
+                        return new Dictionary<string, Edge>(newNode.Edges);
                   }
 
 
@@ -340,6 +343,16 @@ namespace tartarus.graph {
             public static Table<TK, TV> From(Dictionary<TK, TV> dictionary) {
                   var table = new Table<TK, TV>();
                   dictionary.ToList().ForEach(entry => table.Add(entry.Key, entry.Value));
+                  return table;
+            }
+
+
+            public static Table<TK, TV> MergeRight(Table<TK, TV> source, Table<TK, TV> target) {
+                  var table = new Table<TK, TV>();
+                  source.Where(e => !table.ContainsKey(e.Key)).ToList().ForEach(entry => table.Add(entry.Key, entry.Value));
+                  target.Where(e => !table.ContainsKey(e.Key)).ToList().ForEach(entry => table.Add(entry.Key, entry.Value));
+
+
                   return table;
             }
 
