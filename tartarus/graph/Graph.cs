@@ -87,7 +87,6 @@ namespace tartarus.graph {
                   public string                                   Name        { get; }
                   public SerializedDictionary<string, Connection> Connections { get; set; }
                   public Properties                               Props       { get; set; }
-                  public bool                                     Visited     { get; set; }
 
                   public Point Position { get; set; }
 
@@ -113,7 +112,6 @@ namespace tartarus.graph {
                         return new Node(nodeID, name) {
                               Connections = new Table<string, Connection>(),
                               Props       = Properties.Empty(),
-                              Visited     = false,
                               Position    = new Point()
                         };
                   }
@@ -207,7 +205,6 @@ namespace tartarus.graph {
                                                .Select(connection => (connectionsVisited.Add(connection.ID), connection.To))
                                                .Select(_ => _.To.CountAll(--depth, nodesVisited, connectionsVisited))
                                                .Sum();
-
                         return 1 + count;
                   }
 
