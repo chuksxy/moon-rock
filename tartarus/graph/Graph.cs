@@ -236,8 +236,6 @@ namespace tartarus.graph {
 
 
                         public static Edge Create(Node from, Node to, float weight = 1.0f, bool bidirectional = false) {
-                              Debug.Log($"connect|[{from.Name}]|to|[{to.Name}]");
-
                               var edgeID = $"connect|[{from.ID}]|to|[{to.ID}]";
                               var edge = new Edge {
                                     ID              = edgeID,
