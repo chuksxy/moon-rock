@@ -35,9 +35,9 @@ namespace tartarus.graph {
             // Create a new graph with the [ID] specified.
             internal static Graph Create(string graphID, string name) {
                   var node = new Node(graphID, name) {
-                        Connections = new Table<string, Node.Connection>(),
-                        Props       = Node.Properties.Empty(),
-                        Position    = new Node.Point()
+                        Edges    = new Table<string, Node.Edge>(),
+                        Props    = Node.Properties.Empty(),
+                        Position = new Node.Point()
                   };
 
                   return new Graph {
@@ -54,8 +54,8 @@ namespace tartarus.graph {
 
 
             public int CountConnections() {
-                  var entryNodeCount = EntryNode.Connections?.Count ?? 0;
-                  var exitNodeCount  = ExitNode.Connections?.Count ?? 0;
+                  var entryNodeCount = EntryNode.Edges?.Count ?? 0;
+                  var exitNodeCount  = ExitNode.Edges?.Count ?? 0;
                   return EntryNode.Equals(ExitNode) ? entryNodeCount : entryNodeCount + exitNodeCount;
             }
 
@@ -69,9 +69,9 @@ namespace tartarus.graph {
             public class Node {
 
                   private static readonly Node Empty = new Node("no.node.ID", "") {
-                        Position    = new Point(),
-                        Props       = Properties.Empty(),
-                        Connections = new Table<string, Connection>()
+                        Position = new Point(),
+                        Props    = Properties.Empty(),
+                        Edges    = new Table<string, Edge>()
                   };
 
 
@@ -81,10 +81,10 @@ namespace tartarus.graph {
                   }
 
 
-                  public string                    ID          { get; }
-                  public string                    Name        { get; }
-                  public Table<string, Connection> Connections { get; set; }
-                  public Properties                Props       { get; set; }
+                  public string              ID    { get; }
+                  public string              Name  { get; }
+                  public Table<string, Edge> Edges { get; set; }
+                  public Properties          Props { get; set; }
 
                   public Point Position { get; set; }
 
@@ -108,9 +108,9 @@ namespace tartarus.graph {
                   // New Node with [ID] specified.
                   public static Node New(string nodeID, string name) {
                         return new Node(nodeID, name) {
-                              Connections = new Table<string, Connection>(),
-                              Props       = Properties.Empty(),
-                              Position    = new Point()
+                              Edges    = new Table<string, Edge>(),
+                              Props    = Properties.Empty(),
+                              Position = new Point()
                         };
                   }
 
@@ -118,9 +118,9 @@ namespace tartarus.graph {
                   // Empty Node with all fields initialized.
                   public static Node Blank() {
                         return new Node("no.node.ID", "") {
-                              Position    = new Point(),
-                              Props       = Properties.Empty(),
-                              Connections = new Table<string, Connection>()
+                              Position = new Point(),
+                              Props    = Properties.Empty(),
+                              Edges    = new Table<string, Edge>()
                         };
                   }
 
@@ -151,41 +151,41 @@ namespace tartarus.graph {
 
 
                   // Connect this node to another.
-                  public Connection Connect(Node node, float weight = 1.0f, bool bidirectional = false) {
-                        return Connection.Create(this, node, weight, bidirectional);
+                  public Edge Connect(Node node, float weight = 1.0f, bool bidirectional = false) {
+                        return Edge.Create(this, node, weight, bidirectional);
                   }
 
 
-                  // Add a new connection to another Node. Ignore if the connection is already present.
-                  public void Add(Connection connection) {
-                        if (Connections.ContainsKey(connection.ID)) return;
+                  // Add a new edge to another Node. Ignore if the edge is already present.
+                  public void Add(Edge edge) {
+                        if (Edges.ContainsKey(edge.ID)) return;
 
-                        Connections ??= new Table<string, Connection>();
-                        Connections.Add(connection.ID, connection);
+                        Edges ??= new Table<string, Edge>();
+                        Edges.Add(edge.ID, edge);
 
-                        if (connection.IsBiDirectional) connection.To.Add(connection);
+                        if (edge.IsBiDirectional) edge.To.Add(edge);
                   }
 
 
-                  // Add a new connection to another Node. Ignore if the connection is already present.
-                  public void Add(string connectionID, float weight, Node to, bool bidirectional) {
-                        if (Connections.ContainsKey(connectionID)) return;
+                  // Add a new edge to another Node. Ignore if the edge is already present.
+                  public void Add(string edgeID, float weight, Node to, bool bidirectional) {
+                        if (Edges.ContainsKey(edgeID)) return;
 
-                        var connection = new Connection {
-                              ID              = connectionID,
+                        var edge = new Edge {
+                              ID              = edgeID,
                               Weight          = weight,
                               To              = to,
                               IsBiDirectional = bidirectional
                         };
-                        Connections.Add(connectionID, connection);
+                        Edges.Add(edgeID, edge);
 
-                        if (bidirectional) to.Add(connection);
+                        if (bidirectional) to.Add(edge);
                   }
 
 
-                  public void Remove(string connectionID) {
-                        if (!Connections.ContainsKey(connectionID)) return;
-                        Connections.Remove(connectionID);
+                  public void Remove(string edgeID) {
+                        if (!Edges.ContainsKey(edgeID)) return;
+                        Edges.Remove(edgeID);
                   }
 
 
@@ -194,20 +194,20 @@ namespace tartarus.graph {
                   }
 
 
-                  internal int CountAll(int depth, HashSet<string> nodesVisited, HashSet<string> connectionsVisited) {
+                  internal int CountAll(int depth, HashSet<string> nodesVisited, HashSet<string> edgesVisited) {
                         if (depth <= 0 || nodesVisited.Contains(ID)) return 0;
 
                         nodesVisited.Add(ID);
-                        var count = Connections.Values
-                                               .Where(connection => !connectionsVisited.Contains(connection.ID))
-                                               .Select(connection => (connectionsVisited.Add(connection.ID), connection.To))
-                                               .Select(_ => _.To.CountAll(--depth, nodesVisited, connectionsVisited))
-                                               .Sum();
+                        var count = Edges.Values
+                                         .Where(edge => !edgesVisited.Contains(edge.ID))
+                                         .Select(edge => (edgesVisited.Add(edge.ID), edge.To))
+                                         .Select(_ => _.To.CountAll(--depth, nodesVisited, edgesVisited))
+                                         .Sum();
                         return 1 + count;
                   }
 
 
-                  public class Connection {
+                  public class Edge {
 
                         public string ID     { get; set; }
                         public float  Weight { get; set; }
@@ -218,30 +218,30 @@ namespace tartarus.graph {
 
 
                         // Create Single Connection with empty `to` node.
-                        public static Connection CreateSingle(Node from) {
+                        public static Edge CreateSingle(Node from) {
                               return Create(from, Blank());
                         }
 
 
-                        public static Connection Create(Node from, Node to, float weight = 1.0f, bool bidirectional = false) {
-                              var connectionID = $"connect|[{from.ID}]|to|[{to.ID}]";
-                              var connection = new Connection {
-                                    ID              = connectionID,
+                        public static Edge Create(Node from, Node to, float weight = 1.0f, bool bidirectional = false) {
+                              var edgeID = $"connect|[{from.ID}]|to|[{to.ID}]";
+                              var edge = new Edge {
+                                    ID              = edgeID,
                                     Weight          = weight,
                                     From            = from,
                                     To              = to,
                                     IsBiDirectional = bidirectional
                               };
 
-                              from.Add(connection);
-                              to.Add(connection);
+                              from.Add(edge);
+                              to.Add(edge);
 
-                              return connection;
+                              return edge;
                         }
 
 
                         public static string GenerateID() {
-                              return $"connection|{Guid.NewGuid().ToString()}";
+                              return $"edge|{Guid.NewGuid().ToString()}";
                         }
 
 

@@ -36,13 +36,13 @@ namespace tartarus.graph {
                   nodeE.ConnectChain(nodeB, bidirectional: true);
 
                   Debug.Log(
-                        $"Graph Size for {nodeD.Name} is [{nodeD.CountAll(8)}] nodes created and [{nodeD.Connections.Count}].");
+                        $"Graph Size for {nodeD.Name} is [{nodeD.CountAll(8)}] nodes created and [{nodeD.Edges.Count}].");
                   Debug.Log(
-                        $"Graph Size for {nodeA.Name} is [{nodeA.CountAll(8)}] nodes created and [{nodeA.Connections.Count}].");
+                        $"Graph Size for {nodeA.Name} is [{nodeA.CountAll(8)}] nodes created and [{nodeA.Edges.Count}].");
                   Debug.Log(
-                        $"Size for {nodeB.Name} is [{nodeB.CountAll(8)}] nodes created and [{nodeB.Connections.Count}].");
+                        $"Size for {nodeB.Name} is [{nodeB.CountAll(8)}] nodes created and [{nodeB.Edges.Count}].");
                   Debug.Log(
-                        $"Size for {nodeE.Name} is [{nodeE.CountAll(8)}] nodes created and [{nodeE.Connections.Count}].");
+                        $"Size for {nodeE.Name} is [{nodeE.CountAll(8)}] nodes created and [{nodeE.Edges.Count}].");
             }
 
       }
