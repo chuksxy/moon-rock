@@ -34,7 +34,7 @@ namespace tartarus.graph {
                               };
 
                               from.Add(edge);
-                              to.Add(edge);
+                              if (bidirectional) to.Add(edge);
 
                               return edge;
                         }
