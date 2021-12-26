@@ -18,14 +18,14 @@ namespace moon.rock {
                         Graph.Node.New("main.capacitor")
                   });
 
-                  Debug.Log($"Original Size [{circuit.CountAll(5)}]");
-                  Debug.Log($"Clone Size [{circuit.DeepClone().CountAll(5)}]");
+                  var powerBank = Graph.Node.New("power.bank.unit");
+                  powerBank.ConnectAll(new[] {
+                        Graph.Node.New("main.capacitor"),
+                        Graph.Node.New("main.capacitor"),
+                        Graph.Node.New("main.capacitor").ConnectChain(Graph.Node.New("main.switch"))
+                  });
 
-                  Debug.Log($"Original ID [{circuit.ID}]");
-                  Debug.Log($"Clone ID [{circuit.DeepClone().ID}]");
-
-                  Debug.Log($"Original Name [{circuit.Name}]");
-                  Debug.Log($"Clone Name [{circuit.DeepClone().Name}]");
+                  var processingUnit = circuit.ConnectChain(powerBank);
 
                   // A frame/chassis with armour.
                   var frame = Graph.Create("frame");
@@ -53,12 +53,13 @@ namespace moon.rock {
                   legR.Add(Graph.Create("feet.r"));
 
                   suit.Add(frame);
+                  suit.Add(processingUnit);
                   suit.Add(armL);
                   suit.Add(armR);
                   suit.Add(legL);
                   suit.Add(legR);
 
-                  Debug.Log($"Graph Size of Mecha Suit is {suit.Entry.CountAll(100)}");
+                  Debug.Log($"Graph Size of Mecha Suit is {suit.Entry.CountAll(50)}");
             }
 
       }
