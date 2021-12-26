@@ -49,8 +49,15 @@ namespace tartarus.graph {
 
             // Add a graph within this graph.
             public void Add(Graph graph) {
+                  Entry.Connect(graph.Entry, bidirectional: true);
                   graph.Exit = Entry;
-                  graph.Entry.Connect(Entry, bidirectional: true);
+            }
+
+
+            // Add an existing node to the graph, then return it.s
+            public Node Add(Node node, float weight = 1.0f, bool bidirectional = false) {
+                  Entry.Connect(node, weight, bidirectional);
+                  return node;
             }
 
 
@@ -229,6 +236,8 @@ namespace tartarus.graph {
 
 
                         public static Edge Create(Node from, Node to, float weight = 1.0f, bool bidirectional = false) {
+                              Debug.Log($"connect|[{from.Name}]|to|[{to.Name}]");
+
                               var edgeID = $"connect|[{from.ID}]|to|[{to.ID}]";
                               var edge = new Edge {
                                     ID              = edgeID,
