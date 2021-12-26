@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using moon.rock.table;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -37,7 +35,7 @@ namespace tartarus.graph {
             // Create a new graph with the [ID] specified.
             internal static Graph Create(string graphID, string name) {
                   var node = new Node(graphID, name) {
-                        Connections = new SerializedDictionary<string, Node.Connection>(),
+                        Connections = new Table<string, Node.Connection>(),
                         Props       = Node.Properties.Empty(),
                         Position    = new Node.Point()
                   };
@@ -73,7 +71,7 @@ namespace tartarus.graph {
                   private static readonly Node Empty = new Node("no.node.ID", "") {
                         Position    = new Point(),
                         Props       = Properties.Empty(),
-                        Connections = new SerializedDictionary<string, Connection>()
+                        Connections = new Table<string, Connection>()
                   };
 
 
@@ -83,10 +81,10 @@ namespace tartarus.graph {
                   }
 
 
-                  public string                                   ID          { get; }
-                  public string                                   Name        { get; }
-                  public SerializedDictionary<string, Connection> Connections { get; set; }
-                  public Properties                               Props       { get; set; }
+                  public string                    ID          { get; }
+                  public string                    Name        { get; }
+                  public Table<string, Connection> Connections { get; set; }
+                  public Properties                Props       { get; set; }
 
                   public Point Position { get; set; }
 
@@ -122,7 +120,7 @@ namespace tartarus.graph {
                         return new Node("no.node.ID", "") {
                               Position    = new Point(),
                               Props       = Properties.Empty(),
-                              Connections = new SerializedDictionary<string, Connection>()
+                              Connections = new Table<string, Connection>()
                         };
                   }
 
@@ -162,7 +160,7 @@ namespace tartarus.graph {
                   public void Add(Connection connection) {
                         if (Connections.ContainsKey(connection.ID)) return;
 
-                        Connections ??= new SerializedDictionary<string, Connection>();
+                        Connections ??= new Table<string, Connection>();
                         Connections.Add(connection.ID, connection);
 
                         if (connection.IsBiDirectional) connection.To.Add(connection);
@@ -309,5 +307,7 @@ namespace tartarus.graph {
             }
 
       }
+
+      public class Table<TK, TV> : SerializedDictionary<TK, TV> { }
 
 }
