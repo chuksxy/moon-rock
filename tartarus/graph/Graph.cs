@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using moon.rock.table;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -27,9 +28,15 @@ namespace tartarus.graph {
             }
 
 
+            // Create a new graph and generate and assign it a random [ID].
+            public static Graph Create(string name) {
+                  return Create(GenerateID(""), name);
+            }
+
+
             // Create a new graph with the [ID] specified.
-            public static Graph Create(string graphID) {
-                  var node = new Node(graphID) {
+            internal static Graph Create(string graphID, string name) {
+                  var node = new Node(graphID, name) {
                         Connections = new SerializedDictionary<string, Node.Connection>(),
                         Props       = Node.Properties.Empty(),
                         Position    = new Node.Point()
@@ -55,27 +62,29 @@ namespace tartarus.graph {
             }
 
 
-            public int CountNodes() {
-                  return EntryNode.CountAll();
+            public int CountNodes(int depth) {
+                  return EntryNode.CountAll(depth);
             }
 
 
             // Node housing various properties for an entity in the world.
             public class Node {
 
-                  private static readonly Node Empty = new Node("no.node.ID") {
+                  private static readonly Node Empty = new Node("no.node.ID", "") {
                         Position    = new Point(),
                         Props       = Properties.Empty(),
                         Connections = new SerializedDictionary<string, Connection>()
                   };
 
 
-                  public Node(string nodeID) {
-                        ID = nodeID;
+                  public Node(string nodeID, string name) {
+                        ID   = nodeID;
+                        Name = name;
                   }
 
 
                   public string                                   ID          { get; }
+                  public string                                   Name        { get; }
                   public SerializedDictionary<string, Connection> Connections { get; set; }
                   public Properties                               Props       { get; set; }
                   public bool                                     Visited     { get; set; }
@@ -94,14 +103,14 @@ namespace tartarus.graph {
 
 
                   // New Node with [ID] Randomly generated.
-                  public static Node New() {
-                        return New(GenerateID("default"));
+                  public static Node New(string name) {
+                        return New(GenerateID("default"), name);
                   }
 
 
                   // New Node with [ID] specified.
-                  public static Node New(string nodeID) {
-                        return new Node(nodeID) {
+                  public static Node New(string nodeID, string name) {
+                        return new Node(nodeID, name) {
                               Connections = new Table<string, Connection>(),
                               Props       = Properties.Empty(),
                               Visited     = false,
@@ -112,7 +121,7 @@ namespace tartarus.graph {
 
                   // Empty Node with all fields initialized.
                   public static Node Blank() {
-                        return new Node("no.node.ID") {
+                        return new Node("no.node.ID", "") {
                               Position    = new Point(),
                               Props       = Properties.Empty(),
                               Connections = new SerializedDictionary<string, Connection>()
@@ -122,18 +131,6 @@ namespace tartarus.graph {
 
                   public bool IsBlank() {
                         return Empty.Equals(this);
-                  }
-
-
-                  public Node Visit() {
-                        Visited = true;
-                        return this;
-                  }
-
-
-                  public Node Reset() {
-                        Visited = false;
-                        return this;
                   }
 
 
@@ -196,22 +193,22 @@ namespace tartarus.graph {
                   }
 
 
-                  public int CountAll() {
-                        if (Visited) return 0;
+                  public int CountAll(int depth) {
+                        return CountAll(depth, new HashSet<string>(), new HashSet<string>());
+                  }
 
-                        if (IsBlank() || Connections == null || Connections.Count == 0) return 1;
 
-                        Visited = true;
+                  internal int CountAll(int depth, HashSet<string> nodesVisited, HashSet<string> connectionsVisited) {
+                        if (depth <= 0 || nodesVisited.Contains(ID)) return 0;
+
+                        nodesVisited.Add(ID);
                         var count = Connections.Values
-                                               .Where(c => !c.AlreadyVisited())
-                                               .Select(c => c.Visit().To)
-                                               .Select(node => node.CountAll())
+                                               .Where(connection => !connectionsVisited.Contains(connection.ID))
+                                               .Select(connection => (connectionsVisited.Add(connection.ID), connection.To))
+                                               .Select(_ => _.To.CountAll(--depth, nodesVisited, connectionsVisited))
                                                .Sum();
 
-                        Connections.Values.ToList().ForEach(c => c.VisitCount = 0);
-                        Visited = false;
-
-                        return count + 1;
+                        return 1 + count;
                   }
 
 
@@ -223,7 +220,6 @@ namespace tartarus.graph {
                         public Node From            { get; set; }
                         public Node To              { get; set; }
                         public bool IsBiDirectional { get; set; }
-                        public int  VisitCount      { get; set; }
 
 
                         // Create Single Connection with empty `to` node.
@@ -233,7 +229,7 @@ namespace tartarus.graph {
 
 
                         public static Connection Create(Node from, Node to, float weight = 1.0f, bool bidirectional = false) {
-                              var connectionID = $"connect_[{from.ID}]_to_[{to.ID}]";
+                              var connectionID = $"connect::[{from.ID}]:[{to.ID}]";
                               var connection = new Connection {
                                     ID              = connectionID,
                                     Weight          = weight,
@@ -253,18 +249,6 @@ namespace tartarus.graph {
                               return $"connection_{Guid.NewGuid().ToString()}";
                         }
 
-
-                        // Record how many times this connection has been visited.
-                        public Connection Visit() {
-                              VisitCount++;
-                              return this;
-                        }
-
-
-                        // Already Visited from both nodes if bidirectional or from the single node if not bidirectional.
-                        public bool AlreadyVisited() {
-                              return VisitCount >= 1;
-                        }
 
                   }
 
