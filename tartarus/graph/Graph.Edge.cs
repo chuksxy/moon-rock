@@ -24,7 +24,7 @@ namespace tartarus.graph {
 
 
                         public static Edge Create(Node from, Node to, float weight = 1.0f, bool bidirectional = false) {
-                              var edgeID = $"connect|[{from.ID}]|to|[{to.ID}]";
+                              var edgeID = $"connect|[{from.NodeID}]|to|[{to.NodeID}]";
                               var edge = new Edge {
                                     ID            = edgeID,
                                     Weight        = weight,

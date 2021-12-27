@@ -15,7 +15,7 @@ namespace tartarus.graph {
             public Node Entry { get; set; }
             public Node Exit  { get; set; }
 
-            public string ID => Entry.ID;
+            public string ID => Entry.NodeID;
 
 
             // Generate ID with the [prefix] supplied.
@@ -35,11 +35,7 @@ namespace tartarus.graph {
 
             // Create a new graph with the [ID] specified.
             internal static Graph Create(string graphID, string name) {
-                  var node = new Node(graphID, name) {
-                        Edges    = new Table<string, Node.Edge>(),
-                        Props    = Props.Empty(),
-                        Position = new Node.Point()
-                  };
+                  var node = Node.New(graphID, name);
 
                   return new Graph {
                         Entry = node, Exit = node

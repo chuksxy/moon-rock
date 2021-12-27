@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using moon.rock.world.property;
 using tartarus.graph;
 using UnityEngine;
@@ -15,14 +16,14 @@ namespace moon.rock {
                   circuit.ConnectAll(new[] {
                         Graph.Node.New("aux.oscillator"),
                         Graph.Node.New("main.switch"),
-                        Graph.Node.New("main.capacitor")
+                        Graph.Node.New("main.capacitor").TagR("energy.storage")
                   });
 
                   var powerBank = Graph.Node.New("power.bank.unit");
                   powerBank.ConnectAll(new[] {
-                        Graph.Node.New("main.capacitor"),
-                        Graph.Node.New("main.capacitor"),
-                        Graph.Node.New("main.capacitor").ConnectChain(Graph.Node.New("main.switch"))
+                        Graph.Node.New("main.capacitor").TagR("energy.storage"),
+                        Graph.Node.New("main.capacitor").TagR("energy.storage"),
+                        Graph.Node.New("main.capacitor").TagR("energy.storage").ConnectChain(Graph.Node.New("main.switch"))
                   });
 
                   var processingUnit = circuit.ConnectChain(powerBank);
@@ -59,7 +60,8 @@ namespace moon.rock {
                   suit.Add(legL);
                   suit.Add(legR);
 
-                  Debug.Log($"Graph Size of Mecha Suit is {suit.Entry.CountAll(50)}");
+                  //Debug.Log($"Graph Size of Mecha Suit is {suit.Entry.CountAll(50)}");
+                  Debug.Log($"Found [{suit.Entry.FindByTag("energy.storage").Count()}] by Tag energy.storage");
             }
 
       }
