@@ -9,12 +9,11 @@ namespace tartarus.graph {
 
                   public class Edge {
 
-                        public string ID     { get; set; }
-                        public float  Weight { get; set; }
-
-                        public Node From          { get; set; }
-                        public Node To            { get; set; }
-                        public bool BiDirectional { get; set; }
+                        public string ID            { get; set; }
+                        public float  Weight        { get; set; }
+                        public Node   From          { get; set; }
+                        public Node   To            { get; set; }
+                        public bool   BiDirectional { get; set; }
 
 
                         // Create Single Connection with empty `to` node.

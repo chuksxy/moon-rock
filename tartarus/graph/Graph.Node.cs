@@ -40,7 +40,8 @@ namespace tartarus.graph {
                   // New Node with [ID] specified.
                   public static Node New(string nodeID, string name) {
                         return new Node(
-                              nodeID, name,
+                              nodeID,
+                              name,
                               new HashSet<string>(),
                               new Table<string, Edge>(),
                               Props.Empty(),
@@ -51,7 +52,8 @@ namespace tartarus.graph {
                   // Empty Node with all fields initialized.
                   public static Node Blank() {
                         return new Node(
-                              "no.node.ID", "",
+                              "no.node.ID",
+                              "",
                               new HashSet<string>(),
                               new Table<string, Edge>(),
                               Props.Empty(),
