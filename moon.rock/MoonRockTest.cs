@@ -23,8 +23,10 @@ namespace moon.rock {
                   powerBank.ConnectAll(new[] {
                         Graph.Node.New("main.capacitor").TagR("energy.storage"),
                         Graph.Node.New("main.capacitor").TagR("energy.storage"),
-                        Graph.Node.New("main.capacitor").TagR("energy.storage").ConnectChain(Graph.Node.New("main.switch"))
+                        Graph.Node.New("main.capacitor").TagR("energy.storage")
                   });
+
+                  Debug.Log($"Found [{powerBank.FindByTag("energy.storage").Count()}] by Tag energy.storage for power Bank.");
 
                   var processingUnit = circuit.ConnectChain(powerBank);
 
@@ -59,9 +61,6 @@ namespace moon.rock {
                   suit.Add(armR);
                   suit.Add(legL);
                   suit.Add(legR);
-
-                  //Debug.Log($"Graph Size of Mecha Suit is {suit.Entry.CountAll(50)}");
-                  Debug.Log($"Found [{suit.Entry.FindByTag("energy.storage").Count()}] by Tag energy.storage");
             }
 
       }

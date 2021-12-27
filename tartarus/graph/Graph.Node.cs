@@ -262,7 +262,13 @@ namespace tartarus.graph {
                                          .Where(allFound => allFound.Any())
                                          .SelectMany(allFound => allFound);
 
-                        return match ? found.Append(this) : found;
+                        var allFound = found.ToList();
+                        if (match) {
+                              Debug.Log($"match {Name}");
+                              allFound.Add(this);
+                        }
+
+                        return allFound;
                   }
 
             }
