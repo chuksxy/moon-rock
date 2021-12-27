@@ -266,7 +266,6 @@ namespace tartarus.graph {
 
                         var allFound = found.ToList();
                         if (match) {
-                              Debug.Log($"match {Name}");
                               allFound.Add(this);
                         }
 
