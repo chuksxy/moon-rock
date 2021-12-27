@@ -5,7 +5,7 @@ using tartarus.props;
 using UnityEngine;
 
 /*
- * Graph Noe management and behaviour.
+ * Graph Node management and behaviour.
  */
 namespace tartarus.graph {
 
@@ -69,7 +69,7 @@ namespace tartarus.graph {
                   }
 
 
-                  // Private Constructor.
+                  // Private Constructor. Do Not Expose!
                   private Node(
                         string              nodeID,
                         string              name,
@@ -86,7 +86,7 @@ namespace tartarus.graph {
                   }
 
 
-                  // Is Blank with all fields initialised and set to default values..
+                  // Is Blank with all fields initialised and set to default values.
                   public bool IsBlank() {
                         return Empty.Equals(this);
                   }
@@ -103,7 +103,7 @@ namespace tartarus.graph {
                   }
 
 
-                  // Swap Place by transferring all edges from old to new source.
+                  // Swap Place by transferring all edges from old to new node.
                   public Dictionary<string, Edge> SwapInPlace(Node oldNode, Node newNode, bool keepCurrentEdges = true) {
                         newNode.Edges = keepCurrentEdges
                               ? Table<string, Edge>.MergeRight(newNode.Edges, oldNode.Edges)
@@ -114,7 +114,7 @@ namespace tartarus.graph {
                   }
 
 
-                  // Deep Clone a Node and all nodes connected to it. Cloning a large graph could be costly.
+                  // Deep Clone a node and all nodes connected to it. Cloning a large graph could be costly!
                   public Node DeepClone() {
                         return DeepClone(new Dictionary<string, Node>(), new Table<string, Edge>());
                   }
@@ -134,10 +134,10 @@ namespace tartarus.graph {
 
                         nodesVisited.Add(NodeID, clone);
 
-                        var edges = Edges.Values
-                                         .Where(edge => !edgesVisited.ContainsKey(edge.ID))
-                                         .Select(edge => edge.DeepClone(nodesVisited, edgesVisited))
-                                         .ToDictionary(edgeClone => edgeClone.ID);
+                        Edges.Values
+                             .Where(edge => !edgesVisited.ContainsKey(edge.ID))
+                             .ToList()
+                             .ForEach(edge => edge.DeepClone(nodesVisited, edgesVisited));
 
                         return clone;
                   }
@@ -201,7 +201,7 @@ namespace tartarus.graph {
                   }
 
 
-                  internal int CountAll(int depth, HashSet<string> nodesVisited, HashSet<string> edgesVisited) {
+                  private int CountAll(int depth, ISet<string> nodesVisited, ISet<string> edgesVisited) {
                         if (depth <= 0 || nodesVisited.Contains(NodeID)) return 0;
 
                         nodesVisited.Add(NodeID);
