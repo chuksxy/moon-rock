@@ -1,9 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using tartarus.props;
-using UnityEngine;
-using UnityEngine.Rendering;
 
 /*
  * Graph management, utils and behaviour.
@@ -34,7 +29,7 @@ namespace tartarus.graph {
 
 
             // Create a new graph with the [ID] specified.
-            internal static Graph Create(string graphID, string name) {
+            private static Graph Create(string graphID, string name) {
                   var node = Node.New(graphID, name);
 
                   return new Graph {
@@ -43,17 +38,23 @@ namespace tartarus.graph {
             }
 
 
-            // Add a graph within this graph.
-            public void Add(Graph graph) {
-                  Entry.Connect(graph.Entry, bidirectional: true);
-                  graph.Exit = Entry;
+            // Append an existing node to the graph, then return it.
+            public Node Append(Node node, float weight = 1.0f, bool bidirectional = false) {
+                  Add(node, weight, bidirectional);
+                  return node;
             }
 
 
-            // Add an existing node to the graph, then return it.
-            public Node Add(Node node, float weight = 1.0f, bool bidirectional = false) {
+            // Add an existing node to this graph.
+            public void Add(Node node, float weight = 1.0f, bool bidirectional = false) {
                   Entry.Connect(node, weight, bidirectional);
-                  return node;
+            }
+
+
+            // Add a graph to this graph.
+            public void Add(Graph graph, float weight = 1.0f, bool bidirectional = false) {
+                  Entry.Connect(graph.Entry, weight, bidirectional);
+                  graph.Exit = Entry;
             }
 
 

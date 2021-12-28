@@ -1,5 +1,5 @@
-using System;
 using System.Linq;
+using moon.rock.world.part;
 using moon.rock.world.property;
 using tartarus.graph;
 using UnityEngine;
@@ -16,14 +16,14 @@ namespace moon.rock {
                   circuit.ConnectAll(new[] {
                         Graph.Node.New("aux.oscillator"),
                         Graph.Node.New("main.switch"),
-                        Graph.Node.New("main.capacitor").TagR("energy.storage")
+                        Graph.Node.New("main.capacitor").Tag("energy.storage")
                   });
 
                   var powerBank = Graph.Node.New("power.bank.unit");
                   powerBank.ConnectAll(new[] {
-                        Graph.Node.New("main.capacitor").TagR("energy.storage"),
-                        Graph.Node.New("main.capacitor").TagR("energy.storage"),
-                        Graph.Node.New("main.capacitor").TagR("energy.storage")
+                        Graph.Node.New("main.capacitor").Tag("energy.storage"),
+                        Graph.Node.New("main.capacitor").Tag("energy.storage"),
+                        Graph.Node.New("main.capacitor").Tag("energy.storage")
                   });
 
                   Debug.Log($"Found [{powerBank.FindByTag("energy.storage").Count()}] by Tag energy.storage for power Bank.");
@@ -38,7 +38,8 @@ namespace moon.rock {
 
                   // Destroying sub components should add a de-buff.
                   var armL = Graph.Create("arm.l");
-                  armL.Add(circuit.DeepClone());
+                  armL.Append(circuit.DeepClone())
+                      .Connect(Part.Electric.Motor.FindByName("blue.iron.phaser"));
                   armL.Add(Graph.Node.New("hand.l"));
 
                   Debug.Log($"Graph Size of Left Arm is {armL.Entry.CountAll(7)}");

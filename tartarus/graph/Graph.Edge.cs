@@ -54,9 +54,7 @@ namespace tartarus.graph {
                                     To            = To.DeepClone(nodesVisited, edgesVisited),
                                     BiDirectional = BiDirectional
                               };
-                              if (!edgesVisited.ContainsKey(ID)) {
-                                    edgesVisited.Add(ID, clone);
-                              }
+                              if (!edgesVisited.ContainsKey(ID)) edgesVisited.Add(ID, clone);
 
                               return clone;
                         }
@@ -64,7 +62,6 @@ namespace tartarus.graph {
                   }
 
             }
-
 
       }
 

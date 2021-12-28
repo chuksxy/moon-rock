@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using tartarus.props;
-using UnityEngine;
 
 /*
  * Graph Node management and behaviour.
@@ -23,9 +22,27 @@ namespace tartarus.graph {
                         new Point()
                   );
 
+
+                  // Private Constructor. Do Not Expose!
+                  private Node(
+                        string              nodeID,
+                        string              name,
+                        HashSet<string>     tags,
+                        Table<string, Edge> edges,
+                        Props               props,
+                        Point               position) {
+                        Tags     = tags;
+                        NodeID   = nodeID;
+                        Name     = name;
+                        Edges    = edges;
+                        Props    = props;
+                        Position = position;
+                  }
+
+
                   public HashSet<string>     Tags     { get; set; }
                   public string              NodeID   { get; }
-                  public string              Name     { get; }
+                  public string              Name     { get; set; }
                   public Table<string, Edge> Edges    { get; set; }
                   public Props               Props    { get; set; }
                   public Point               Position { get; set; }
@@ -66,23 +83,6 @@ namespace tartarus.graph {
                         var noPrefix = prefix == null || "no.prefix".Equals(prefix) || prefix == "";
                         var p        = noPrefix ? "default" : prefix;
                         return $"node|{p}|{Guid.NewGuid().ToString()}";
-                  }
-
-
-                  // Private Constructor. Do Not Expose!
-                  private Node(
-                        string              nodeID,
-                        string              name,
-                        HashSet<string>     tags,
-                        Table<string, Edge> edges,
-                        Props               props,
-                        Point               position) {
-                        Tags     = tags;
-                        NodeID   = nodeID;
-                        Name     = name;
-                        Edges    = edges;
-                        Props    = props;
-                        Position = position;
                   }
 
 
@@ -215,7 +215,7 @@ namespace tartarus.graph {
 
 
                   // Tag Node with a [name] so it can be queried later and return said node.
-                  public Node TagR(string name) {
+                  public Node Tag(string name) {
                         Tags ??= new HashSet<string>();
 
                         if (Tags.Contains(name)) return this;
@@ -225,12 +225,12 @@ namespace tartarus.graph {
                   }
 
 
-                  // Tag Node with a [name] so it can be queried later.
-                  public void Tag(string name) {
+                  // Tag Node with a [name] so it can be queried later and return said node.
+                  public Node TagNew(string name) {
                         Tags ??= new HashSet<string>();
 
-                        if (Tags.Contains(name)) return;
-                        Tags.Add(name);
+                        var copy = DeepClone();
+                        return Tags.Contains(name) ? copy : copy.Tag(name);
                   }
 
 
@@ -265,9 +265,7 @@ namespace tartarus.graph {
                                          .SelectMany(allFound => allFound);
 
                         var allFound = found.ToList();
-                        if (match) {
-                              allFound.Add(this);
-                        }
+                        if (match) allFound.Add(this);
 
                         return allFound;
                   }
