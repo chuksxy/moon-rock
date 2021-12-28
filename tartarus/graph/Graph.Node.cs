@@ -31,7 +31,7 @@ namespace tartarus.graph {
                         Props               props,
                         Point               position) {
                         Tags     = tags;
-                        NodeID   = nodeID;
+                        ID       = nodeID;
                         Name     = name;
                         Edges    = edges;
                         Props    = props;
@@ -40,7 +40,7 @@ namespace tartarus.graph {
 
 
                   public HashSet<string>     Tags     { get; set; }
-                  public string              NodeID   { get; }
+                  public string              ID       { get; }
                   public string              Name     { get; set; }
                   public Table<string, Edge> Edges    { get; set; }
                   public Props               Props    { get; set; }
@@ -93,12 +93,12 @@ namespace tartarus.graph {
 
                   // Equals another node if the [ID]s are the same.
                   public override bool Equals(object obj) {
-                        return ((Node) obj)!.NodeID.Equals(NodeID);
+                        return ((Node) obj)!.ID.Equals(ID);
                   }
 
 
                   public override int GetHashCode() {
-                        return NodeID.GetHashCode();
+                        return ID.GetHashCode();
                   }
 
 
@@ -121,17 +121,17 @@ namespace tartarus.graph {
 
                   // Deep Clone a Node and all nodes connected to it. Cloning a large graph could be costly.
                   private Node DeepClone(Dictionary<string, Node> nodesVisited, Table<string, Edge> edgesVisited) {
-                        if (nodesVisited.ContainsKey(NodeID)) return nodesVisited[NodeID];
+                        if (nodesVisited.ContainsKey(ID)) return nodesVisited[ID];
 
                         var clone = new Node(
                               GenerateID("clone"),
                               Name,
                               new HashSet<string>(Tags),
                               edgesVisited,
-                              Props.Clone(),
+                              Props.DeepClone(),
                               Position.Clone());
 
-                        nodesVisited.Add(NodeID, clone);
+                        nodesVisited.Add(ID, clone);
 
                         Edges.Values
                              .Where(edge => !edgesVisited.ContainsKey(edge.ID))
@@ -201,9 +201,9 @@ namespace tartarus.graph {
 
 
                   private int CountAll(int depth, ISet<string> nodesVisited, ISet<string> edgesVisited) {
-                        if (depth <= 0 || nodesVisited.Contains(NodeID)) return 0;
+                        if (depth <= 0 || nodesVisited.Contains(ID)) return 0;
 
-                        nodesVisited.Add(NodeID);
+                        nodesVisited.Add(ID);
                         var count = Edges.Values
                                          .Where(edge => !edgesVisited.Contains(edge.ID))
                                          .Select(edge => (edgesVisited.Add(edge.ID), edge.To))
@@ -233,6 +233,18 @@ namespace tartarus.graph {
                   }
 
 
+                  // Find First Node By Tag.
+                  public Node FindFirstByTag(string tag) {
+                        return FindByTag(tag).First();
+                  }
+
+
+                  // Find First Node By Tags.
+                  public Node FindFirstByTags(IEnumerable<string> tags) {
+                        return FindByTags(tags).First();
+                  }
+
+
                   // Find By Tag all nodes connected to this one.
                   public IEnumerable<Node> FindByTag(string tag) {
                         return FindByTags(new[] {tag}, new Dictionary<string, Node>(), new HashSet<string>());
@@ -250,9 +262,9 @@ namespace tartarus.graph {
                         IEnumerable<string>       tags,
                         IDictionary<string, Node> nodesVisited,
                         ISet<string>              edgesVisited) {
-                        if (nodesVisited.ContainsKey(NodeID)) return new HashSet<Node>();
+                        if (nodesVisited.ContainsKey(ID)) return new HashSet<Node>();
 
-                        nodesVisited.Add(NodeID, this);
+                        nodesVisited.Add(ID, this);
 
                         // Possible collision and false positives.
                         var match = tags.Select(tag => Tags.Contains(tag)).Aggregate(true, (acc, current) => acc && current);

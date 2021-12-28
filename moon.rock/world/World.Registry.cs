@@ -7,7 +7,7 @@ namespace moon.rock.world {
 
       public static partial class World {
 
-            private static readonly Registry                Main             = Registry.LoadMain();
+            private static readonly Registry                 Main             = Registry.LoadMain();
             private static readonly STable<string, Registry> CachedRegistries = new STable<string, Registry>();
 
             public class Registry {
@@ -19,16 +19,16 @@ namespace moon.rock.world {
 
                   // `Item Tables` for items located in the world.
                   private readonly STable<string, Props.IAmAnObject> _objects;
-                  private readonly STable<string, HashSet<string>>      _zoneIDsToCharactersIDs;
-                  private readonly STable<string, HashSet<string>>      _zoneIDsToObjectsIDs;
+                  private readonly STable<string, HashSet<string>>   _zoneIDsToCharactersIDs;
+                  private readonly STable<string, HashSet<string>>   _zoneIDsToObjectsIDs;
 
-
+                  
                   private Registry(
-                        STable<string, Character.Data>       characters,
-                        STable<string, string>               characterIDsToZoneIDs,
-                        STable<string, HashSet<string>>      zoneIDsToCharactersIDs,
+                        STable<string, Character.Data>    characters,
+                        STable<string, string>            characterIDsToZoneIDs,
+                        STable<string, HashSet<string>>   zoneIDsToCharactersIDs,
                         STable<string, Props.IAmAnObject> objects,
-                        STable<string, HashSet<string>>      zoneIDsToObjectsIDs
+                        STable<string, HashSet<string>>   zoneIDsToObjectsIDs
                   ) {
                         _characterIDsToZoneIDs  = characterIDsToZoneIDs;
                         _characters             = characters;

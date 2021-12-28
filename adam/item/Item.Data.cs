@@ -30,15 +30,15 @@ namespace adam.item {
             public struct Hat : Props.IHaveWeight, Props.ICanStack, Props.IAmAnObject {
 
 
-                  public string[]        Tags          { get; set; }
-                  public string[]        Modifiers     { get; set; }
-                  public string          ID            { get; set; }
-                  public Vector3         WorldPosition { get; set; }
-                  public Vector3         WorldRotation { get; set; }
-                  public string          Name          { get; set; }
+                  public string[]     Tags          { get; set; }
+                  public string[]     Modifiers     { get; set; }
+                  public string       ID            { get; set; }
+                  public Vector3      WorldPosition { get; set; }
+                  public Vector3      WorldRotation { get; set; }
+                  public string       Name          { get; set; }
                   public Props.Health Health        { get; set; }
-                  public float           Weight        { get; set; }
-                  public bool            CanStack      { get; }
+                  public float        Weight        { get; set; }
+                  public bool         CanStack      { get; }
 
             }
 
@@ -65,15 +65,15 @@ namespace adam.item {
 
             public struct BaseLayer : Props.IHaveWeight, Props.ICanStack, Props.IAmAnObject {
 
-                  public string[]        Tags          { get; set; }
-                  public string[]        Modifiers     { get; set; }
-                  public string          ID            { get; set; }
-                  public Vector3         WorldPosition { get; set; }
-                  public Vector3         WorldRotation { get; set; }
-                  public string          Name          { get; set; }
+                  public string[]     Tags          { get; set; }
+                  public string[]     Modifiers     { get; set; }
+                  public string       ID            { get; set; }
+                  public Vector3      WorldPosition { get; set; }
+                  public Vector3      WorldRotation { get; set; }
+                  public string       Name          { get; set; }
                   public Props.Health Health        { get; set; }
-                  public float           Weight        { get; set; }
-                  public bool            CanStack      { get; }
+                  public float        Weight        { get; set; }
+                  public bool         CanStack      { get; }
 
             }
 
@@ -100,15 +100,15 @@ namespace adam.item {
 
             public struct OuterWear : Props.IHaveWeight, Props.ICanStack, Props.IAmAnObject {
 
-                  public string[]        Tags          { get; set; }
-                  public string[]        Modifiers     { get; set; }
-                  public string          ID            { get; set; }
-                  public Vector3         WorldPosition { get; set; }
-                  public Vector3         WorldRotation { get; set; }
-                  public string          Name          { get; set; }
+                  public string[]     Tags          { get; set; }
+                  public string[]     Modifiers     { get; set; }
+                  public string       ID            { get; set; }
+                  public Vector3      WorldPosition { get; set; }
+                  public Vector3      WorldRotation { get; set; }
+                  public string       Name          { get; set; }
                   public Props.Health Health        { get; set; }
-                  public float           Weight        { get; set; }
-                  public bool            CanStack      { get; }
+                  public float        Weight        { get; set; }
+                  public bool         CanStack      { get; }
 
             }
 
@@ -135,15 +135,15 @@ namespace adam.item {
 
             public struct Shoes : Props.IHaveWeight, Props.ICanStack, Props.IAmAnObject {
 
-                  public string[]        Tags          { get; set; }
-                  public string[]        Modifiers     { get; set; }
-                  public string          ID            { get; set; }
-                  public Vector3         WorldPosition { get; set; }
-                  public Vector3         WorldRotation { get; set; }
-                  public string          Name          { get; set; }
+                  public string[]     Tags          { get; set; }
+                  public string[]     Modifiers     { get; set; }
+                  public string       ID            { get; set; }
+                  public Vector3      WorldPosition { get; set; }
+                  public Vector3      WorldRotation { get; set; }
+                  public string       Name          { get; set; }
                   public Props.Health Health        { get; set; }
-                  public float           Weight        { get; set; }
-                  public bool            CanStack      { get; }
+                  public float        Weight        { get; set; }
+                  public bool         CanStack      { get; }
 
             }
 
@@ -170,15 +170,15 @@ namespace adam.item {
 
             public struct Sleeve : Props.IHaveWeight, Props.ICanStack, Props.IAmAnObject {
 
-                  public string[]        Tags          { get; set; }
-                  public string[]        Modifiers     { get; set; }
-                  public string          ID            { get; set; }
-                  public Vector3         WorldPosition { get; set; }
-                  public Vector3         WorldRotation { get; set; }
-                  public string          Name          { get; set; }
+                  public string[]     Tags          { get; set; }
+                  public string[]     Modifiers     { get; set; }
+                  public string       ID            { get; set; }
+                  public Vector3      WorldPosition { get; set; }
+                  public Vector3      WorldRotation { get; set; }
+                  public string       Name          { get; set; }
                   public Props.Health Health        { get; set; }
-                  public float           Weight        { get; set; }
-                  public bool            CanStack      { get; }
+                  public float        Weight        { get; set; }
+                  public bool         CanStack      { get; }
 
             }
 

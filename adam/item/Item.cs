@@ -105,7 +105,7 @@ namespace adam.item {
                   Slot slotID, string template, string registryID = "main.registry", string zoneID = "no.zone.ID") {
                   var path = $"{slotID}/{template}";
 
-                  GameObject           prefab  = null;
+                  GameObject        prefab  = null;
                   Props.IAmAnObject @object = null;
 
                   switch (slotID) {

@@ -6,8 +6,7 @@ using tartarus.graph;
 
 namespace moon.rock.world.part {
 
-      public static class Part {
-
+      public static partial class Part {
 
             public static class Electric {
 
@@ -39,12 +38,13 @@ namespace moon.rock.world.part {
                               blue_iron_phaser.Tag("level:1").Tag("cast-iron").Tag("weight:8.2").Tag("common")
                                               .Tag("load:50V").Tag("power:2.2KW").Tag("efficiency:43.3333%");
 
-                              blue_iron_phaser.Props.Append(Props.Add.Health(60, 60, true));
+                              blue_iron_phaser.Props.Append(Props.Add.Health(60, 60));
                               blue_iron_phaser.Props.Append(Props.Add.MaxLoad(60));
                               blue_iron_phaser.Props.Append(Props.Add.Price(110.99f));
                               blue_iron_phaser.Props.Append(Props.Add.Efficiency(43.3333f));
                               blue_iron_phaser.Props.Append(Props.Add.Weight(8.2f));
                               blue_iron_phaser.Props.Append(Props.Add.Level(1));
+                              blue_iron_phaser.Props.Append(Props.Add.Hidden(true));
 
                               var copper_red_phaser_v1 = ogun_motors.TagNew("copper.red.phaser");
                               copper_red_phaser_v1.Name = "copper.red.phaser";
@@ -161,9 +161,7 @@ namespace moon.rock.world.part {
 
                   }
 
-
             }
-
 
       }
 

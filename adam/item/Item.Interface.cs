@@ -37,11 +37,11 @@ namespace adam.item {
 
                   // Init item in the world.
                   internal Interface Init(
-                        Slot                 slotID,
-                        string               objectID,
-                        string               itemID,
-                        string               registryID,
-                        string               zoneID,
+                        Slot              slotID,
+                        string            objectID,
+                        string            itemID,
+                        string            registryID,
+                        string            zoneID,
                         Props.IAmAnObject @object
                   ) {
                         _slotID     = slotID;

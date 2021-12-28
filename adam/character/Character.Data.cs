@@ -29,8 +29,8 @@ namespace adam.character {
 
                   private static readonly Data Blank = new Data();
 
-                  public string          ID     { get; set; }
-                  public string          Name   { get; set; }
+                  public string       ID     { get; set; }
+                  public string       Name   { get; set; }
                   public Props.Health Health { get; set; }
                   public Props.Energy Energy { get; set; }
 

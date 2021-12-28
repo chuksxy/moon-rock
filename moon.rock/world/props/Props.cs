@@ -6,7 +6,7 @@ using tartarus.graph;
 
 namespace moon.rock.world.props {
 
-      public static class Props {
+      public static partial class Props {
 
             public static class Add {
 
@@ -15,7 +15,7 @@ namespace moon.rock.world.props {
                                     .AddProperty("current", current)
                                     .AddProperty("max", max)
                                     .AddProperty("enabled", enabled)
-                                    .Build();
+                                    .Next();
                   }
 
 
@@ -25,7 +25,7 @@ namespace moon.rock.world.props {
                                     .AddProperty("current", current)
                                     .AddProperty("max", max)
                                     .AddProperty("enabled", enabled)
-                                    .Build();
+                                    .Next();
                   }
 
 
@@ -33,7 +33,7 @@ namespace moon.rock.world.props {
                         return Graph.Props.Builder.NewGroup("armour")
                                     .AddProperty("current", current)
                                     .AddProperty("max", max)
-                                    .Build();
+                                    .Next();
                   }
 
 
@@ -69,6 +69,11 @@ namespace moon.rock.world.props {
 
                   public static Graph.Props.Ref Price(float value) {
                         return Graph.Props.Builder.NewProperty("price", value);
+                  }
+
+
+                  public static Graph.Props.Ref Hidden(bool value) {
+                        return Graph.Props.Builder.NewProperty("hidden", value);
                   }
 
             }

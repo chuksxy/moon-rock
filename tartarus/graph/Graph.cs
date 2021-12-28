@@ -1,5 +1,5 @@
 using System;
-using System.Collections;
+using System.Collections.Generic;
 
 /*
  * Graph management, utils and behaviour.
@@ -11,7 +11,7 @@ namespace tartarus.graph {
             public Node Entry { get; set; }
             public Node Exit  { get; set; }
 
-            public string ID => Entry.NodeID;
+            public string ID => Entry.ID;
 
 
             // Generate ID with the [prefix] supplied.
@@ -52,6 +52,12 @@ namespace tartarus.graph {
             }
 
 
+            // TODO:: Implement!
+            public HashSet<Node> AllNodes() {
+                  return new HashSet<Node>();
+            }
+
+
             // Add a graph to this graph.
             public void Add(Graph graph, float weight = 1.0f, bool bidirectional = false) {
                   Entry.Connect(graph.Entry, weight, bidirectional);
@@ -71,15 +77,16 @@ namespace tartarus.graph {
             }
 
 
-            // TODO:: Implement!
-            public Graph SubGraphByTags(string[] tags) {
-                  return null;
+            // Find First Node By Tag on match.
+            public Graph FindFirstByTag(string tag) {
+                  return FindFirstByTags(new[] {tag});
             }
 
 
-            // TODO:: Implement!
-            public Graph SubGraphByTag(string tags) {
-                  return null;
+            // Find First Node By Tags on match.
+            public Graph FindFirstByTags(string[] tags) {
+                  var tree = Entry.FindFirstByTags(tags);
+                  return Create(tree.ID, tree.Name);
             }
 
       }
