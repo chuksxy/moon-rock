@@ -266,7 +266,6 @@ namespace tartarus.graph {
 
                         nodesVisited.Add(ID, this);
 
-                        // Possible collision and false positives.
                         var match = tags.Select(tag => Tags.Contains(tag)).Aggregate(true, (acc, current) => acc && current);
                         var found = Edges.Values
                                          .Where(edge => !edgesVisited.Contains(edge.ID))
