@@ -38,13 +38,13 @@ namespace moon.rock.world.part {
                               blue_iron_phaser.Tag("level:1").Tag("cast-iron").Tag("weight:8.2").Tag("common")
                                               .Tag("load:50V").Tag("power:2.2KW").Tag("efficiency:43.3333%");
 
-                              blue_iron_phaser.Props.Append(Props.Add.Health(60, 60));
-                              blue_iron_phaser.Props.Append(Props.Add.MaxLoad(60));
-                              blue_iron_phaser.Props.Append(Props.Add.Price(110.99f));
-                              blue_iron_phaser.Props.Append(Props.Add.Efficiency(43.3333f));
-                              blue_iron_phaser.Props.Append(Props.Add.Weight(8.2f));
-                              blue_iron_phaser.Props.Append(Props.Add.Level(1));
-                              blue_iron_phaser.Props.Append(Props.Add.Hidden(true));
+                              blue_iron_phaser.Props.Merge(Props.Create.Health(60, 60));
+                              blue_iron_phaser.Props.Merge(Props.Create.MaxLoad(60));
+                              blue_iron_phaser.Props.Merge(Props.Create.Price(110.99f));
+                              blue_iron_phaser.Props.Merge(Props.Create.Efficiency(43.3333f));
+                              blue_iron_phaser.Props.Merge(Props.Create.Weight(8.2f));
+                              blue_iron_phaser.Props.Merge(Props.Create.Level(1));
+                              blue_iron_phaser.Props.Merge(Props.Create.Hidden(true));
 
                               var copper_red_phaser_v1 = ogun_motors.TagNew("copper.red.phaser");
                               copper_red_phaser_v1.Name = "copper.red.phaser";

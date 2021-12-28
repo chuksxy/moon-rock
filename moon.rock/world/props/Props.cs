@@ -8,72 +8,75 @@ namespace moon.rock.world.props {
 
       public static partial class Props {
 
-            public static class Add {
+            public static class Create {
 
-                  public static Graph.Props.Ref Health(float current, float max, bool enabled = true) {
-                        return Graph.Props.Builder.NewGroup("health")
+                  public static Graph.Props Health(float current, float max, bool enabled = true) {
+                        return Graph.Props.Builder.New().NewGroup("health")
                                     .AddProperty("current", current)
                                     .AddProperty("max", max)
                                     .AddProperty("enabled", enabled)
-                                    .Next();
+                                    .Next()
+                                    .Build();
                   }
 
 
                   // Energy - Objects with [energy], consume it!
-                  public static Graph.Props.Ref Energy(int current, int max, bool enabled) {
-                        return Graph.Props.Builder.NewGroup("energy")
+                  public static Graph.Props Energy(int current, int max, bool enabled) {
+                        return Graph.Props.Builder.New().NewGroup("energy")
                                     .AddProperty("current", current)
                                     .AddProperty("max", max)
                                     .AddProperty("enabled", enabled)
-                                    .Next();
+                                    .Next()
+                                    .Build();
                   }
 
 
-                  public static Graph.Props.Ref Armour(int current, int max) {
-                        return Graph.Props.Builder.NewGroup("armour")
+                  public static Graph.Props Armour(int current, int max) {
+                        return Graph.Props.Builder.New().NewGroup("armour")
                                     .AddProperty("current", current)
                                     .AddProperty("max", max)
-                                    .Next();
+                                    .Next()
+                                    .Build();
                   }
 
 
-                  public static Graph.Props.Ref Efficiency(float value) {
-                        return Graph.Props.Builder.NewProperty("efficiency", value);
+                  public static Graph.Props Efficiency(float value) {
+                        return Graph.Props.Builder.New().NewProperty("efficiency", value).Build();
                   }
 
 
-                  public static Graph.Props.Ref Power(float value) {
-                        return Graph.Props.Builder.NewProperty("power", value);
+                  public static Graph.Props Power(float value) {
+                        return Graph.Props.Builder.New().NewProperty("power", value).Build();
                   }
 
 
-                  public static Graph.Props.Ref MaxLoad(float max) {
-                        return Graph.Props.Builder.NewProperty("load.max", max);
+                  public static Graph.Props MaxLoad(float max) {
+                        return Graph.Props.Builder.New().NewProperty("load.max", max).Build();
                   }
 
 
-                  public static Graph.Props.Ref Level(int value) {
-                        return Graph.Props.Builder.NewProperty("level", value);
+                  public static Graph.Props Level(int value) {
+                        return Graph.Props.Builder.New().NewProperty("level", value).Build();
                   }
 
 
-                  public static Graph.Props.Ref Weight(float value) {
-                        return Graph.Props.Builder.NewProperty("weight", value);
+                  public static Graph.Props Weight(float value) {
+                        return Graph.Props.Builder.New().NewProperty("weight", value).Build();
                   }
 
 
-                  public static Graph.Props.Ref Rarity(string value) {
-                        return Graph.Props.Builder.NewProperty("rarity", value);
+                  public static Graph.Props Rarity(string value) {
+                        return Graph.Props.Builder.New().NewProperty("rarity", value).Build();
                   }
 
 
-                  public static Graph.Props.Ref Price(float value) {
-                        return Graph.Props.Builder.NewProperty("price", value);
+                  public static Graph.Props Price(float value) {
+                        return Graph.Props.Builder.New().NewProperty("price", value).Build();
                   }
 
 
-                  public static Graph.Props.Ref Hidden(bool value) {
-                        return Graph.Props.Builder.NewProperty("hidden", value);
+                  public static Graph.Props Hidden(bool value) {
+                        return Graph.Props.Builder.New().NewProperty("hidden", value).Build();
                   }
 
             }

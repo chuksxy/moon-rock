@@ -27,17 +27,17 @@ namespace tartarus.graph {
 
 
                   // Get property by type.
-                  public Ref<T> Get<T>(string name) where T : class {
+                  public Ref<T> Get<T>(string name) {
                         if (!Entries.ContainsKey(name)) return Ref.NoProp() as Ref<T>;
-                        return new Ref<T>(name, Entries[name] as T);
+                        return new Ref<T>(name, (T) Entries[name]);
                   }
 
 
                   // Get `Property` By [group] [name].
-                  public Ref<T> GetByGroup<T>(string group, string name) where T : class {
+                  public Ref<T> GetByGroup<T>(string group, string name) {
                         var key = $"{group}.{name}";
                         if (!Entries.ContainsKey(key)) return Ref.NoProp() as Ref<T>;
-                        return new Ref<T>(key, Entries[key] as T);
+                        return new Ref<T>(key, (T) Entries[key]);
                   }
 
 
@@ -63,7 +63,7 @@ namespace tartarus.graph {
 
 
                   // TODO:: Implement!
-                  public Props Append(Ref property) {
+                  public Props Merge(Props props) {
                         return this;
                   }
 
@@ -98,10 +98,10 @@ namespace tartarus.graph {
 
                   }
 
-                  public class Ref<T> where T : class {
+                  public class Ref<T> {
 
-                        private string Key   { get; }
-                        private T      Value { get; }
+                        public string Key   { get; }
+                        public T      Value { get; }
 
 
                         internal Ref(string key, T value) {
@@ -211,7 +211,7 @@ namespace tartarus.graph {
                               }
 
 
-                              public Builder Build() {
+                              public Builder Next() {
                                     return _builder.AddGroup(this);
                               }
 

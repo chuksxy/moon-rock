@@ -1,3 +1,4 @@
+using System;
 using tartarus.graph;
 
 namespace moon.rock.world.props {
@@ -7,7 +8,7 @@ namespace moon.rock.world.props {
             public static class Helpers {
 
                   public static bool IsHidden(Graph.Node node) {
-                        return node.Props.Get("hidden").GetV alue<bool>();
+                        return node.Props.Get<bool>("hidden").Value;
                   }
 
             }
