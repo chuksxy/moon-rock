@@ -63,26 +63,37 @@ namespace moon.rock.world.part {
                               var peter_and_lawanson = Graph.Node.New("peter-and-lawanson.unassigned")
                                                             .Tag("electric")
                                                             .Tag("motor")
-                                                            .Tag("hardware");
+                                                            .Tag("hardware")
+                                                            .Tag("middleware");
 
-                              var blue_iron_phaser = peter_and_lawanson.TagNew("blue.iron.phaser");
-                              blue_iron_phaser.Name = "blue.iron.phaser";
-                              blue_iron_phaser.Tag("level:1").Tag("cast-iron").Tag("weight:2.5")
-                                              .Tag("load:50V").Tag("power:2.2KW").Tag("efficiency:68.3%");
+                              var lawanson_turbine_17 = peter_and_lawanson.TagNew("lawanson_turbine_17");
+                              lawanson_turbine_17.Name = "lawanson_turbine_17";
+                              lawanson_turbine_17.Tag("level:1").Tag("aluminium").Tag("weight:6").Tag("common")
+                                                 .Tag("load:50V").Tag("power:2.2KW").Tag("efficiency:61.3%");
 
-                              var copper_red_phaser_v1 = peter_and_lawanson.TagNew("copper.red.phaser");
-                              copper_red_phaser_v1.Name = "copper.red.phaser";
-                              copper_red_phaser_v1.Tag("level:1").Tag("cast-iron").Tag("weight:2.5")
-                                                  .Tag("load:45V").Tag("power:2.2KW").Tag("efficiency:72.65%");
+                              var lawamson_turbine_18 = peter_and_lawanson.TagNew("lawanson_turbine_18");
+                              lawamson_turbine_18.Name = "lawanson_turbine_18";
+                              lawamson_turbine_18.Tag("level:1").Tag("aluminium").Tag("weight:6").Tag("common")
+                                                 .Tag("load:45V").Tag("power:2.2KW").Tag("efficiency:63.65%");
 
-                              var copper_red_phaser_v2 = peter_and_lawanson.TagNew("copper.red.phaser");
-                              copper_red_phaser_v2.Name = "copper.red.phaser.version:2";
-                              copper_red_phaser_v2.Tag("level:2").Tag("cast-iron").Tag("weight:1.9")
-                                                  .Tag("load:45V").Tag("power:4.8KW").Tag("efficiency:66.3333%");
+                              var lawanson_turbine_19 = peter_and_lawanson.TagNew("lawanson_turbine_19");
+                              lawanson_turbine_19.Name = "lawanson_turbine_19";
+                              lawanson_turbine_19.Tag("level:2").Tag("aluminium").Tag("weight:6").Tag("uncommon")
+                                                 .Tag("load:45V").Tag("power:4.8KW").Tag("efficiency:66.3333%");
+
+                              var lawawnson_titan = peter_and_lawanson.TagNew("lawanson_titan");
+                              lawawnson_titan.Name = "lawanson_titan";
+                              lawawnson_titan.Tag("level:2").Tag("aluminium").Tag("weight:6").Tag("rare")
+                                             .Tag("load:45V").Tag("power:4.8KW").Tag("efficiency:68.3333%");
+
+                              var lawanson_x = peter_and_lawanson.TagNew("lawanson_x");
+                              lawanson_x.Name = "lawanson_x";
+                              lawanson_x.Tag("level:2").Tag("aluminium").Tag("weight:6").Tag("epic")
+                                        .Tag("load:45V").Tag("power:4.8KW").Tag("efficiency:71.3333%");
 
                               return new[] {
-                                    blue_iron_phaser,
-                                    copper_red_phaser_v2
+                                    lawanson_turbine_17,
+                                    lawanson_x
                               };
                         }
 
@@ -97,33 +108,38 @@ namespace moon.rock.world.part {
 
                               var bruin = house_of_maalpertuus.TagNew("bruin");
                               bruin.Name = "bruin";
-                              bruin.Tag("level:1").Tag("graphene").Tag("weight:4.7").Tag("uncommon")
-                                   .Tag("load:45V").Tag("power:4.8KW").Tag("efficiency:66.3333%");
+                              bruin.Tag("level:1").Tag("graphene").Tag("weight:4.7").Tag("rare")
+                                   .Tag("load:45V").Tag("power:4.8KW").Tag("efficiency:58.9%");
 
                               var reynard_the_first = house_of_maalpertuus.TagNew("reynard.the-first");
                               reynard_the_first.Name = "reynard";
                               reynard_the_first.Tag("level:2").Tag("graphene").Tag("weight:3.8").Tag("rare")
-                                               .Tag("load:50V").Tag("power:2.2KW").Tag("efficiency:68.3%");
+                                               .Tag("load:50V").Tag("power:2.2KW").Tag("efficiency:62%");
 
                               var reynard_the_second = house_of_maalpertuus.TagNew("reynard.the-second");
                               reynard_the_second.Name = "reynard";
-                              reynard_the_second.Tag("level:3").Tag("graphene").Tag("weight:3.6").Tag("rare")
+                              reynard_the_second.Tag("level:3").Tag("graphene").Tag("weight:3.6").Tag("epic")
                                                 .Tag("load:50V").Tag("power:2.2KW").Tag("efficiency:68.3%");
 
                               var baldwin = house_of_maalpertuus.TagNew("baldwin");
                               baldwin.Name = "baldwin";
                               baldwin.Tag("level:4").Tag("graphene").Tag("weight:1.9").Tag("legendary")
-                                     .Tag("load:45V").Tag("power:4.8KW").Tag("efficiency:66.3333%");
+                                     .Tag("load:45V").Tag("power:4.8KW").Tag("efficiency:73.3333%");
 
                               var isengrim = house_of_maalpertuus.TagNew("isengrim");
                               isengrim.Name = "isengrim";
                               isengrim.Tag("level:4").Tag("graphene").Tag("weight:2.32").Tag("legendary")
-                                      .Tag("load:45V").Tag("power:2.2KW").Tag("efficiency:79.65%");
+                                      .Tag("load:45V").Tag("power:2.2KW").Tag("efficiency:82.65%");
 
                               var noble = house_of_maalpertuus.TagNew("noble");
                               noble.Name = "noble";
                               noble.Tag("level:5").Tag("graphene").Tag("weight:1.8").Tag("mythic")
-                                   .Tag("load:45V").Tag("power:4.8KW").Tag("efficiency:81%");
+                                   .Tag("load:45V").Tag("power:4.8KW").Tag("efficiency:88%");
+
+                              var tybalt = house_of_maalpertuus.TagNew("tybalt");
+                              tybalt.Name = "tybalt";
+                              tybalt.Tag("level:6").Tag("graphene").Tag("weight:0.999292").Tag("exotic")
+                                    .Tag("load:45V").Tag("power:4.8KW").Tag("efficiency:99.9999998");
 
                               var king_noble = house_of_maalpertuus.TagNew("king-noble");
                               king_noble.Name = "king-noble";
@@ -137,6 +153,7 @@ namespace moon.rock.world.part {
                                     baldwin,
                                     isengrim,
                                     noble,
+                                    tybalt,
                                     king_noble
                               };
                         }
