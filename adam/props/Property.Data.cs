@@ -4,9 +4,9 @@ using System.Linq;
 /*
  * Properties of Objects that exist in the world and their respective modifiers.
  */
-namespace adam.property {
+namespace adam.props {
 
-      public partial class Property {
+      public class Props {
 
             // I Have Weight, so I am affected by gravity and physics.
             public interface IHaveWeight {

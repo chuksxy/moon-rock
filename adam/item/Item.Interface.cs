@@ -1,4 +1,4 @@
-using adam.property;
+using adam.props;
 using moon.rock.world;
 using UnityEngine;
 
@@ -42,7 +42,7 @@ namespace adam.item {
                         string               itemID,
                         string               registryID,
                         string               zoneID,
-                        Property.IAmAnObject @object
+                        Props.IAmAnObject @object
                   ) {
                         _slotID     = slotID;
                         _objectID   = objectID;

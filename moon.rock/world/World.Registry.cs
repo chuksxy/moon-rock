@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using adam.character;
-using adam.property;
+using adam.props;
 using moon.rock.table;
 
 namespace moon.rock.world {
@@ -18,7 +18,7 @@ namespace moon.rock.world {
                   private readonly STable<string, Character.Data> _characters;
 
                   // `Item Tables` for items located in the world.
-                  private readonly STable<string, Property.IAmAnObject> _objects;
+                  private readonly STable<string, Props.IAmAnObject> _objects;
                   private readonly STable<string, HashSet<string>>      _zoneIDsToCharactersIDs;
                   private readonly STable<string, HashSet<string>>      _zoneIDsToObjectsIDs;
 
@@ -27,7 +27,7 @@ namespace moon.rock.world {
                         STable<string, Character.Data>       characters,
                         STable<string, string>               characterIDsToZoneIDs,
                         STable<string, HashSet<string>>      zoneIDsToCharactersIDs,
-                        STable<string, Property.IAmAnObject> objects,
+                        STable<string, Props.IAmAnObject> objects,
                         STable<string, HashSet<string>>      zoneIDsToObjectsIDs
                   ) {
                         _characterIDsToZoneIDs  = characterIDsToZoneIDs;
@@ -61,7 +61,7 @@ namespace moon.rock.world {
                         var characters             = new STable<string, Character.Data>();
                         var characterIDsToZoneIDs  = new STable<string, string>();
                         var zoneIDsToCharactersIDs = new STable<string, HashSet<string>>();
-                        var objects                = new STable<string, Property.IAmAnObject>();
+                        var objects                = new STable<string, Props.IAmAnObject>();
                         var zoneIDsToObjectIDs     = new STable<string, HashSet<string>>();
                         return new Registry(
                               characters,
@@ -130,7 +130,7 @@ namespace moon.rock.world {
                   }
 
 
-                  public void RegisterObject(string objectID, string zoneID, Property.IAmAnObject @object) {
+                  public void RegisterObject(string objectID, string zoneID, Props.IAmAnObject @object) {
                         if (_objects.ContainsKey(objectID)) return;
 
                         _objects.Add(objectID, @object);

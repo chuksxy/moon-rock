@@ -1,5 +1,5 @@
 using adam.item;
-using adam.property;
+using adam.props;
 using UnityEngine;
 
 namespace adam.character {
@@ -25,14 +25,14 @@ namespace adam.character {
 
             }
 
-            public struct Data : Property.IHaveWeight, Property.IAmAnObject {
+            public struct Data : Props.IHaveWeight, Props.IAmAnObject {
 
                   private static readonly Data Blank = new Data();
 
                   public string          ID     { get; set; }
                   public string          Name   { get; set; }
-                  public Property.Health Health { get; set; }
-                  public Property.Energy Energy { get; set; }
+                  public Props.Health Health { get; set; }
+                  public Props.Energy Energy { get; set; }
 
                   public string[] Tags      { get; set; }
                   public string[] Modifiers { get; set; }

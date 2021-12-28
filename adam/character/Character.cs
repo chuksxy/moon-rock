@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 using adam.item;
-using adam.property;
+using adam.props;
 using moon.rock.world;
 using UnityEngine;
 
@@ -88,11 +88,11 @@ namespace adam.character {
 
 
             // Get Health of character and apply all existing health modifiers.
-            public static Property.Health GetHealth(Interface characterInterface) {
+            public static Props.Health GetHealth(Interface characterInterface) {
                   var registry = World.Registry.Get(characterInterface.GetRegistryID());
                   var data     = registry.GetCharacterData(characterInterface.GetCharacterID());
 
-                  return data.IsBlank() ? new Property.Health() : data.Health;
+                  return data.IsBlank() ? new Props.Health() : data.Health;
             }
 
 
@@ -151,9 +151,9 @@ namespace adam.character {
                   var data = new Data {
                         ID   = characterID,
                         Name = t.characterName,
-                        Health = new Property.Health
+                        Health = new Props.Health
                               {Current = t.maxHealth, Max = t.maxHealth, Modifiers = t.modifiers.ToList()},
-                        Energy = new Property.Energy
+                        Energy = new Props.Energy
                               {Current = t.maxEnergy, Max = t.maxEnergy, Modifiers = t.modifiers.ToList()},
                         Base        = t.skeleton.name,
                         BaseLayer   = t.body.Select(b => b.ToData()).ToArray(),

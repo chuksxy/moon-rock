@@ -1,4 +1,4 @@
-using adam.property;
+using adam.props;
 using UnityEngine;
 
 namespace adam.item {
@@ -19,7 +19,7 @@ namespace adam.item {
                   internal Hat ToData() {
                         return new Hat {
                               Name      = itemName,
-                              Health    = new Property.Health {Current = health, Max = health},
+                              Health    = new Props.Health {Current = health, Max = health},
                               Weight    = weight,
                               Modifiers = modifiers
                         };
@@ -27,7 +27,7 @@ namespace adam.item {
 
             }
 
-            public struct Hat : Property.IHaveWeight, Property.ICanStack, Property.IAmAnObject {
+            public struct Hat : Props.IHaveWeight, Props.ICanStack, Props.IAmAnObject {
 
 
                   public string[]        Tags          { get; set; }
@@ -36,7 +36,7 @@ namespace adam.item {
                   public Vector3         WorldPosition { get; set; }
                   public Vector3         WorldRotation { get; set; }
                   public string          Name          { get; set; }
-                  public Property.Health Health        { get; set; }
+                  public Props.Health Health        { get; set; }
                   public float           Weight        { get; set; }
                   public bool            CanStack      { get; }
 
@@ -55,7 +55,7 @@ namespace adam.item {
                   internal BaseLayer ToData() {
                         return new BaseLayer {
                               Name      = itemName,
-                              Health    = new Property.Health {Current = health, Max = health},
+                              Health    = new Props.Health {Current = health, Max = health},
                               Weight    = weight,
                               Modifiers = modifiers
                         };
@@ -63,7 +63,7 @@ namespace adam.item {
 
             }
 
-            public struct BaseLayer : Property.IHaveWeight, Property.ICanStack, Property.IAmAnObject {
+            public struct BaseLayer : Props.IHaveWeight, Props.ICanStack, Props.IAmAnObject {
 
                   public string[]        Tags          { get; set; }
                   public string[]        Modifiers     { get; set; }
@@ -71,7 +71,7 @@ namespace adam.item {
                   public Vector3         WorldPosition { get; set; }
                   public Vector3         WorldRotation { get; set; }
                   public string          Name          { get; set; }
-                  public Property.Health Health        { get; set; }
+                  public Props.Health Health        { get; set; }
                   public float           Weight        { get; set; }
                   public bool            CanStack      { get; }
 
@@ -90,7 +90,7 @@ namespace adam.item {
                   internal OuterWear ToData() {
                         return new OuterWear {
                               Name      = itemName,
-                              Health    = new Property.Health {Current = health, Max = health},
+                              Health    = new Props.Health {Current = health, Max = health},
                               Weight    = weight,
                               Modifiers = modifiers
                         };
@@ -98,7 +98,7 @@ namespace adam.item {
 
             }
 
-            public struct OuterWear : Property.IHaveWeight, Property.ICanStack, Property.IAmAnObject {
+            public struct OuterWear : Props.IHaveWeight, Props.ICanStack, Props.IAmAnObject {
 
                   public string[]        Tags          { get; set; }
                   public string[]        Modifiers     { get; set; }
@@ -106,7 +106,7 @@ namespace adam.item {
                   public Vector3         WorldPosition { get; set; }
                   public Vector3         WorldRotation { get; set; }
                   public string          Name          { get; set; }
-                  public Property.Health Health        { get; set; }
+                  public Props.Health Health        { get; set; }
                   public float           Weight        { get; set; }
                   public bool            CanStack      { get; }
 
@@ -125,7 +125,7 @@ namespace adam.item {
                   internal Shoes ToData() {
                         return new Shoes {
                               Name      = itemName,
-                              Health    = new Property.Health {Current = health, Max = health},
+                              Health    = new Props.Health {Current = health, Max = health},
                               Weight    = weight,
                               Modifiers = modifiers
                         };
@@ -133,7 +133,7 @@ namespace adam.item {
 
             }
 
-            public struct Shoes : Property.IHaveWeight, Property.ICanStack, Property.IAmAnObject {
+            public struct Shoes : Props.IHaveWeight, Props.ICanStack, Props.IAmAnObject {
 
                   public string[]        Tags          { get; set; }
                   public string[]        Modifiers     { get; set; }
@@ -141,7 +141,7 @@ namespace adam.item {
                   public Vector3         WorldPosition { get; set; }
                   public Vector3         WorldRotation { get; set; }
                   public string          Name          { get; set; }
-                  public Property.Health Health        { get; set; }
+                  public Props.Health Health        { get; set; }
                   public float           Weight        { get; set; }
                   public bool            CanStack      { get; }
 
@@ -160,7 +160,7 @@ namespace adam.item {
                   internal Sleeve ToData() {
                         return new Sleeve {
                               Name      = itemName,
-                              Health    = new Property.Health {Current = health, Max = health},
+                              Health    = new Props.Health {Current = health, Max = health},
                               Weight    = weight,
                               Modifiers = modifiers
                         };
@@ -168,7 +168,7 @@ namespace adam.item {
 
             }
 
-            public struct Sleeve : Property.IHaveWeight, Property.ICanStack, Property.IAmAnObject {
+            public struct Sleeve : Props.IHaveWeight, Props.ICanStack, Props.IAmAnObject {
 
                   public string[]        Tags          { get; set; }
                   public string[]        Modifiers     { get; set; }
@@ -176,7 +176,7 @@ namespace adam.item {
                   public Vector3         WorldPosition { get; set; }
                   public Vector3         WorldRotation { get; set; }
                   public string          Name          { get; set; }
-                  public Property.Health Health        { get; set; }
+                  public Props.Health Health        { get; set; }
                   public float           Weight        { get; set; }
                   public bool            CanStack      { get; }
 

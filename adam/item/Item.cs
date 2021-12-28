@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using adam.character;
-using adam.property;
+using adam.props;
 using moon.rock.world;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -106,7 +106,7 @@ namespace adam.item {
                   var path = $"{slotID}/{template}";
 
                   GameObject           prefab  = null;
-                  Property.IAmAnObject @object = null;
+                  Props.IAmAnObject @object = null;
 
                   switch (slotID) {
                         case Slot.Head:
@@ -183,7 +183,7 @@ namespace adam.item {
             }
 
 
-            public static float Weigh(Property.IHaveWeight[] weights) {
+            public static float Weigh(Props.IHaveWeight[] weights) {
                   return weights.Select(hasWeight => hasWeight.Weight).Sum();
             }
 
