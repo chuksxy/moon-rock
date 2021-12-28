@@ -5,24 +5,6 @@ namespace tartarus.graph {
       public class GraphTest : MonoBehaviour {
 
             public void Start() {
-                  var graphA = Graph.Create("graph.A");
-                  var graphB = Graph.Create("graph.B");
-
-                  // TODO:: Graph Encapsulation is still buggy. Fix!
-                  /*
-                  Debug.Log(
-                        $"graph Size for {graphA.ID} is [{graphA.CountNodes()}] nodes created and [{graphA.CountConnections()}] connections");
-                  Debug.Log(
-                        $"graph Size for {graphB.ID} is [{graphB.CountNodes()}] nodes created and [{graphB.CountConnections()}] connections");
-
-                  graphA.Add(graphB);
-
-                  Debug.Log(
-                        $"graph Size for {graphA.ID} is [{graphA.CountNodes()}] nodes created and [{graphA.CountConnections()}] connections");
-                  Debug.Log(
-                        $"graph Size for {graphB.ID} is [{graphB.CountNodes()}] nodes created and [{graphB.CountConnections()}] connections");
-                  */
-
                   var nodeA = Graph.Node.New("A");
                   var nodeB = Graph.Node.New("B");
                   var nodeC = Graph.Node.New("C");
