@@ -60,31 +60,31 @@ namespace tartarus.props {
                   }
 
 
-                  public static Builder NewProperty(string propertyID, int value) {
+                  public static Props NewProperty(string propertyID, int value) {
                         return new Builder(allInts: new Dictionary<string, int> {
                               {propertyID, value}
-                        });
+                        }).Build();
                   }
 
 
-                  public static Builder NewProperty(string propertyID, float value) {
+                  public static Props NewProperty(string propertyID, float value) {
                         return new Builder(allFloats: new Dictionary<string, float>() {
                               {propertyID, value}
-                        });
+                        }).Build();
                   }
 
 
-                  public static Builder NewProperty(string propertyID, string value) {
+                  public static Props NewProperty(string propertyID, string value) {
                         return new Builder(allStrings: new Dictionary<string, string>() {
                               {propertyID, value}
-                        });
+                        }).Build();
                   }
 
 
-                  public static Builder NewProperty(string propertyID, bool value) {
+                  public static Props NewProperty(string propertyID, bool value) {
                         return new Builder(allBooleans: new Dictionary<string, bool>() {
                               {propertyID, value}
-                        });
+                        }).Build();
                   }
 
 
@@ -105,6 +105,11 @@ namespace tartarus.props {
 
                   public Builder AddProperty(string propertyID, bool value) {
                         return this;
+                  }
+
+
+                  public Props Build() {
+                        return new Props();
                   }
 
             }
