@@ -58,6 +58,7 @@ namespace moon.rock.world.part {
                               blue_iron_phaser.Props.Merge(Props.Create.Weight(8.2f));
                               blue_iron_phaser.Props.Merge(Props.Create.Level(1));
                               blue_iron_phaser.Props.Merge(Props.Create.Hidden(true));
+
                               return blue_iron_phaser;
                         }
 
@@ -67,6 +68,7 @@ namespace moon.rock.world.part {
                               copper_red_phaser_v1.Name = "copper.red.phaser";
                               copper_red_phaser_v1.Tag("level:1").Tag("cast-iron").Tag("weight:6.5").Tag("common")
                                                   .Tag("load:45V").Tag("power:2.2KW").Tag("efficiency:52.65%");
+
                               return copper_red_phaser_v1;
                         }
 
@@ -76,6 +78,7 @@ namespace moon.rock.world.part {
                               copper_red_phaser_v2.Name = "copper.red.phaser.version:2";
                               copper_red_phaser_v2.Tag("level:2").Tag("cast-iron").Tag("weight:5.9")
                                                   .Tag("load:45V").Tag("power:4.8KW").Tag("efficiency:58.3333%");
+
                               return copper_red_phaser_v2;
                         }
 
@@ -150,6 +153,7 @@ namespace moon.rock.world.part {
                               bruin.Name = "bruin";
                               bruin.Tag("level:1").Tag("graphene").Tag("weight:4.7").Tag("rare")
                                    .Tag("load:45V").Tag("power:4.8KW").Tag("efficiency:58.9%");
+
                               return bruin;
                         }
 
@@ -159,6 +163,7 @@ namespace moon.rock.world.part {
                               reynard_the_first.Name = "reynard";
                               reynard_the_first.Tag("level:2").Tag("graphene").Tag("weight:3.8").Tag("rare")
                                                .Tag("load:50V").Tag("power:2.2KW").Tag("efficiency:62%");
+
                               return reynard_the_first;
                         }
 
@@ -168,6 +173,7 @@ namespace moon.rock.world.part {
                               reynard_the_second.Name = "reynard";
                               reynard_the_second.Tag("level:3").Tag("graphene").Tag("weight:3.6").Tag("epic")
                                                 .Tag("load:50V").Tag("power:2.2KW").Tag("efficiency:68.3%");
+
                               return reynard_the_second;
                         }
 
@@ -177,6 +183,7 @@ namespace moon.rock.world.part {
                               baldwin.Name = "baldwin";
                               baldwin.Tag("level:4").Tag("graphene").Tag("weight:1.9").Tag("legendary")
                                      .Tag("load:45V").Tag("power:4.8KW").Tag("efficiency:73.3333%");
+
                               return baldwin;
                         }
 
@@ -186,6 +193,7 @@ namespace moon.rock.world.part {
                               isengrim.Name = "isengrim";
                               isengrim.Tag("level:4").Tag("graphene").Tag("weight:2.32").Tag("legendary")
                                       .Tag("load:45V").Tag("power:2.2KW").Tag("efficiency:82.65%");
+
                               return isengrim;
                         }
 
@@ -195,6 +203,7 @@ namespace moon.rock.world.part {
                               noble.Name = "noble";
                               noble.Tag("level:5").Tag("graphene").Tag("weight:1.8").Tag("mythic")
                                    .Tag("load:45V").Tag("power:4.8KW").Tag("efficiency:88%");
+
                               return noble;
                         }
 
@@ -204,6 +213,7 @@ namespace moon.rock.world.part {
                               tybalt.Name = "tybalt";
                               tybalt.Tag("level:6").Tag("graphene").Tag("weight:0.999292").Tag("exotic")
                                     .Tag("load:45V").Tag("power:4.8KW").Tag("efficiency:99.9999998");
+
                               return tybalt;
                         }
 
@@ -213,6 +223,7 @@ namespace moon.rock.world.part {
                               king_noble.Name = "king-noble";
                               king_noble.Tag("level:6").Tag("graphene").Tag("weight:0.999292").Tag("exotic")
                                         .Tag("load:45V").Tag("power:4.8KW").Tag("efficiency:99.9999998");
+
                               return king_noble;
                         }
 
