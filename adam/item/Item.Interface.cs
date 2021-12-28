@@ -1,7 +1,8 @@
+using moon.rock.world;
 using moon.rock.world.property;
 using UnityEngine;
 
-namespace moon.rock.world.item {
+namespace adam.item {
 
       public static partial class Item {
 

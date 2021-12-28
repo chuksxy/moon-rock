@@ -1,6 +1,6 @@
 using System.Collections.Generic;
+using adam.character;
 using moon.rock.table;
-using moon.rock.world.character;
 using moon.rock.world.property;
 
 namespace moon.rock.world {

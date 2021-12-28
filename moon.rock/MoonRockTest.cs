@@ -45,7 +45,7 @@ namespace moon.rock {
                   Debug.Log($"Graph Size of Left Arm is {armL.Entry.CountAll(7)}");
 
                   var armR = Graph.Create("arm.r");
-                  armR.Add(circuit.DeepClone());
+                  armR.Append(circuit.DeepClone()).Connect(Part.Electric.Motor.FindByName("baldwin"));
                   armR.Add(Graph.Node.New("hand.r"));
 
                   var legL = Graph.Create("leg.l");

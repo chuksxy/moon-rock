@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using moon.rock.world.character;
+using adam.character;
+using moon.rock.world;
 using moon.rock.world.property;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -9,7 +10,7 @@ using Object = UnityEngine.Object;
 /*
  * Item management and behaviours.
  */
-namespace moon.rock.world.item {
+namespace adam.item {
 
       public static partial class Item {
 

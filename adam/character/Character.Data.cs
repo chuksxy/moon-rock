@@ -1,8 +1,8 @@
-using moon.rock.world.item;
+using adam.item;
 using moon.rock.world.property;
 using UnityEngine;
 
-namespace moon.rock.world.character {
+namespace adam.character {
 
       public static partial class Character {
 

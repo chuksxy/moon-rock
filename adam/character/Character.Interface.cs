@@ -1,10 +1,11 @@
-using moon.rock.world.item;
+using adam.item;
+using moon.rock.world;
 using UnityEngine;
 
 /*
  * Character Interface with all Unity Engine related systems.
  */
-namespace moon.rock.world.character {
+namespace adam.character {
 
       public static partial class Character {
 
