@@ -93,6 +93,9 @@ namespace moon.rock.world.part {
 
                               return new[] {
                                     lawanson_turbine_17,
+                                    lawamson_turbine_18,
+                                    lawanson_turbine_19,
+                                    lawawnson_titan,
                                     lawanson_x
                               };
                         }
