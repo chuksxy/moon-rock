@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEngine.Rendering;
 
 /*
- * Node Property creation DSL.
+ * Graph Node `Property` creation DSL. Use this to create and maintain node properties!
  */
 namespace tartarus.graph {
 
@@ -21,12 +21,13 @@ namespace tartarus.graph {
                   }
 
 
+                  // Empty Property.
                   public static Props Empty() {
                         return new Props(new HashSet<string>(), new SerializedDictionary<string, object>());
                   }
 
 
-                  // Get property by type.
+                  // Get `Property` by [name].
                   public Ref<T> Get<T>(string name) {
                         if (!Entries.ContainsKey(name)) return Ref.NoProp() as Ref<T>;
                         return new Ref<T>(name, (T) Entries[name]);
@@ -54,7 +55,7 @@ namespace tartarus.graph {
                   }
 
 
-                  // Deep Clone property values.
+                  // Deep Clone `Property` values.
                   public Props DeepClone() {
                         var clone = new SerializedDictionary<string, object>();
                         Entries.ToList().ForEach(entry => clone.Add(entry.Key, entry.Value));
@@ -63,11 +64,13 @@ namespace tartarus.graph {
 
 
                   // TODO:: Implement!
+                  // Merge two props together into one.
                   public Props Merge(Props props) {
                         return this;
                   }
 
 
+                  // Property Builder.
                   public class Builder {
 
                         private readonly HashSet<string>            _groups;
@@ -80,11 +83,13 @@ namespace tartarus.graph {
                         }
 
 
+                        // New Property Builder.
                         public static Builder New() {
                               return new Builder(new HashSet<string>(), new Dictionary<string, object>());
                         }
 
 
+                        // New Group of properties.
                         public Group NewGroup(string name) {
                               _groups.Add(name);
                               return new Group(this, name, new Dictionary<string, object>());
@@ -97,30 +102,35 @@ namespace tartarus.graph {
                         }
 
 
+                        // New `int` Property.
                         public Builder NewProperty(string propertyID, int value) {
                               _properties.Add(propertyID, value);
                               return this;
                         }
 
 
+                        // New `float` Property.
                         public Builder NewProperty(string propertyID, float value) {
                               _properties.Add(propertyID, value);
                               return this;
                         }
 
 
+                        // New `string` Property.
                         public Builder NewProperty(string propertyID, string value) {
                               _properties.Add(propertyID, value);
                               return this;
                         }
 
 
+                        // New `bool` Property.
                         public Builder NewProperty(string propertyID, bool value) {
                               _properties.Add(propertyID, value);
                               return this;
                         }
 
 
+                        // Build and return property block.
                         public Props Build() {
                               var props = new SerializedDictionary<string, object>();
                               _properties.ToList().ForEach(prop => props.Add(prop.Key, prop.Value));
@@ -128,6 +138,7 @@ namespace tartarus.graph {
                         }
 
 
+                        // Group of properties related to one another.
                         public class Group {
 
                               private readonly Builder _builder;
