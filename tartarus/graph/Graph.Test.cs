@@ -29,11 +29,11 @@ namespace tartarus.graph {
                   var nodeD = Graph.Node.New("D");
                   var nodeE = Graph.Node.New("E");
 
-                  nodeA.ConnectChain(nodeB, bidirectional: true).ConnectChain(nodeC).ConnectChain(nodeD).ConnectChain(nodeE);
-                  nodeC.ConnectChain(nodeA, bidirectional: true);
+                  nodeA.Append(nodeB, bidirectional: true).Append(nodeC).Append(nodeD).Append(nodeE);
+                  nodeC.Append(nodeA, bidirectional: true);
 
-                  nodeE.ConnectChain(nodeA, bidirectional: true);
-                  nodeE.ConnectChain(nodeB, bidirectional: true);
+                  nodeE.Append(nodeA, bidirectional: true);
+                  nodeE.Append(nodeB, bidirectional: true);
 
                   Debug.Log(
                         $"Graph Size for {nodeD.Name} is [{nodeD.CountAll(8)}] nodes created and [{nodeD.Edges.Count}].");

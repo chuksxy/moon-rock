@@ -28,7 +28,7 @@ namespace moon.rock {
 
                   Debug.Log($"Found [{powerBank.FindByTag("energy.storage").Count()}] by Tag energy.storage for power Bank.");
 
-                  var processingUnit = circuit.ConnectChain(powerBank);
+                  var processingUnit = circuit.Append(powerBank);
 
                   // A frame/chassis with armour.
                   var frame = Graph.Create("frame");

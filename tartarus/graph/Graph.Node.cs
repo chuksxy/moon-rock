@@ -143,8 +143,8 @@ namespace tartarus.graph {
                   }
 
 
-                  // Connect Chain from one node to the other node and then return the other one.
-                  public Node ConnectChain(Node from, float weight = 1.0f, bool bidirectional = false) {
+                  // Append existing node and return it.
+                  public Node Append(Node from, float weight = 1.0f, bool bidirectional = false) {
                         return Connect(from, weight, bidirectional).To;
                   }
 
