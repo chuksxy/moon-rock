@@ -36,6 +36,7 @@ namespace moon.rock.world.part {
                               var blue_iron_phaser     = BlueIronPhaser(ogun_motors);
                               var copper_red_phaser_v1 = CopperRedPhaserV1(ogun_motors);
                               var copper_red_phaser_v2 = CopperRedPhaserV2(ogun_motors);
+
                               return new[] {
                                     blue_iron_phaser,
                                     copper_red_phaser_v1,
