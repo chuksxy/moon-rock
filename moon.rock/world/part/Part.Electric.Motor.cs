@@ -44,8 +44,8 @@ namespace moon.rock.world.part {
                         }
 
 
-                        private static Graph.Node BlueIronPhaser(Graph.Node ogunMotors) {
-                              var blue_iron_phaser = ogunMotors.TagNew("blue.iron.phaser");
+                        private static Graph.Node BlueIronPhaser(Graph.Node company) {
+                              var blue_iron_phaser = company.TagNew("blue.iron.phaser");
                               blue_iron_phaser.Name = "blue.iron.phaser";
                               blue_iron_phaser.Tag("level:1").Tag("cast-iron").Tag("weight:8.2").Tag("common")
                                               .Tag("load:50V").Tag("power:2.2KW").Tag("efficiency:43.3333%");
@@ -61,8 +61,8 @@ namespace moon.rock.world.part {
                         }
 
 
-                        private static Graph.Node CopperRedPhaserV1(Graph.Node ogunMotors) {
-                              var copper_red_phaser_v1 = ogunMotors.TagNew("copper.red.phaser");
+                        private static Graph.Node CopperRedPhaserV1(Graph.Node company) {
+                              var copper_red_phaser_v1 = company.TagNew("copper.red.phaser");
                               copper_red_phaser_v1.Name = "copper.red.phaser";
                               copper_red_phaser_v1.Tag("level:1").Tag("cast-iron").Tag("weight:6.5").Tag("common")
                                                   .Tag("load:45V").Tag("power:2.2KW").Tag("efficiency:52.65%");
@@ -70,8 +70,8 @@ namespace moon.rock.world.part {
                         }
 
 
-                        private static Graph.Node CopperRedPhaserV2(Graph.Node ogunMotors) {
-                              var copper_red_phaser_v2 = ogunMotors.TagNew("copper.red.phaser").Tag("uncommon");
+                        private static Graph.Node CopperRedPhaserV2(Graph.Node company) {
+                              var copper_red_phaser_v2 = company.TagNew("copper.red.phaser").Tag("uncommon");
                               copper_red_phaser_v2.Name = "copper.red.phaser.version:2";
                               copper_red_phaser_v2.Tag("level:2").Tag("cast-iron").Tag("weight:5.9")
                                                   .Tag("load:45V").Tag("power:4.8KW").Tag("efficiency:58.3333%");
@@ -144,8 +144,8 @@ namespace moon.rock.world.part {
                         }
 
 
-                        private static Graph.Node Bruin(Graph.Node houseOfMaalpertuus) {
-                              var bruin = houseOfMaalpertuus.TagNew("bruin");
+                        private static Graph.Node Bruin(Graph.Node company) {
+                              var bruin = company.TagNew("bruin");
                               bruin.Name = "bruin";
                               bruin.Tag("level:1").Tag("graphene").Tag("weight:4.7").Tag("rare")
                                    .Tag("load:45V").Tag("power:4.8KW").Tag("efficiency:58.9%");
@@ -153,8 +153,8 @@ namespace moon.rock.world.part {
                         }
 
 
-                        private static Graph.Node ReynardTheFirst(Graph.Node houseOfMaalpertuus) {
-                              var reynard_the_first = houseOfMaalpertuus.TagNew("reynard.the-first");
+                        private static Graph.Node ReynardTheFirst(Graph.Node company) {
+                              var reynard_the_first = company.TagNew("reynard.the-first");
                               reynard_the_first.Name = "reynard";
                               reynard_the_first.Tag("level:2").Tag("graphene").Tag("weight:3.8").Tag("rare")
                                                .Tag("load:50V").Tag("power:2.2KW").Tag("efficiency:62%");
@@ -162,8 +162,8 @@ namespace moon.rock.world.part {
                         }
 
 
-                        private static Graph.Node ReynardTheSecond(Graph.Node houseOfMaalpertuus) {
-                              var reynard_the_second = houseOfMaalpertuus.TagNew("reynard.the-second");
+                        private static Graph.Node ReynardTheSecond(Graph.Node company) {
+                              var reynard_the_second = company.TagNew("reynard.the-second");
                               reynard_the_second.Name = "reynard";
                               reynard_the_second.Tag("level:3").Tag("graphene").Tag("weight:3.6").Tag("epic")
                                                 .Tag("load:50V").Tag("power:2.2KW").Tag("efficiency:68.3%");
@@ -171,8 +171,8 @@ namespace moon.rock.world.part {
                         }
 
 
-                        private static Graph.Node Baldwin(Graph.Node houseOfMaalpertuus) {
-                              var baldwin = houseOfMaalpertuus.TagNew("baldwin");
+                        private static Graph.Node Baldwin(Graph.Node company) {
+                              var baldwin = company.TagNew("baldwin");
                               baldwin.Name = "baldwin";
                               baldwin.Tag("level:4").Tag("graphene").Tag("weight:1.9").Tag("legendary")
                                      .Tag("load:45V").Tag("power:4.8KW").Tag("efficiency:73.3333%");
@@ -180,8 +180,8 @@ namespace moon.rock.world.part {
                         }
 
 
-                        private static Graph.Node Isengrim(Graph.Node houseOfMaalpertuus) {
-                              var isengrim = houseOfMaalpertuus.TagNew("isengrim");
+                        private static Graph.Node Isengrim(Graph.Node company) {
+                              var isengrim = company.TagNew("isengrim");
                               isengrim.Name = "isengrim";
                               isengrim.Tag("level:4").Tag("graphene").Tag("weight:2.32").Tag("legendary")
                                       .Tag("load:45V").Tag("power:2.2KW").Tag("efficiency:82.65%");
@@ -189,8 +189,8 @@ namespace moon.rock.world.part {
                         }
 
 
-                        private static Graph.Node Noble(Graph.Node houseOfMaalpertuus) {
-                              var noble = houseOfMaalpertuus.TagNew("noble");
+                        private static Graph.Node Noble(Graph.Node company) {
+                              var noble = company.TagNew("noble");
                               noble.Name = "noble";
                               noble.Tag("level:5").Tag("graphene").Tag("weight:1.8").Tag("mythic")
                                    .Tag("load:45V").Tag("power:4.8KW").Tag("efficiency:88%");
@@ -198,8 +198,8 @@ namespace moon.rock.world.part {
                         }
 
 
-                        private static Graph.Node Tybalt(Graph.Node houseOfMaalpertuus) {
-                              var tybalt = houseOfMaalpertuus.TagNew("tybalt");
+                        private static Graph.Node Tybalt(Graph.Node company) {
+                              var tybalt = company.TagNew("tybalt");
                               tybalt.Name = "tybalt";
                               tybalt.Tag("level:6").Tag("graphene").Tag("weight:0.999292").Tag("exotic")
                                     .Tag("load:45V").Tag("power:4.8KW").Tag("efficiency:99.9999998");
@@ -207,8 +207,8 @@ namespace moon.rock.world.part {
                         }
 
 
-                        private static Graph.Node KingNoble(Graph.Node houseOfMaalpertuus) {
-                              var king_noble = houseOfMaalpertuus.TagNew("king-noble");
+                        private static Graph.Node KingNoble(Graph.Node company) {
+                              var king_noble = company.TagNew("king-noble");
                               king_noble.Name = "king-noble";
                               king_noble.Tag("level:6").Tag("graphene").Tag("weight:0.999292").Tag("exotic")
                                         .Tag("load:45V").Tag("power:4.8KW").Tag("efficiency:99.9999998");
