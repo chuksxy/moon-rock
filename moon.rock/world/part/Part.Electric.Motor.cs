@@ -31,29 +31,16 @@ namespace moon.rock.world.part {
 
                         // All By `Ogun Motors` Electric Company.
                         private static IEnumerable<Graph.Node> AllByOgunMotors() {
+                              var ogun_motors = Company.OgunMotors();
+
+                              var blue_iron_phaser     = BlueIronPhaser(ogun_motors);
+                              var copper_red_phaser_v1 = CopperRedPhaserV1(ogun_motors);
+                              var copper_red_phaser_v2 = CopperRedPhaserV2(ogun_motors);
                               return new[] {
-                                    CopperRedPhaserV2(Company.OgunMotors()),
-                                    CopperRedPhaserV1(Company.OgunMotors()),
-                                    BlueIronPhaser(Company.OgunMotors()),
+                                    blue_iron_phaser,
+                                    copper_red_phaser_v1,
+                                    copper_red_phaser_v2
                               };
-                        }
-
-
-                        private static Graph.Node CopperRedPhaserV2(Graph.Node ogunMotors) {
-                              var copper_red_phaser_v2 = ogunMotors.TagNew("copper.red.phaser").Tag("uncommon");
-                              copper_red_phaser_v2.Name = "copper.red.phaser.version:2";
-                              copper_red_phaser_v2.Tag("level:2").Tag("cast-iron").Tag("weight:5.9")
-                                                  .Tag("load:45V").Tag("power:4.8KW").Tag("efficiency:58.3333%");
-                              return copper_red_phaser_v2;
-                        }
-
-
-                        private static Graph.Node CopperRedPhaserV1(Graph.Node ogunMotors) {
-                              var copper_red_phaser_v1 = ogunMotors.TagNew("copper.red.phaser");
-                              copper_red_phaser_v1.Name = "copper.red.phaser";
-                              copper_red_phaser_v1.Tag("level:1").Tag("cast-iron").Tag("weight:6.5").Tag("common")
-                                                  .Tag("load:45V").Tag("power:2.2KW").Tag("efficiency:52.65%");
-                              return copper_red_phaser_v1;
                         }
 
 
@@ -71,6 +58,24 @@ namespace moon.rock.world.part {
                               blue_iron_phaser.Props.Merge(Props.Create.Level(1));
                               blue_iron_phaser.Props.Merge(Props.Create.Hidden(true));
                               return blue_iron_phaser;
+                        }
+
+
+                        private static Graph.Node CopperRedPhaserV1(Graph.Node ogunMotors) {
+                              var copper_red_phaser_v1 = ogunMotors.TagNew("copper.red.phaser");
+                              copper_red_phaser_v1.Name = "copper.red.phaser";
+                              copper_red_phaser_v1.Tag("level:1").Tag("cast-iron").Tag("weight:6.5").Tag("common")
+                                                  .Tag("load:45V").Tag("power:2.2KW").Tag("efficiency:52.65%");
+                              return copper_red_phaser_v1;
+                        }
+
+
+                        private static Graph.Node CopperRedPhaserV2(Graph.Node ogunMotors) {
+                              var copper_red_phaser_v2 = ogunMotors.TagNew("copper.red.phaser").Tag("uncommon");
+                              copper_red_phaser_v2.Name = "copper.red.phaser.version:2";
+                              copper_red_phaser_v2.Tag("level:2").Tag("cast-iron").Tag("weight:5.9")
+                                                  .Tag("load:45V").Tag("power:4.8KW").Tag("efficiency:58.3333%");
+                              return copper_red_phaser_v2;
                         }
 
 
