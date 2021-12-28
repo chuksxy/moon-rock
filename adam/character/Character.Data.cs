@@ -1,5 +1,5 @@
 using adam.item;
-using moon.rock.world.property;
+using adam.property;
 using UnityEngine;
 
 namespace adam.character {

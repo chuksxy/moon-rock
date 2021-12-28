@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using adam.character;
+using adam.property;
 using moon.rock.world;
-using moon.rock.world.property;
 using UnityEngine;
 using Object = UnityEngine.Object;
 

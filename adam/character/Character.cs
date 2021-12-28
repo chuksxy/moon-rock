@@ -1,8 +1,8 @@
 using System;
 using System.Linq;
 using adam.item;
+using adam.property;
 using moon.rock.world;
-using moon.rock.world.property;
 using UnityEngine;
 
 

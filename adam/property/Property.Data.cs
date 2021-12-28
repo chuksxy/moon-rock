@@ -4,7 +4,7 @@ using System.Linq;
 /*
  * Properties of Objects that exist in the world and their respective modifiers.
  */
-namespace moon.rock.world.property {
+namespace adam.property {
 
       public partial class Property {
 
