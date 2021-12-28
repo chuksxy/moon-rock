@@ -8,27 +8,27 @@ namespace moon.rock.world {
       public static partial class World {
 
             private static readonly Registry                Main             = Registry.LoadMain();
-            private static readonly Table<string, Registry> CachedRegistries = new Table<string, Registry>();
+            private static readonly STable<string, Registry> CachedRegistries = new STable<string, Registry>();
 
             public class Registry {
 
-                  private readonly Table<string, string> _characterIDsToZoneIDs;
+                  private readonly STable<string, string> _characterIDsToZoneIDs;
 
                   // `Character Tables` for characters located in the world.
-                  private readonly Table<string, Character.Data> _characters;
+                  private readonly STable<string, Character.Data> _characters;
 
                   // `Item Tables` for items located in the world.
-                  private readonly Table<string, Property.IAmAnObject> _objects;
-                  private readonly Table<string, HashSet<string>>      _zoneIDsToCharactersIDs;
-                  private readonly Table<string, HashSet<string>>      _zoneIDsToObjectsIDs;
+                  private readonly STable<string, Property.IAmAnObject> _objects;
+                  private readonly STable<string, HashSet<string>>      _zoneIDsToCharactersIDs;
+                  private readonly STable<string, HashSet<string>>      _zoneIDsToObjectsIDs;
 
 
                   private Registry(
-                        Table<string, Character.Data>       characters,
-                        Table<string, string>               characterIDsToZoneIDs,
-                        Table<string, HashSet<string>>      zoneIDsToCharactersIDs,
-                        Table<string, Property.IAmAnObject> objects,
-                        Table<string, HashSet<string>>      zoneIDsToObjectsIDs
+                        STable<string, Character.Data>       characters,
+                        STable<string, string>               characterIDsToZoneIDs,
+                        STable<string, HashSet<string>>      zoneIDsToCharactersIDs,
+                        STable<string, Property.IAmAnObject> objects,
+                        STable<string, HashSet<string>>      zoneIDsToObjectsIDs
                   ) {
                         _characterIDsToZoneIDs  = characterIDsToZoneIDs;
                         _characters             = characters;
@@ -58,11 +58,11 @@ namespace moon.rock.world {
 
                   // Load registry by ID from disk.
                   public static Registry Load(string registryID) {
-                        var characters             = new Table<string, Character.Data>();
-                        var characterIDsToZoneIDs  = new Table<string, string>();
-                        var zoneIDsToCharactersIDs = new Table<string, HashSet<string>>();
-                        var objects                = new Table<string, Property.IAmAnObject>();
-                        var zoneIDsToObjectIDs     = new Table<string, HashSet<string>>();
+                        var characters             = new STable<string, Character.Data>();
+                        var characterIDsToZoneIDs  = new STable<string, string>();
+                        var zoneIDsToCharactersIDs = new STable<string, HashSet<string>>();
+                        var objects                = new STable<string, Property.IAmAnObject>();
+                        var zoneIDsToObjectIDs     = new STable<string, HashSet<string>>();
                         return new Registry(
                               characters,
                               characterIDsToZoneIDs,

@@ -1,61 +1,111 @@
 using System.Collections.Generic;
+using tartarus.graph;
+using UnityEngine.Rendering;
 
 namespace tartarus.props {
 
       public class Props {
 
-            public HashSet<Float>   Floats   { get; set; }
-            public HashSet<Boolean> Booleans { get; set; }
-            public HashSet<Int>     Ints     { get; set; }
-            public HashSet<String>  Strings  { get; set; }
+            private SerializedDictionary<string, float>  Floats  { get; set; }
+            private SerializedDictionary<string, bool>   Bools   { get; set; }
+            private SerializedDictionary<string, int>    Ints    { get; set; }
+            private SerializedDictionary<string, string> Strings { get; set; }
 
 
             public static Props Empty() {
                   return new Props {
-                        Floats   = new HashSet<Float>(),
-                        Booleans = new HashSet<Boolean>(),
-                        Ints     = new HashSet<Int>(),
-                        Strings  = new HashSet<String>()
+                        Floats  = new SerializedDictionary<string, float>(),
+                        Bools   = new SerializedDictionary<string, bool>(),
+                        Ints    = new SerializedDictionary<string, int>(),
+                        Strings = new SerializedDictionary<string, string>()
                   };
             }
 
 
+            // TODO:: Implement!
             // Clone property values. Could have side effects!
             public Props Clone() {
                   return new Props {
-                        Floats   = new HashSet<Float>(Floats),
-                        Booleans = new HashSet<Boolean>(Booleans),
-                        Ints     = new HashSet<Int>(Ints),
-                        Strings  = new HashSet<String>(Strings)
+                        Floats  = new SerializedDictionary<string, float>(),
+                        Bools   = new SerializedDictionary<string, bool>(),
+                        Ints    = new SerializedDictionary<string, int>(),
+                        Strings = new SerializedDictionary<string, string>()
                   };
             }
 
 
-            public struct Boolean {
+            public class Builder {
 
-                  public string ID    { get; set; }
-                  public bool   Value { get; set; }
+                  private Dictionary<string, float>  AllFloats   { get; set; }
+                  private Dictionary<string, bool>   AllBooleans { get; set; }
+                  private Dictionary<string, int>    AllInts     { get; set; }
+                  private Dictionary<string, string> AllStrings  { get; set; }
 
-            }
 
-            public struct Int {
+                  public Builder(
+                        Dictionary<string, float>  allFloats   = null,
+                        Dictionary<string, bool>   allBooleans = null,
+                        Dictionary<string, int>    allInts     = null,
+                        Dictionary<string, string> allStrings  = null
+                  ) {
+                        AllFloats   = allFloats;
+                        AllBooleans = allBooleans;
+                        AllInts     = allInts;
+                        AllStrings  = allStrings;
+                  }
 
-                  public string ID    { get; set; }
-                  public int    Value { get; set; }
 
-            }
+                  public static Builder NewGroup(string name) {
+                        return new Builder();
+                  }
 
-            public struct Float {
 
-                  public string ID    { get; set; }
-                  public float  Value { get; set; }
+                  public static Builder NewProperty(string propertyID, int value) {
+                        return new Builder(allInts: new Dictionary<string, int> {
+                              {propertyID, value}
+                        });
+                  }
 
-            }
 
-            public struct String {
+                  public static Builder NewProperty(string propertyID, float value) {
+                        return new Builder(allFloats: new Dictionary<string, float>() {
+                              {propertyID, value}
+                        });
+                  }
 
-                  public string ID    { get; set; }
-                  public string Value { get; set; }
+
+                  public static Builder NewProperty(string propertyID, string value) {
+                        return new Builder(allStrings: new Dictionary<string, string>() {
+                              {propertyID, value}
+                        });
+                  }
+
+
+                  public static Builder NewProperty(string propertyID, bool value) {
+                        return new Builder(allBooleans: new Dictionary<string, bool>() {
+                              {propertyID, value}
+                        });
+                  }
+
+
+                  public Builder AddProperty(string propertyID, int value) {
+                        return this;
+                  }
+
+
+                  public Builder AddProperty(string propertyID, float value) {
+                        return this;
+                  }
+
+
+                  public Builder AddProperty(string propertyID, string value) {
+                        return this;
+                  }
+
+
+                  public Builder AddProperty(string propertyID, bool value) {
+                        return this;
+                  }
 
             }
 

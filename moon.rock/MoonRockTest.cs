@@ -32,9 +32,6 @@ namespace moon.rock {
 
                   // A frame/chassis with armour.
                   var frame = Graph.Create("frame");
-                  frame.Entry.Props.Floats.Add(Property.Armour.Current(100.0f));
-                  frame.Entry.Props.Floats.Add(Property.Armour.Max(100.0f));
-                  frame.Entry.Props.Booleans.Add(Property.Armour.Enabled(true));
 
                   // Destroying sub components should add a de-buff.
                   var armL = Graph.Create("arm.l");
