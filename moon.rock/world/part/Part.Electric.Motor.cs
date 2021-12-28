@@ -117,45 +117,14 @@ namespace moon.rock.world.part {
                         private static IEnumerable<Graph.Node> AllByHouseOfMaalpertuus() {
                               var house_of_maalpertuus = Company.HouseOfMaalpertuus();
 
-                              var bruin = house_of_maalpertuus.TagNew("bruin");
-                              bruin.Name = "bruin";
-                              bruin.Tag("level:1").Tag("graphene").Tag("weight:4.7").Tag("rare")
-                                   .Tag("load:45V").Tag("power:4.8KW").Tag("efficiency:58.9%");
-
-                              var reynard_the_first = house_of_maalpertuus.TagNew("reynard.the-first");
-                              reynard_the_first.Name = "reynard";
-                              reynard_the_first.Tag("level:2").Tag("graphene").Tag("weight:3.8").Tag("rare")
-                                               .Tag("load:50V").Tag("power:2.2KW").Tag("efficiency:62%");
-
-                              var reynard_the_second = house_of_maalpertuus.TagNew("reynard.the-second");
-                              reynard_the_second.Name = "reynard";
-                              reynard_the_second.Tag("level:3").Tag("graphene").Tag("weight:3.6").Tag("epic")
-                                                .Tag("load:50V").Tag("power:2.2KW").Tag("efficiency:68.3%");
-
-                              var baldwin = house_of_maalpertuus.TagNew("baldwin");
-                              baldwin.Name = "baldwin";
-                              baldwin.Tag("level:4").Tag("graphene").Tag("weight:1.9").Tag("legendary")
-                                     .Tag("load:45V").Tag("power:4.8KW").Tag("efficiency:73.3333%");
-
-                              var isengrim = house_of_maalpertuus.TagNew("isengrim");
-                              isengrim.Name = "isengrim";
-                              isengrim.Tag("level:4").Tag("graphene").Tag("weight:2.32").Tag("legendary")
-                                      .Tag("load:45V").Tag("power:2.2KW").Tag("efficiency:82.65%");
-
-                              var noble = house_of_maalpertuus.TagNew("noble");
-                              noble.Name = "noble";
-                              noble.Tag("level:5").Tag("graphene").Tag("weight:1.8").Tag("mythic")
-                                   .Tag("load:45V").Tag("power:4.8KW").Tag("efficiency:88%");
-
-                              var tybalt = house_of_maalpertuus.TagNew("tybalt");
-                              tybalt.Name = "tybalt";
-                              tybalt.Tag("level:6").Tag("graphene").Tag("weight:0.999292").Tag("exotic")
-                                    .Tag("load:45V").Tag("power:4.8KW").Tag("efficiency:99.9999998");
-
-                              var king_noble = house_of_maalpertuus.TagNew("king-noble");
-                              king_noble.Name = "king-noble";
-                              king_noble.Tag("level:6").Tag("graphene").Tag("weight:0.999292").Tag("exotic")
-                                        .Tag("load:45V").Tag("power:4.8KW").Tag("efficiency:99.9999998");
+                              var bruin              = Bruin(house_of_maalpertuus);
+                              var reynard_the_first  = ReynardTheFirst(house_of_maalpertuus);
+                              var reynard_the_second = ReynardTheSecond(house_of_maalpertuus);
+                              var baldwin            = Baldwin(house_of_maalpertuus);
+                              var isengrim           = Isengrim(house_of_maalpertuus);
+                              var noble              = Noble(house_of_maalpertuus);
+                              var tybalt             = Tybalt(house_of_maalpertuus);
+                              var king_noble         = KingNoble(house_of_maalpertuus);
 
                               return new[] {
                                     bruin,
@@ -167,6 +136,78 @@ namespace moon.rock.world.part {
                                     tybalt,
                                     king_noble
                               };
+                        }
+
+
+                        private static Graph.Node Bruin(Graph.Node houseOfMaalpertuus) {
+                              var bruin = houseOfMaalpertuus.TagNew("bruin");
+                              bruin.Name = "bruin";
+                              bruin.Tag("level:1").Tag("graphene").Tag("weight:4.7").Tag("rare")
+                                   .Tag("load:45V").Tag("power:4.8KW").Tag("efficiency:58.9%");
+                              return bruin;
+                        }
+
+
+                        private static Graph.Node ReynardTheFirst(Graph.Node houseOfMaalpertuus) {
+                              var reynard_the_first = houseOfMaalpertuus.TagNew("reynard.the-first");
+                              reynard_the_first.Name = "reynard";
+                              reynard_the_first.Tag("level:2").Tag("graphene").Tag("weight:3.8").Tag("rare")
+                                               .Tag("load:50V").Tag("power:2.2KW").Tag("efficiency:62%");
+                              return reynard_the_first;
+                        }
+
+
+                        private static Graph.Node ReynardTheSecond(Graph.Node houseOfMaalpertuus) {
+                              var reynard_the_second = houseOfMaalpertuus.TagNew("reynard.the-second");
+                              reynard_the_second.Name = "reynard";
+                              reynard_the_second.Tag("level:3").Tag("graphene").Tag("weight:3.6").Tag("epic")
+                                                .Tag("load:50V").Tag("power:2.2KW").Tag("efficiency:68.3%");
+                              return reynard_the_second;
+                        }
+
+
+                        private static Graph.Node Baldwin(Graph.Node houseOfMaalpertuus) {
+                              var baldwin = houseOfMaalpertuus.TagNew("baldwin");
+                              baldwin.Name = "baldwin";
+                              baldwin.Tag("level:4").Tag("graphene").Tag("weight:1.9").Tag("legendary")
+                                     .Tag("load:45V").Tag("power:4.8KW").Tag("efficiency:73.3333%");
+                              return baldwin;
+                        }
+
+
+                        private static Graph.Node Isengrim(Graph.Node houseOfMaalpertuus) {
+                              var isengrim = houseOfMaalpertuus.TagNew("isengrim");
+                              isengrim.Name = "isengrim";
+                              isengrim.Tag("level:4").Tag("graphene").Tag("weight:2.32").Tag("legendary")
+                                      .Tag("load:45V").Tag("power:2.2KW").Tag("efficiency:82.65%");
+                              return isengrim;
+                        }
+
+
+                        private static Graph.Node Noble(Graph.Node houseOfMaalpertuus) {
+                              var noble = houseOfMaalpertuus.TagNew("noble");
+                              noble.Name = "noble";
+                              noble.Tag("level:5").Tag("graphene").Tag("weight:1.8").Tag("mythic")
+                                   .Tag("load:45V").Tag("power:4.8KW").Tag("efficiency:88%");
+                              return noble;
+                        }
+
+
+                        private static Graph.Node Tybalt(Graph.Node houseOfMaalpertuus) {
+                              var tybalt = houseOfMaalpertuus.TagNew("tybalt");
+                              tybalt.Name = "tybalt";
+                              tybalt.Tag("level:6").Tag("graphene").Tag("weight:0.999292").Tag("exotic")
+                                    .Tag("load:45V").Tag("power:4.8KW").Tag("efficiency:99.9999998");
+                              return tybalt;
+                        }
+
+
+                        private static Graph.Node KingNoble(Graph.Node houseOfMaalpertuus) {
+                              var king_noble = houseOfMaalpertuus.TagNew("king-noble");
+                              king_noble.Name = "king-noble";
+                              king_noble.Tag("level:6").Tag("graphene").Tag("weight:0.999292").Tag("exotic")
+                                        .Tag("load:45V").Tag("power:4.8KW").Tag("efficiency:99.9999998");
+                              return king_noble;
                         }
 
                   }
