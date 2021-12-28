@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using moon.rock.world.company;
 using tartarus.graph;
 
 namespace moon.rock.world.part {
@@ -30,10 +31,7 @@ namespace moon.rock.world.part {
 
                         // All By `Ogun Motors` Electric Company.
                         private static IEnumerable<Graph.Node> AllByOgunMotors() {
-                              var ogun_motors = Graph.Node.New("ogun-motors.unassigned")
-                                                     .Tag("electric")
-                                                     .Tag("motor")
-                                                     .Tag("hardware");
+                              var ogun_motors = Company.OgunMotors();
 
                               var blue_iron_phaser = ogun_motors.TagNew("blue.iron.phaser");
                               blue_iron_phaser.Name = "blue.iron.phaser";
@@ -60,11 +58,7 @@ namespace moon.rock.world.part {
 
                         // All By `Peter and Lawanson` Inc.
                         private static IEnumerable<Graph.Node> AllByPeterAndLawanson() {
-                              var peter_and_lawanson = Graph.Node.New("peter-and-lawanson.unassigned")
-                                                            .Tag("electric")
-                                                            .Tag("motor")
-                                                            .Tag("hardware")
-                                                            .Tag("middleware");
+                              var peter_and_lawanson = Company.PeterAndLawansonInc();
 
                               var lawanson_turbine_17 = peter_and_lawanson.TagNew("lawanson_turbine_17");
                               lawanson_turbine_17.Name = "lawanson_turbine_17";
@@ -103,11 +97,7 @@ namespace moon.rock.world.part {
 
                         // All By `Maalpertuus Institure` Electric Motors Company.
                         private static IEnumerable<Graph.Node> AllByHouseOfMaalpertuus() {
-                              var house_of_maalpertuus = Graph.Node.New("house.of.maalpertuus.unassigned")
-                                                              .Tag("electric")
-                                                              .Tag("motor")
-                                                              .Tag("hardware")
-                                                              .Tag("software");
+                              var house_of_maalpertuus = Company.HouseOfMaalpertuus();
 
                               var bruin = house_of_maalpertuus.TagNew("bruin");
                               bruin.Name = "bruin";
