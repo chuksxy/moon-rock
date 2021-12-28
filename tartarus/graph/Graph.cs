@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 
 /*
  * Graph management, utils and behaviour.
@@ -67,6 +68,18 @@ namespace tartarus.graph {
 
             public int NodeCount(int depth) {
                   return Entry.CountAll(depth);
+            }
+
+
+            // TODO:: Implement!
+            public Graph SubGraphByTags(string[] tags) {
+                  return null;
+            }
+
+
+            // TODO:: Implement!
+            public Graph SubGraphByTag(string tags) {
+                  return null;
             }
 
       }

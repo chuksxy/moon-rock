@@ -40,6 +40,12 @@ namespace tartarus.graph {
                   }
 
 
+                  // TODO:: Implement!
+                  public Props Append(Ref property) {
+                        return this;
+                  }
+
+
                   public class Builder {
 
                         private Dictionary<string, float>  AllFloats   { get; set; }
