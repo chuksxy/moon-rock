@@ -1,5 +1,8 @@
 using tartarus.graph;
 
+/*
+ * All Major Companies operating within the world of Moon Rock.
+ */
 namespace moon.rock.world.company {
 
       public static class Company {
