@@ -6,9 +6,7 @@ using UnityEngine;
 
 namespace moon.rock.world.actor.mobilearmour {
 
-
       public partial class MobileArmour {
-
 
             // Create Mobile Armour from graph.
             public static Interface Create(Graph graph) {
@@ -40,6 +38,7 @@ namespace moon.rock.world.actor.mobilearmour {
             }
 
 
+            // TODO:: Implement!
             public static void CreateTorso(Graph graph) {
                   // For each node, look up creator.
                   graph.AllNodes()
@@ -51,9 +50,6 @@ namespace moon.rock.world.actor.mobilearmour {
                        .ToList()
                        .ForEach(_ => _.creator.Apply(_.node));
             }
-
-
-            public class Interface : MonoBehaviour { }
 
       }
 
