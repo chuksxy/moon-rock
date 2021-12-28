@@ -2,22 +2,25 @@ using System.Collections.Generic;
 using tartarus.graph;
 using UnityEngine.Rendering;
 
+/*
+ * Node Property creation DSL.
+ */
 namespace tartarus.props {
 
       public class Props {
 
-            private SerializedDictionary<string, float>  Floats  { get; set; }
-            private SerializedDictionary<string, bool>   Bools   { get; set; }
-            private SerializedDictionary<string, int>    Ints    { get; set; }
-            private SerializedDictionary<string, string> Strings { get; set; }
+            private SerializedDictionary<string, float>  Floats   { get; set; }
+            private SerializedDictionary<string, bool>   Booleans { get; set; }
+            private SerializedDictionary<string, int>    Ints     { get; set; }
+            private SerializedDictionary<string, string> Strings  { get; set; }
 
 
             public static Props Empty() {
                   return new Props {
-                        Floats  = new SerializedDictionary<string, float>(),
-                        Bools   = new SerializedDictionary<string, bool>(),
-                        Ints    = new SerializedDictionary<string, int>(),
-                        Strings = new SerializedDictionary<string, string>()
+                        Floats   = new SerializedDictionary<string, float>(),
+                        Booleans = new SerializedDictionary<string, bool>(),
+                        Ints     = new SerializedDictionary<string, int>(),
+                        Strings  = new SerializedDictionary<string, string>()
                   };
             }
 
@@ -26,10 +29,10 @@ namespace tartarus.props {
             // Clone property values. Could have side effects!
             public Props Clone() {
                   return new Props {
-                        Floats  = new SerializedDictionary<string, float>(),
-                        Bools   = new SerializedDictionary<string, bool>(),
-                        Ints    = new SerializedDictionary<string, int>(),
-                        Strings = new SerializedDictionary<string, string>()
+                        Floats   = new SerializedDictionary<string, float>(),
+                        Booleans = new SerializedDictionary<string, bool>(),
+                        Ints     = new SerializedDictionary<string, int>(),
+                        Strings  = new SerializedDictionary<string, string>()
                   };
             }
 
