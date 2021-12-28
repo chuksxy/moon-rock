@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using tartarus.props;
 
 /*
  * Graph Node management and behaviour.
