@@ -8,8 +8,8 @@ namespace tartarus.graph {
 
       public partial class Graph {
 
-            public Node Entry { get; set; }
-            public Node Exit  { get; set; }
+            public Node Entry { get; private set; }
+            public Node Exit  { get; private set; }
 
             public string ID => Entry.ID;
 
@@ -65,14 +65,8 @@ namespace tartarus.graph {
             }
 
 
-            public int EdgeCount() {
-                  var entryNodeCount = Entry.Edges?.Count ?? 0;
-                  var exitNodeCount  = Exit.Edges?.Count ?? 0;
-                  return Entry.Equals(Exit) ? entryNodeCount : entryNodeCount + exitNodeCount;
-            }
-
-
-            public int NodeCount(int depth) {
+            // Count all nodes up to a specific depth.
+            public int CountAllNodes(int depth) {
                   return Entry.CountAll(depth);
             }
 
