@@ -183,16 +183,14 @@ namespace moon.rock.world.part {
 
                         // All By `Maalpertuus Institure` Electric Motors Company.
                         private static IEnumerable<Graph.Node> AllByHouseOfMaalpertuus() {
-                              var house_of_maalpertuus = Company.HouseOfMaalpertuus();
-
-                              var bruin              = Bruin(house_of_maalpertuus);
-                              var reynard_the_first  = ReynardTheFirst(house_of_maalpertuus);
-                              var reynard_the_second = ReynardTheSecond(house_of_maalpertuus);
-                              var baldwin            = Baldwin(house_of_maalpertuus);
-                              var isengrim           = Isengrim(house_of_maalpertuus);
-                              var noble              = Noble(house_of_maalpertuus);
-                              var tybalt             = Tybalt(house_of_maalpertuus);
-                              var king_noble         = KingNoble(house_of_maalpertuus);
+                              var bruin              = Bruin(Company.HouseOfMaalpertuus());
+                              var reynard_the_first  = ReynardTheFirst(Company.HouseOfMaalpertuus());
+                              var reynard_the_second = ReynardTheSecond();
+                              var baldwin            = Baldwin();
+                              var isengrim           = Isengrim();
+                              var noble              = Noble();
+                              var tybalt             = Tybalt();
+                              var king_noble         = KingNoble();
 
                               return new[] {
                                     bruin,
@@ -241,9 +239,9 @@ namespace moon.rock.world.part {
                         }
 
 
-                        private static Graph.Node ReynardTheSecond(Graph.Node company) {
+                        private static Graph.Node ReynardTheSecond() {
                               return Create(
-                                    company,
+                                    Company.HouseOfMaalpertuus(),
                                     "reynard.the-second",
                                     280f,
                                     38f,
@@ -258,9 +256,9 @@ namespace moon.rock.world.part {
                         }
 
 
-                        private static Graph.Node Baldwin(Graph.Node company) {
+                        private static Graph.Node Baldwin() {
                               return Create(
-                                    company,
+                                    Company.HouseOfMaalpertuus(),
                                     "baldwin",
                                     380f,
                                     30,
@@ -275,9 +273,9 @@ namespace moon.rock.world.part {
                         }
 
 
-                        private static Graph.Node Isengrim(Graph.Node company) {
+                        private static Graph.Node Isengrim() {
                               return Create(
-                                    company,
+                                    Company.HouseOfMaalpertuus(),
                                     "isengrim",
                                     480f,
                                     21f,
@@ -292,9 +290,9 @@ namespace moon.rock.world.part {
                         }
 
 
-                        private static Graph.Node Noble(Graph.Node company) {
+                        private static Graph.Node Noble() {
                               return Create(
-                                    company,
+                                    Company.HouseOfMaalpertuus()¬,
                                     "noble",
                                     512f,
                                     18f,
@@ -309,9 +307,9 @@ namespace moon.rock.world.part {
                         }
 
 
-                        private static Graph.Node Tybalt(Graph.Node company) {
+                        private static Graph.Node Tybalt() {
                               return Create(
-                                    company,
+                                    Company.HouseOfMaalpertuus(),
                                     "tybalt",
                                     1200f,
                                     80f,
@@ -326,9 +324,9 @@ namespace moon.rock.world.part {
                         }
 
 
-                        private static Graph.Node KingNoble(Graph.Node company) {
+                        private static Graph.Node KingNoble() {
                               return Create(
-                                    company,
+                                    Company.HouseOfMaalpertuus(),
                                     "king-noble",
                                     1286f,
                                     120f,
