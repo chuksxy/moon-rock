@@ -41,43 +41,46 @@ namespace moon.rock.world.part {
                               float      efficiency,
                               string[]   materials,
                               int        level,
-                              string     rarity
+                              string     rarity,
+                              int        version = 1
                         ) {
-                              var electricMotor = company.TagNew(name)
-                                                         .Tag($"level:{level}")
-                                                         .Tag($"health:{health}")
-                                                         .Tag($"weight:{weight}")
-                                                         .Tag($"price:{price}")
-                                                         .Tag($"{rarity}")
-                                                         .Tag($"load:{load}V")
-                                                         .Tag($"power:{power}KW")
-                                                         .Tag($"efficiency:{efficiency}%");
+                              var motor = company.TagNew(name)
+                                                 .Tag($"level:{level}")
+                                                 .Tag($"health:{health}")
+                                                 .Tag($"weight:{weight}")
+                                                 .Tag($"price:{price}")
+                                                 .Tag($"{rarity}")
+                                                 .Tag($"load:{load}V")
+                                                 .Tag($"power:{power}KW")
+                                                 .Tag($"efficiency:{efficiency}%")
+                                                 .Tag($"version:{version}");
 
-                              materials.ToList().ForEach(material => electricMotor.AddTag($"material:{material}"));
-                              electricMotor.Name = name;
+                              materials.ToList().ForEach(material => motor.AddTag($"material:{material}"));
+                              AddProperties(motor, health, load, price, weight, efficiency, level, version);
 
-                              AddProperties(health, load, price, weight, efficiency, level, electricMotor);
-
-                              return electricMotor;
+                              motor.Name = name;
+                              return motor;
                         }
 
 
                         private static void AddProperties(
+                              Graph.Node motor,
                               float      health,
                               float      load,
                               float      price,
                               float      weight,
                               float      efficiency,
                               int        level,
-                              Graph.Node electricMotor
+                              int        version
                         ) {
-                              electricMotor.Props.Merge(Props.Create.Health(health, health));
-                              electricMotor.Props.Merge(Props.Create.MaxLoad(load));
-                              electricMotor.Props.Merge(Props.Create.Price(price));
-                              electricMotor.Props.Merge(Props.Create.Efficiency(efficiency));
-                              electricMotor.Props.Merge(Props.Create.Weight(weight));
-                              electricMotor.Props.Merge(Props.Create.Level(level));
-                              electricMotor.Props.Merge(Props.Create.Hidden(true));
+                              motor.Props.Merge(Props.Create.Health(health, health));
+                              motor.Props.Merge(Props.Create.MaxLoad(load));
+                              motor.Props.Merge(Props.Create.Price(price));
+                              motor.Props.Merge(Props.Create.Efficiency(efficiency));
+                              motor.Props.Merge(Props.Create.Weight(weight));
+                              motor.Props.Merge(Props.Create.Level(level));
+                              motor.Props.Merge(Props.Create.Hidden(true));
+                              motor.Props.Merge(Props.Create.Version(version));
                         }
 
 
@@ -292,7 +295,7 @@ namespace moon.rock.world.part {
 
                         private static Graph.Node Noble() {
                               return Create(
-                                    Company.HouseOfMaalpertuus()¬,
+                                    Company.HouseOfMaalpertuus(),
                                     "noble",
                                     512f,
                                     18f,

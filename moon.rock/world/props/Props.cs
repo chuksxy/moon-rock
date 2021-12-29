@@ -79,6 +79,11 @@ namespace moon.rock.world.props {
                         return Graph.Props.Builder.New().NewProperty("hidden", value).Build();
                   }
 
+
+                  public static Graph.Props Version(int value) {
+                        return Graph.Props.Builder.New().NewProperty("version", value).Build();
+                  }
+
             }
 
       }
