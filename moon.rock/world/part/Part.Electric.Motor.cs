@@ -327,11 +327,6 @@ namespace moon.rock.world.part {
 
 
                         private static Graph.Node KingNoble(Graph.Node company) {
-                              var king_noble = company.TagNew("king-noble");
-                              king_noble.Name = "king-noble";
-                              king_noble.Tag("level:6").Tag("graphene").Tag("weight:0.999292").Tag("exotic")
-                                        .Tag("load:45V").Tag("power:4.8KW").Tag("efficiency:99.9999998");
-
                               return Create(
                                     company,
                                     "king-noble",
