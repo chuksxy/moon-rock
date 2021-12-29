@@ -23,6 +23,58 @@ namespace moon.rock.world.part {
                         }
 
 
+                        // Create An Electric Motor.
+                        public static Graph.Node Create(
+                              Graph.Node company,
+                              string     name,
+                              float      health,
+                              float      load,
+                              float      power,
+                              float      price,
+                              float      weight,
+                              float      efficiency,
+                              string[]   materials,
+                              int        level,
+                              string     rarity
+                        ) {
+                              var electricMotor = company.TagNew(name)
+                                                         .Tag($"level:{level}")
+                                                         .Tag($"health:{health}")
+                                                         .Tag($"weight:{weight}")
+                                                         .Tag($"price:{price}")
+                                                         .Tag($"{rarity}")
+                                                         .Tag($"load:{load}V")
+                                                         .Tag($"power:{power}KW")
+                                                         .Tag($"efficiency:{efficiency}%");
+
+                              materials.ToList().ForEach(material => electricMotor.AddTag($"material:{material}"));
+                              electricMotor.Name = name;
+
+                              AddProperties(health, load, price, weight, efficiency, level, electricMotor);
+
+                              return electricMotor;
+                        }
+
+
+                        private static void AddProperties(
+                              float      health,
+                              float      load,
+                              float      price,
+                              float      weight,
+                              float      efficiency,
+                              int        level,
+                              Graph.Node electricMotor
+                        ) {
+                              electricMotor.Props.Merge(Props.Create.Health(health, health));
+                              electricMotor.Props.Merge(Props.Create.MaxLoad(load));
+                              electricMotor.Props.Merge(Props.Create.Price(price));
+                              electricMotor.Props.Merge(Props.Create.Efficiency(efficiency));
+                              electricMotor.Props.Merge(Props.Create.Weight(weight));
+                              electricMotor.Props.Merge(Props.Create.Level(level));
+                              electricMotor.Props.Merge(Props.Create.Hidden(true));
+                        }
+
+
                         // Find An `Electric Motor` by [name].
                         public static Graph.Node FindByName(string name) {
                               return !AllMotorsByName.ContainsKey(name) ? Graph.Node.Blank() : AllMotorsByName[name].DeepClone();
@@ -46,30 +98,36 @@ namespace moon.rock.world.part {
 
 
                         private static Graph.Node BlueIronPhaser(Graph.Node company) {
-                              var blue_iron_phaser = company.TagNew("blue.iron.phaser");
-                              blue_iron_phaser.Name = "blue.iron.phaser";
-                              blue_iron_phaser.Tag("level:1").Tag("cast-iron").Tag("weight:8.2").Tag("common")
-                                              .Tag("load:50V").Tag("power:2.2KW").Tag("efficiency:43.3333%");
-
-                              blue_iron_phaser.Props.Merge(Props.Create.Health(60, 60));
-                              blue_iron_phaser.Props.Merge(Props.Create.MaxLoad(60));
-                              blue_iron_phaser.Props.Merge(Props.Create.Price(110.99f));
-                              blue_iron_phaser.Props.Merge(Props.Create.Efficiency(43.3333f));
-                              blue_iron_phaser.Props.Merge(Props.Create.Weight(8.2f));
-                              blue_iron_phaser.Props.Merge(Props.Create.Level(1));
-                              blue_iron_phaser.Props.Merge(Props.Create.Hidden(true));
-
-                              return blue_iron_phaser;
+                              return Create(
+                                    company,
+                                    "blue.iron.phaser",
+                                    60.0f,
+                                    60.0f,
+                                    2.2f,
+                                    110.99f,
+                                    8.2f,
+                                    43.3333f,
+                                    new[] {"cast-iron", "copper", "iron", "steel"},
+                                    1,
+                                    "common"
+                              );
                         }
 
 
                         private static Graph.Node CopperRedPhaserV1(Graph.Node company) {
-                              var copper_red_phaser_v1 = company.TagNew("copper.red.phaser");
-                              copper_red_phaser_v1.Name = "copper.red.phaser";
-                              copper_red_phaser_v1.Tag("level:1").Tag("cast-iron").Tag("weight:6.5").Tag("common")
-                                                  .Tag("load:45V").Tag("power:2.2KW").Tag("efficiency:52.65%");
-
-                              return copper_red_phaser_v1;
+                              return Create(
+                                    company,
+                                    "copper.red.phaser",
+                                    71f,
+                                    45.0f,
+                                    2.2f,
+                                    151f,
+                                    6.5f,
+                                    52.65f,
+                                    new[] {"copper", "aluminium"},
+                                    1,
+                                    "common"
+                              );
                         }
 
 

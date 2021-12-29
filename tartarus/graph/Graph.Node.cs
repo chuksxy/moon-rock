@@ -214,6 +214,15 @@ namespace tartarus.graph {
                   }
 
 
+                  // Add a Tag to a Node so it can be queried later.
+                  public void AddTag(string name) {
+                        Tags ??= new HashSet<string>();
+
+                        if (Tags.Contains(name)) return;
+                        Tags.Add(name);
+                  }
+
+
                   // Tag Node with a [name] so it can be queried later and return said node.
                   public Node Tag(string name) {
                         Tags ??= new HashSet<string>();
