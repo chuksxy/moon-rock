@@ -88,8 +88,8 @@ namespace moon.rock.world.part {
                         private static IEnumerable<Graph.Node> AllByOgunMotors() {
                               return new[] {
                                     BlueIronPhaser(Company.OgunMotors()),
-                                    CopperRedPhaserV1(Company.OgunMotors()),
-                                    CopperRedPhaserV2(Company.OgunMotors())
+                                    CopperRedPhaser(Company.OgunMotors()),
+                                    CopperRedPhaserFire(Company.OgunMotors())
                               };
                         }
 
@@ -111,7 +111,7 @@ namespace moon.rock.world.part {
                         }
 
 
-                        private static Graph.Node CopperRedPhaserV1(Graph.Node company) {
+                        private static Graph.Node CopperRedPhaser(Graph.Node company) {
                               return Create(
                                     company,
                                     "copper-red-phaser",
@@ -128,10 +128,10 @@ namespace moon.rock.world.part {
                         }
 
 
-                        private static Graph.Node CopperRedPhaserV2(Graph.Node company) {
+                        private static Graph.Node CopperRedPhaserFire(Graph.Node company) {
                               return Create(
                                     company,
-                                    "copper-red-phaser.2",
+                                    "copper-red-phaser.fire",
                                     86f,
                                     45f,
                                     4.8f,
@@ -140,7 +140,8 @@ namespace moon.rock.world.part {
                                     58.3333f,
                                     new[] {"copper", "aluminium", "gold"},
                                     2,
-                                    "uncommon"
+                                    "uncommon",
+                                    2
                               );
                         }
 
@@ -254,7 +255,8 @@ namespace moon.rock.world.part {
                                     68.0f,
                                     new[] {"graphene", "nanite-mesh", "gold", "copper"},
                                     3,
-                                    "epic"
+                                    "epic",
+                                    2
                               );
                         }
 
