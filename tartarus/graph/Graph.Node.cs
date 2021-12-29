@@ -129,7 +129,8 @@ namespace tartarus.graph {
                               new HashSet<string>(Tags),
                               edgesVisited,
                               Props.DeepClone(),
-                              Position.Clone());
+                              Position.Clone()
+                        );
 
                         nodesVisited.Add(ID, clone);
 
@@ -142,25 +143,25 @@ namespace tartarus.graph {
                   }
 
 
-                  // Append existing node and return it.
+                  // Append a node then return it.
                   public Node Append(Node from, float weight = 1.0f, bool bidirectional = false) {
                         return Connect(from, weight, bidirectional).To;
                   }
 
 
-                  // Connect All nodes to the node supplied.
+                  // Connect All [nodes] to the current node.
                   public void ConnectAll(IEnumerable<Node> nodes, float weight = 1.0f, bool bidirectional = false) {
                         nodes.ToList().ForEach(node => Connect(node, weight, bidirectional));
                   }
 
 
-                  // Connect this node to another.
+                  // Connect [node] to current node.
                   public Edge Connect(Node node, float weight = 1.0f, bool bidirectional = false) {
                         return Edge.Create(this, node, weight, bidirectional);
                   }
 
 
-                  // Add a new edge to another Node. Ignore if the edge is already present.
+                  // Add a new [edge] that connects to another Node. Ignore if the [edge] is a duplicate.
                   public void Add(Edge edge) {
                         if (Edges.ContainsKey(edge.ID)) return;
 
@@ -171,7 +172,7 @@ namespace tartarus.graph {
                   }
 
 
-                  // Add a new edge to another Node. Ignore if the edge is already present.
+                  // Add a new edge to that connects to another Node. Ignore if the edge is a duplicate.
                   public void Add(string edgeID, float weight, Node to, bool bidirectional) {
                         if (Edges.ContainsKey(edgeID)) return;
 
@@ -187,7 +188,7 @@ namespace tartarus.graph {
                   }
 
 
-                  // Remove an existing edge.
+                  // Remove an existing edge by it's ID.
                   public void Remove(string edgeID) {
                         if (!Edges.ContainsKey(edgeID)) return;
                         Edges.Remove(edgeID);
