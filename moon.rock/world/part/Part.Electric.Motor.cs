@@ -208,72 +208,121 @@ namespace moon.rock.world.part {
 
 
                         private static Graph.Node Bruin(Graph.Node company) {
-                              var bruin = company.TagNew("bruin");
-                              bruin.Name = "bruin";
-                              bruin.Tag("level:1").Tag("graphene").Tag("weight:4.7").Tag("rare")
-                                   .Tag("load:45V").Tag("power:4.8KW").Tag("efficiency:58.9%");
-
-                              return bruin;
+                              return Create(
+                                    company,
+                                    "bruin",
+                                    196f,
+                                    50f,
+                                    10f,
+                                    800f,
+                                    4.7f,
+                                    58.90f,
+                                    new[] {"graphene", "copper"},
+                                    1,
+                                    "rare"
+                              );
                         }
 
 
                         private static Graph.Node ReynardTheFirst(Graph.Node company) {
-                              var reynard_the_first = company.TagNew("reynard.the-first");
-                              reynard_the_first.Name = "reynard";
-                              reynard_the_first.Tag("level:2").Tag("graphene").Tag("weight:3.8").Tag("rare")
-                                               .Tag("load:50V").Tag("power:2.2KW").Tag("efficiency:62%");
-
-                              return reynard_the_first;
+                              return Create(
+                                    company,
+                                    "reynard.the-first",
+                                    220f,
+                                    42f,
+                                    10f,
+                                    1200,
+                                    3.8f,
+                                    62.0f,
+                                    new[] {"graphene", "nanite-mesh", "copper"},
+                                    2,
+                                    "rare"
+                              );
                         }
 
 
                         private static Graph.Node ReynardTheSecond(Graph.Node company) {
-                              var reynard_the_second = company.TagNew("reynard.the-second");
-                              reynard_the_second.Name = "reynard";
-                              reynard_the_second.Tag("level:3").Tag("graphene").Tag("weight:3.6").Tag("epic")
-                                                .Tag("load:50V").Tag("power:2.2KW").Tag("efficiency:68.3%");
-
-                              return reynard_the_second;
+                              return Create(
+                                    company,
+                                    "reynard.the-second",
+                                    280f,
+                                    38f,
+                                    14f,
+                                    1428,
+                                    3.6f,
+                                    68.0f,
+                                    new[] {"graphene", "nanite-mesh", "gold", "copper"},
+                                    3,
+                                    "epic"
+                              );
                         }
 
 
                         private static Graph.Node Baldwin(Graph.Node company) {
-                              var baldwin = company.TagNew("baldwin");
-                              baldwin.Name = "baldwin";
-                              baldwin.Tag("level:4").Tag("graphene").Tag("weight:1.9").Tag("legendary")
-                                     .Tag("load:45V").Tag("power:4.8KW").Tag("efficiency:73.3333%");
-
-                              return baldwin;
+                              return Create(
+                                    company,
+                                    "baldwin",
+                                    380f,
+                                    30,
+                                    22f,
+                                    2800,
+                                    1.9f,
+                                    73.3333f,
+                                    new[] {"graphene", "nanite-mesh", "mercury"},
+                                    4,
+                                    "legendary"
+                              );
                         }
 
 
                         private static Graph.Node Isengrim(Graph.Node company) {
-                              var isengrim = company.TagNew("isengrim");
-                              isengrim.Name = "isengrim";
-                              isengrim.Tag("level:4").Tag("graphene").Tag("weight:2.32").Tag("legendary")
-                                      .Tag("load:45V").Tag("power:2.2KW").Tag("efficiency:82.65%");
-
-                              return isengrim;
+                              return Create(
+                                    company,
+                                    "isengrim",
+                                    480f,
+                                    21f,
+                                    48f,
+                                    6800,
+                                    2.32f,
+                                    82.65f,
+                                    new[] {"graphene", "nanite-mesh", "titan-mesh", "mercury", "sapphire"},
+                                    4,
+                                    "legendary"
+                              );
                         }
 
 
                         private static Graph.Node Noble(Graph.Node company) {
-                              var noble = company.TagNew("noble");
-                              noble.Name = "noble";
-                              noble.Tag("level:5").Tag("graphene").Tag("weight:1.8").Tag("mythic")
-                                   .Tag("load:45V").Tag("power:4.8KW").Tag("efficiency:88%");
-
-                              return noble;
+                              return Create(
+                                    company,
+                                    "noble",
+                                    512f,
+                                    18f,
+                                    48f,
+                                    7200,
+                                    1.8f,
+                                    88f,
+                                    new[] {"graphene", "nanite-mesh", "titan-mesh", "mercury", "mythril"},
+                                    5,
+                                    "mythic"
+                              );
                         }
 
 
                         private static Graph.Node Tybalt(Graph.Node company) {
-                              var tybalt = company.TagNew("tybalt");
-                              tybalt.Name = "tybalt";
-                              tybalt.Tag("level:6").Tag("graphene").Tag("weight:0.999292").Tag("exotic")
-                                    .Tag("load:45V").Tag("power:4.8KW").Tag("efficiency:99.9999998");
-
-                              return tybalt;
+                              return Create(
+                                    company,
+                                    "tybalt",
+                                    1200f,
+                                    80f,
+                                    120f,
+                                    18000,
+                                    0.999292f,
+                                    93.456f,
+                                    new[] {"graphene", "celestial-mesh", "celestial-tissue.impure"},
+                                    6,
+                                    "exotic"
+                              );
                         }
 
 
@@ -283,7 +332,19 @@ namespace moon.rock.world.part {
                               king_noble.Tag("level:6").Tag("graphene").Tag("weight:0.999292").Tag("exotic")
                                         .Tag("load:45V").Tag("power:4.8KW").Tag("efficiency:99.9999998");
 
-                              return king_noble;
+                              return Create(
+                                    company,
+                                    "king-noble",
+                                    1286f,
+                                    120f,
+                                    120f,
+                                    18500,
+                                    0.999292f,
+                                    99.9999998f,
+                                    new[] {"graphene", "celestial-mesh", "celestial-tissue.pure"},
+                                    6,
+                                    "exotic"
+                              );
                         }
 
                   }
