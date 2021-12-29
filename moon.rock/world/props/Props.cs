@@ -11,7 +11,8 @@ namespace moon.rock.world.props {
             public static class Create {
 
                   public static Graph.Props Health(float current, float max, bool enabled = true) {
-                        return Graph.Props.Builder.New().NewGroup("health")
+                        return Graph.Props.Builder.New()
+                                    .NewGroup("health")
                                     .AddProperty("current", current)
                                     .AddProperty("max", max)
                                     .AddProperty("enabled", enabled)
@@ -22,7 +23,8 @@ namespace moon.rock.world.props {
 
                   // Energy - Objects with [energy], consume it!
                   public static Graph.Props Energy(int current, int max, bool enabled) {
-                        return Graph.Props.Builder.New().NewGroup("energy")
+                        return Graph.Props.Builder.New()
+                                    .NewGroup("energy")
                                     .AddProperty("current", current)
                                     .AddProperty("max", max)
                                     .AddProperty("enabled", enabled)
@@ -32,7 +34,8 @@ namespace moon.rock.world.props {
 
 
                   public static Graph.Props Armour(int current, int max) {
-                        return Graph.Props.Builder.New().NewGroup("armour")
+                        return Graph.Props.Builder.New()
+                                    .NewGroup("armour")
                                     .AddProperty("current", current)
                                     .AddProperty("max", max)
                                     .Next()
