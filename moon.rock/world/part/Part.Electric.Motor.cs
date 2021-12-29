@@ -312,6 +312,7 @@ namespace moon.rock.world.part {
                         }
 
 
+                        // Tybalt Electric Motor crafted from the cells of corrupted celestial tissue using Graphene as a base.
                         private static Graph.Node Tybalt() {
                               return Create(
                                     Company.HouseOfMaalpertuus(),
@@ -329,6 +330,7 @@ namespace moon.rock.world.part {
                         }
 
 
+                        // King Noble Electric Motor crafted from the cells of celestial tissue using Graphene as a base.
                         private static Graph.Node KingNoble() {
                               return Create(
                                     Company.HouseOfMaalpertuus(),
