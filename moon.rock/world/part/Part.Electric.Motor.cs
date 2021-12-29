@@ -12,20 +12,20 @@ namespace moon.rock.world.part {
 
                   public static class Motor {
 
-                        public static readonly Dictionary<string, Graph.Node> MotorsByName =
+                        public static readonly Dictionary<string, Graph.Node> AllMotorsByName =
                               new Dictionary<string, Graph.Node>();
 
 
                         static Motor() {
-                              AllByOgunMotors().ToList().ForEach(motor => MotorsByName.Add(motor.Name, motor));
-                              AllByPeterAndLawanson().ToList().ForEach(motor => MotorsByName.Add(motor.Name, motor));
-                              AllByHouseOfMaalpertuus().ToList().ForEach(motor => MotorsByName.Add(motor.Name, motor));
+                              AllByOgunMotors().ToList().ForEach(motor => AllMotorsByName.Add(motor.Name, motor));
+                              AllByPeterAndLawanson().ToList().ForEach(motor => AllMotorsByName.Add(motor.Name, motor));
+                              AllByHouseOfMaalpertuus().ToList().ForEach(motor => AllMotorsByName.Add(motor.Name, motor));
                         }
 
 
                         // Find An `Electric Motor` by [name].
                         public static Graph.Node FindByName(string name) {
-                              return !MotorsByName.ContainsKey(name) ? Graph.Node.Blank() : MotorsByName[name].DeepClone();
+                              return !AllMotorsByName.ContainsKey(name) ? Graph.Node.Blank() : AllMotorsByName[name].DeepClone();
                         }
 
 
