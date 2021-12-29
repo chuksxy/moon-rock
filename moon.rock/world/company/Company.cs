@@ -7,9 +7,17 @@ namespace moon.rock.world.company {
 
       public static class Company {
 
+            public static string GetNameFromTag(string tag) {
+                  return tag.Split(':')[1];
+            }
+
+
             // Ogun Motors Electric Motors Company.
             public static Graph.Node OgunMotors() {
-                  return Graph.Node.New("ogun-motors.unassigned")
+                  const string name = "ogun-motors";
+                  return Graph.Node.New(name)
+                              .Tag($"company:{name}")
+                              .Tag($"compatibility:{name}")
                               .Tag("electric")
                               .Tag("motor")
                               .Tag("hardware");
@@ -18,7 +26,10 @@ namespace moon.rock.world.company {
 
             // Peter And Lawanson Incorporated.
             public static Graph.Node PeterAndLawansonInc() {
-                  return Graph.Node.New("peter-and-lawanson.unassigned")
+                  const string name = "peter-and-lawanson";
+                  return Graph.Node.New(name)
+                              .Tag($"company:{name}")
+                              .Tag($"compatibility:{name}")
                               .Tag("electric")
                               .Tag("motor")
                               .Tag("hardware")
@@ -28,7 +39,11 @@ namespace moon.rock.world.company {
 
             // House of Maalpertuus Institute.
             public static Graph.Node HouseOfMaalpertuus() {
-                  return Graph.Node.New("house.of.maalpertuus.unassigned")
+                  const string name = "house.of.maalpertuus";
+                  return Graph.Node.New(name)
+                              .Tag($"company:{name}")
+                              .Tag($"compatibility:{name}")
+                              .Tag("compatibility:all")
                               .Tag("electric")
                               .Tag("motor")
                               .Tag("hardware")

@@ -44,22 +44,22 @@ namespace moon.rock.world.part {
                               string     rarity,
                               int        version = 1
                         ) {
-                              var motor = company.TagNew(name)
-                                                 .Tag($"level:{level}")
-                                                 .Tag($"health:{health}")
-                                                 .Tag($"weight:{weight}")
-                                                 .Tag($"price:{price}")
-                                                 .Tag($"{rarity}")
-                                                 .Tag($"load:{load}V")
-                                                 .Tag($"power:{power}KW")
-                                                 .Tag($"efficiency:{efficiency}%")
-                                                 .Tag($"version:{version}");
+                              var motor = Graph.Node.New(name)
+                                               .Tag($"level:{level}")
+                                               .Tag($"health:{health}")
+                                               .Tag($"weight:{weight}")
+                                               .Tag($"price:{price}")
+                                               .Tag($"{rarity}")
+                                               .Tag($"load:{load}V")
+                                               .Tag($"power:{power}KW")
+                                               .Tag($"efficiency:{efficiency}%")
+                                               .Tag($"version:{version}");
 
                               materials.ToList().ForEach(material => motor.AddTag($"material:{material}"));
                               AddProperties(motor, health, load, price, weight, efficiency, level, version);
 
                               motor.Name = name;
-                              return motor;
+                              return motor.Connect(company).From;
                         }
 
 
@@ -84,6 +84,12 @@ namespace moon.rock.world.part {
                         }
 
 
+                        // Add Compatibility with parts manufactured by other companies.
+                        private static void AddCompatibility(Graph.Node motor, IEnumerable<Graph.Node> companies) {
+                              companies.ToList().ForEach(company => motor.Tag($"compatibility:{company.Name}"));
+                        }
+
+
                         // All By `Ogun Motors` Electric Company.
                         private static IEnumerable<Graph.Node> AllByOgunMotors() {
                               return new[] {
@@ -95,7 +101,7 @@ namespace moon.rock.world.part {
 
 
                         private static Graph.Node BlueIronPhaser(Graph.Node company) {
-                              return Create(
+                              var motor = Create(
                                     company,
                                     "blue-iron-phaser",
                                     60.0f,
@@ -108,11 +114,15 @@ namespace moon.rock.world.part {
                                     1,
                                     "common"
                               );
+                              AddCompatibility(motor, new[] {
+                                    Company.PeterAndLawansonInc()
+                              });
+                              return motor;
                         }
 
 
                         private static Graph.Node CopperRedPhaser(Graph.Node company) {
-                              return Create(
+                              var motor = Create(
                                     company,
                                     "copper-red-phaser",
                                     71f,
@@ -125,11 +135,15 @@ namespace moon.rock.world.part {
                                     1,
                                     "common"
                               );
+                              AddCompatibility(motor, new[] {
+                                    Company.PeterAndLawansonInc()
+                              });
+                              return motor;
                         }
 
 
                         private static Graph.Node CopperRedPhaserFire(Graph.Node company) {
-                              return Create(
+                              var motor = Create(
                                     company,
                                     "copper-red-phaser.fire",
                                     86f,
@@ -143,6 +157,10 @@ namespace moon.rock.world.part {
                                     "uncommon",
                                     2
                               );
+                              AddCompatibility(motor, new[] {
+                                    Company.PeterAndLawansonInc(), Company.HouseOfMaalpertuus()
+                              });
+                              return motor;
                         }
 
 
