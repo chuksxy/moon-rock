@@ -23,6 +23,12 @@ namespace moon.rock.world.part {
                         }
 
 
+                        // Find An `Electric Motor` by [name].
+                        public static Graph.Node FindByName(string name) {
+                              return !AllMotorsByName.ContainsKey(name) ? Graph.Node.Blank() : AllMotorsByName[name].DeepClone();
+                        }
+
+
                         // Create An Electric Motor.
                         public static Graph.Node Create(
                               Graph.Node company,
@@ -75,24 +81,12 @@ namespace moon.rock.world.part {
                         }
 
 
-                        // Find An `Electric Motor` by [name].
-                        public static Graph.Node FindByName(string name) {
-                              return !AllMotorsByName.ContainsKey(name) ? Graph.Node.Blank() : AllMotorsByName[name].DeepClone();
-                        }
-
-
                         // All By `Ogun Motors` Electric Company.
                         private static IEnumerable<Graph.Node> AllByOgunMotors() {
-                              var ogun_motors = Company.OgunMotors();
-
-                              var blue_iron_phaser     = BlueIronPhaser(ogun_motors);
-                              var copper_red_phaser_v1 = CopperRedPhaserV1(ogun_motors);
-                              var copper_red_phaser_v2 = CopperRedPhaserV2(ogun_motors);
-
                               return new[] {
-                                    blue_iron_phaser,
-                                    copper_red_phaser_v1,
-                                    copper_red_phaser_v2
+                                    BlueIronPhaser(Company.OgunMotors()),
+                                    CopperRedPhaserV1(Company.OgunMotors()),
+                                    CopperRedPhaserV2(Company.OgunMotors())
                               };
                         }
 
@@ -100,7 +94,7 @@ namespace moon.rock.world.part {
                         private static Graph.Node BlueIronPhaser(Graph.Node company) {
                               return Create(
                                     company,
-                                    "blue.iron.phaser",
+                                    "blue-iron-phaser",
                                     60.0f,
                                     60.0f,
                                     2.2f,
@@ -117,7 +111,7 @@ namespace moon.rock.world.part {
                         private static Graph.Node CopperRedPhaserV1(Graph.Node company) {
                               return Create(
                                     company,
-                                    "copper.red.phaser",
+                                    "copper-red-phaser",
                                     71f,
                                     45.0f,
                                     2.2f,
@@ -132,12 +126,19 @@ namespace moon.rock.world.part {
 
 
                         private static Graph.Node CopperRedPhaserV2(Graph.Node company) {
-                              var copper_red_phaser_v2 = company.TagNew("copper.red.phaser").Tag("uncommon");
-                              copper_red_phaser_v2.Name = "copper.red.phaser.version:2";
-                              copper_red_phaser_v2.Tag("level:2").Tag("cast-iron").Tag("weight:5.9")
-                                                  .Tag("load:45V").Tag("power:4.8KW").Tag("efficiency:58.3333%");
-
-                              return copper_red_phaser_v2;
+                              return Create(
+                                    company,
+                                    "copper-red-phaser.2",
+                                    86f,
+                                    45f,
+                                    4.8f,
+                                    208f,
+                                    5.9f,
+                                    58.3333f,
+                                    new[] {"copper", "aluminium", "gold"},
+                                    2,
+                                    "uncommon"
+                              );
                         }
 
 
