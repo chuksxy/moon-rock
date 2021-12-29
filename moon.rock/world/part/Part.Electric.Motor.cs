@@ -101,7 +101,7 @@ namespace moon.rock.world.part {
                                     110.99f,
                                     8.2f,
                                     43.3333f,
-                                    new[] {"cast-iron", "copper", "iron", "steel"},
+                                    new[] {"copper", "iron", "steel"},
                                     1,
                                     "common"
                               );
