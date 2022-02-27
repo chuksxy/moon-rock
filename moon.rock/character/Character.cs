@@ -1,32 +1,38 @@
+using System;
 using eden;
 using UnityEngine;
 
 namespace moon.rock.character {
 
-      public class Character {
+      public class Character : MonoBehaviour {
 
-            private readonly string _characterID;
+            public static class Animation {
 
+                  public static class Param {
 
-            private Character(string characterID) {
-                  _characterID = characterID;
+                        public static readonly int Move = Animator.StringToHash("Move");
+
+                  }
+
             }
 
-
-            public static Character New(string characterID) {
-                  return new Character(characterID);
-            }
+            [SerializeField] private string characterID;
 
 
             // Move character in a specific direction.
             public void Move(Vector3 direction) {
-                  Eden.GetService<eden.locomotion.Eden.Locomotion>().Move(_characterID, direction, 1.0f);
+                  Action<Animator, Vector3, float> moveFunc = (Animator animator, Vector3 direction, float modifier) => {
+                        var speed = Mathf.Max(direction.x, direction.y) * modifier;
+                        animator.SetFloat(Animation.Param.Move, speed);
+                  };
+                  Eden.GetService<eden.locomotion.Eden.Locomotion>()
+                      .MoveViaAnimator(characterID, this, direction, 1.0f, moveFunc);
             }
 
 
             // Jump in a specific direction.
             public void Jump(Vector3 direction) {
-                  Eden.GetService<eden.locomotion.Eden.Locomotion>().Jump(_characterID, direction, 1.0f);
+                  Eden.GetService<eden.locomotion.Eden.Locomotion>().Jump(characterID, this, direction, 1.0f);
             }
 
 
