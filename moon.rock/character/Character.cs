@@ -4,17 +4,8 @@ using UnityEngine;
 
 namespace moon.rock.character {
 
-      public class Character : MonoBehaviour {
+      public partial class Character : MonoBehaviour {
 
-            public static class Animation {
-
-                  public static class Param {
-
-                        public static readonly int Move = Animator.StringToHash("Move");
-
-                  }
-
-            }
 
             [SerializeField] private string characterID;
 
