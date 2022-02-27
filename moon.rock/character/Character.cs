@@ -26,8 +26,8 @@ namespace moon.rock.character {
 
                   var speedModifier = Eden.GetService<Equipment>()
                                           .GetFactory()
-                                          .Get<Shoe.Factory>()
-                                          .GetEquipment<Shoe>(characterID)
+                                          .Get<Shoe.Factory, Shoe>()
+                                          .GetEquipment(characterID)
                                           .SpeedModifier;
 
                   Eden.GetService<eden.locomotion.Locomotion>()

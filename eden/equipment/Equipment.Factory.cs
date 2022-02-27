@@ -6,22 +6,17 @@ namespace eden.equipment {
       public partial class Equipment {
 
 
-            // Equipment Factories to create equipment of different types in the world.
-            public interface IEquipmentFactory {
+            // Equipment Factory to create equipment of different types in the world.
+            public interface IEquipmentFactory<TEquipmentType> {
 
-                  TEquipmentType GetEquipment<TEquipmentType>(string entityID);
+                  TEquipmentType GetEquipment(string entityID);
 
             }
 
-            // Default equipment type to serve as our identity type.
-            public class Default : IEquipmentFactory {
+            // Equipment Factory for all equipment in the world.
+            public interface IEquipmentFactory : IEquipmentFactory<object> {
 
-                  public static readonly Default Factory = new Default();
-
-
-                  public TEquipmentType GetEquipment<TEquipmentType>(string entityID) {
-                        return default;
-                  }
+                  new object GetEquipment(string entityID);
 
             }
 
@@ -42,12 +37,15 @@ namespace eden.equipment {
                   }
 
 
-                  // Get Factory.
-                  public IEquipmentFactory Get<TFactory>() where TFactory : IEquipmentFactory {
+                  // Get Factory for a specific equipment type.
+                  public IEquipmentFactory<TEquipmentType> Get<TFactory, TEquipmentType>()
+                        where TFactory : IEquipmentFactory<TEquipmentType> {
                         var factoryName = typeof(TFactory).Name;
-                        if (_factories.ContainsKey(factoryName)) return _factories[factoryName];
+                        if (_factories.ContainsKey(factoryName))
+                              return _factories[factoryName] as IEquipmentFactory<TEquipmentType>;
+
                         Debug.LogWarning($"Equipment Factory [{factoryName}] is not registered with Eden.");
-                        return Default.Factory;
+                        return default;
                   }
 
 
