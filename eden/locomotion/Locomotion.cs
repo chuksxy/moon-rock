@@ -23,23 +23,10 @@ namespace eden.locomotion {
             }
 
 
-            // Move Via CharacterController in the direction specified and apply modifiers.
-            public void MoveViaCharacterController(
-                  string entityID, Component character, Vector3 direction, float modifier) {
-                  if (!_entityPositions.ContainsKey(entityID)) {
-                        Debug.LogWarning($"Cannot move entity [{entityID}]. It is not registered.");
-                        return;
-                  }
-
-                  var controller = character.GetComponentInChildren<CharacterController>();
-                  // do some stuff.
-            }
-
-
             // Move Via Animator in the direction specified and apply modifiers.
             public void MoveViaAnimator(
                   string                           entityID,
-                  Component                        character,
+                  Animator                         animator,
                   Vector3                          direction,
                   float                            modifier,
                   Action<Animator, Vector3, float> moveFunc) {
@@ -48,7 +35,6 @@ namespace eden.locomotion {
                         return;
                   }
 
-                  var animator = character.GetComponentInChildren<Animator>();
                   if (animator == null) {
                         Debug.LogWarning($"Cannot move entity [{entityID}]. It does not have an animator present.");
                         return;
@@ -58,8 +44,20 @@ namespace eden.locomotion {
             }
 
 
-            // Jump in direction specified and apply modifier.
-            public void Jump(string entityID, Component character, Vector3 direction, float modifier) { }
+            // Jump Via Animator in the direction specified and apply modifier.
+            public void JumpViaAnimator(string entityID, Animator animator, Action<Animator> jumpFunc) {
+                  if (!_entityPositions.ContainsKey(entityID)) {
+                        Debug.LogWarning($"Entity [{entityID}] cannot jump. It is not registered.");
+                        return;
+                  }
+
+                  if (animator == null) {
+                        Debug.LogWarning($"Entity [{entityID}] cannot jump. It does not have an animator present.");
+                        return;
+                  }
+
+                  jumpFunc.Invoke(animator);
+            }
 
 
       }

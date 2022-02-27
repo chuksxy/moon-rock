@@ -6,25 +6,37 @@ namespace moon.rock.character {
 
       public partial class Character : MonoBehaviour {
 
-
             [SerializeField] private string characterID;
+
+            private Animator _animator;
+
+
+            private void Awake() {
+                  _animator = GetComponentInChildren<Animator>();
+            }
 
 
             // Move character in a specific direction.
             public void Move(Vector3 direction) {
-                  void MoveByAnimator(Animator animator, Vector3 moveDirection, float modifier) {
+                  void MoveViaAnimator(Animator animator, Vector3 moveDirection, float modifier) {
                         var speed = Mathf.Max(moveDirection.x, moveDirection.y) * modifier;
                         animator.SetFloat(Animation.Param.Move, speed);
                   }
 
+                  // Get modifiers from equipment here.
+
                   Eden.GetService<eden.locomotion.Locomotion>()
-                      .MoveViaAnimator(characterID, this, direction, 1.0f, MoveByAnimator);
+                      .MoveViaAnimator(characterID, _animator, direction, 1.0f, MoveViaAnimator);
             }
 
 
             // Jump in a specific direction.
             public void Jump(Vector3 direction) {
-                  Eden.GetService<eden.locomotion.Locomotion>().Jump(characterID, this, direction, 1.0f);
+                  void JumpViaAnimator(Animator animator) {
+                        animator.SetTrigger(Animation.Param.Jump);
+                  }
+
+                  Eden.GetService<eden.locomotion.Locomotion>().JumpViaAnimator(characterID, _animator, JumpViaAnimator);
             }
 
 
