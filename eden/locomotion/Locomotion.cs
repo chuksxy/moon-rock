@@ -28,7 +28,7 @@ namespace eden.locomotion {
                   public void MoveViaCharacterController(
                         string entityID, Component character, Vector3 direction, float modifier) {
                         if (!_entityPositions.ContainsKey(entityID)) {
-                              Debug.LogWarning($"Cannot move entity [{entityID}], it is not registered.");
+                              Debug.LogWarning($"Cannot move entity [{entityID}]. It is not registered.");
                               return;
                         }
 
@@ -44,15 +44,14 @@ namespace eden.locomotion {
                         Vector3                          direction,
                         float                            modifier,
                         Action<Animator, Vector3, float> moveFunc) {
-                        
                         if (!_entityPositions.ContainsKey(entityID)) {
-                              Debug.LogWarning($"Cannot move entity [{entityID}], it is not registered.");
+                              Debug.LogWarning($"Cannot move entity [{entityID}]. It is not registered.");
                               return;
                         }
 
                         var animator = character.GetComponentInChildren<Animator>();
                         if (animator == null) {
-                              Debug.LogWarning($"Cannot move entity [{entityID}], it does not have an animator present.");
+                              Debug.LogWarning($"Cannot move entity [{entityID}]. It does not have an animator present.");
                               return;
                         }
 
