@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using eden;
 using moon.rock.world;
 using UnityEngine;
 
@@ -7,14 +8,11 @@ namespace moon.rock {
 
       public class MoonRock : MonoBehaviour {
 
-            public List<World.Template> templates;
-
 
             private void Awake() {
-                  var worlds = templates.Select(World.Create);
-                  var first  = worlds.First();
-
-                  if (first != null) first.Begin();
+                  Eden.Configure.New()
+                      .Register(eden.locomotion.Eden.Locomotion.New())
+                      .Init();
             }
 
       }
