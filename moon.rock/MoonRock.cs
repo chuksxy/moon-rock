@@ -11,7 +11,7 @@ namespace moon.rock {
 
             private void Awake() {
                   Eden.Configure.New()
-                      .Register(eden.locomotion.Eden.Locomotion.New())
+                      .Register(eden.locomotion.Locomotion.New())
                       .Init();
             }
 

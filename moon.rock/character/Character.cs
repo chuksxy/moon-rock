@@ -21,18 +21,19 @@ namespace moon.rock.character {
 
             // Move character in a specific direction.
             public void Move(Vector3 direction) {
-                  Action<Animator, Vector3, float> moveFunc = (Animator animator, Vector3 direction, float modifier) => {
-                        var speed = Mathf.Max(direction.x, direction.y) * modifier;
+                  void MoveByAnimator(Animator animator, Vector3 moveDirection, float modifier) {
+                        var speed = Mathf.Max(moveDirection.x, moveDirection.y) * modifier;
                         animator.SetFloat(Animation.Param.Move, speed);
-                  };
-                  Eden.GetService<eden.locomotion.Eden.Locomotion>()
-                      .MoveViaAnimator(characterID, this, direction, 1.0f, moveFunc);
+                  }
+
+                  Eden.GetService<eden.locomotion.Locomotion>()
+                      .MoveViaAnimator(characterID, this, direction, 1.0f, MoveByAnimator);
             }
 
 
             // Jump in a specific direction.
             public void Jump(Vector3 direction) {
-                  Eden.GetService<eden.locomotion.Eden.Locomotion>().Jump(characterID, this, direction, 1.0f);
+                  Eden.GetService<eden.locomotion.Locomotion>().Jump(characterID, this, direction, 1.0f);
             }
 
 
