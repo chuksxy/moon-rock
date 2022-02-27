@@ -1,12 +1,10 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 
 namespace eden.locomotion {
 
-
-      public class Locomotion : eden.Eden.IService {
+      public class Locomotion : Eden.IService {
 
             private readonly SerializedDictionary<string, Vector3> _entityPositions;
 

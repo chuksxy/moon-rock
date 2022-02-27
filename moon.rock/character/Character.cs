@@ -1,5 +1,6 @@
-using System;
 using eden;
+using eden.equipment;
+using moon.rock.character.equipment.shoe;
 using UnityEngine;
 
 namespace moon.rock.character {
@@ -23,7 +24,11 @@ namespace moon.rock.character {
                         animator.SetFloat(Animation.Param.Move, speed);
                   }
 
-                  // Get modifiers from equipment here.
+                  var speedModifier = Eden.GetService<Equipment>()
+                                          .GetFactory()
+                                          .Get<Shoe.Factory>()
+                                          .GetEquipment<Shoe>(characterID)
+                                          .SpeedModifier;
 
                   Eden.GetService<eden.locomotion.Locomotion>()
                       .MoveViaAnimator(characterID, _animator, direction, 1.0f, MoveViaAnimator);
