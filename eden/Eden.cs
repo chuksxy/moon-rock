@@ -9,14 +9,48 @@ namespace eden {
             private static readonly Dictionary<string, IService> RegisteredServices = new Dictionary<string, IService>();
 
 
-            // Get Service by type.
+            // GetTable Service by type.
             public static TService GetService<TService>() where TService : IService {
                   return (TService) RegisteredServices[typeof(TService).Name];
             }
 
 
             // IService is a marker interface for all eden micro services.
-            public interface IService { }
+            public interface IService {
+
+                  // ServiceUnit<S> Register();
+
+            }
+
+            public class ServiceUnit<S> {
+
+                  private ServiceUnit(S service) {
+                        Service     = service;
+                        Initialized = true;
+                  }
+
+
+                  public static ServiceUnit<S> New() {
+                        return new ServiceUnit<S>(default);
+                  }
+
+
+                  public ServiceUnit<S> Init(S service) {
+                        if (Service != null) {
+                              return this;
+                        }
+
+                        Initialized = true;
+                        Service     = service;
+                        return this;
+                  }
+
+
+                  private S Service { get; set; }
+
+                  private bool Initialized { get; set; }
+
+            }
 
 
             public class Configure {

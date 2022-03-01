@@ -6,6 +6,8 @@ namespace eden.locomotion {
 
       public class Locomotion : Eden.IService {
 
+            private static readonly Eden.ServiceUnit<Locomotion> ActiveUnit = Eden.ServiceUnit<Locomotion>.New();
+
             private readonly SerializedDictionary<string, Vector3> _entityPositions;
 
 
@@ -16,7 +18,7 @@ namespace eden.locomotion {
 
 
             // New Locomotion service.
-            public static eden.Eden.IService New() {
+            public static Eden.IService New() {
                   return new Locomotion(new SerializedDictionary<string, Vector3>());
             }
 
@@ -57,6 +59,10 @@ namespace eden.locomotion {
                   jumpFunc.Invoke(animator);
             }
 
+
+            public Eden.ServiceUnit<Locomotion> Register() {
+                  return ActiveUnit.Init(this);
+            }
 
       }
 

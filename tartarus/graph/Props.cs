@@ -27,14 +27,14 @@ namespace tartarus.graph {
                   }
 
 
-                  // Get `Property` by [name].
+                  // GetTable `Property` by [name].
                   public Ref<T> Get<T>(string name) {
                         if (!Entries.ContainsKey(name)) return Ref.NoProp() as Ref<T>;
                         return new Ref<T>(name, (T) Entries[name]);
                   }
 
 
-                  // Get `Property` By [group] [name].
+                  // GetTable `Property` By [group] [name].
                   public Ref<T> GetByGroup<T>(string group, string name) {
                         var key = $"{group}.{name}";
                         if (!Entries.ContainsKey(key)) return Ref.NoProp() as Ref<T>;
@@ -42,7 +42,7 @@ namespace tartarus.graph {
                   }
 
 
-                  // Get `Property Group`.
+                  // GetTable `Property Group`.
                   public Ref.Group GetGroup(string groupName) {
                         if (!Groups.Contains(groupName)) return new Ref.Group("", new Dictionary<string, object>());
 

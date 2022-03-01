@@ -4,9 +4,9 @@ namespace moon.rock.character.equipment.shoe {
 
       public partial class Shoe {
 
-            public class Factory : Equipment.IEquipmentFactory<Shoe> {
+            public class Table : Equipment.IEquipmentTable<Shoe> {
 
-                  public Shoe GetEquipment(string entityID) {
+                  public Shoe Read(string entityID) {
                         throw new System.NotImplementedException();
                   }
 

@@ -6,16 +6,16 @@ namespace eden.equipment {
 
       public partial class Equipment : Eden.IService {
 
-            private readonly Factory _factory;
+            private readonly Service _service;
 
 
-            private Equipment(Factory factory) {
-                  _factory = factory;
+            private Equipment(Service service) {
+                  _service = service;
             }
 
 
-            public Factory GetFactory() {
-                  return _factory;
+            public Service Tables() {
+                  return _service;
             }
 
       }
