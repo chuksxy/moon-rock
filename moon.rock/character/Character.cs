@@ -31,7 +31,7 @@ namespace moon.rock.character {
                                           .SpeedModifier;
 
                   Eden.GetService<eden.locomotion.Locomotion>()
-                      .MoveViaAnimator(characterID, _animator, direction, 1.0f, MoveViaAnimator);
+                      .MoveViaAnimator(characterID, _animator, direction, speedModifier, MoveViaAnimator);
             }
 
 
