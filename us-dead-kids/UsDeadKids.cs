@@ -1,3 +1,4 @@
+using System;
 using SimpleSQL;
 using UnityEngine;
 using us_dead_kids.character;
@@ -26,6 +27,13 @@ namespace us_dead_kids {
                         }
 
                         return _manager;
+                  }
+
+
+                  public static void Exec(Action<SimpleSQLManager> action) {
+                        if (Get() != null) {
+                              action.Invoke(_manager);
+                        }
                   }
 
             }

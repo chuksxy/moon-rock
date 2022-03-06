@@ -13,10 +13,10 @@ namespace us_dead_kids.character {
 
                   private static readonly Dictionary<string, Character> CharacterCache = new Dictionary<string, Character>();
 
-                  private const string FIND_CHARACTER_BY_ID =
+                  private const string GET_CHARACTER_BY_ID =
                         "select * " +
-                        "from character " +
-                        "where character.ID = ?";
+                        "from character c " +
+                        "where c.character_id = ?";
 
                   public static void Init(SimpleSQL.SimpleSQLManager db) { }
 
@@ -45,7 +45,7 @@ namespace us_dead_kids.character {
                               return;
                         }
 
-                        var characters = db.Query<Character>(FIND_CHARACTER_BY_ID, characterID);
+                        var characters = db.Query<Character>(GET_CHARACTER_BY_ID, characterID);
                         if (characters == null || characters.Count == 0) {
                               Debug.LogWarning($"could not find character with ID [{characterID}].");
                               return;
@@ -116,6 +116,11 @@ namespace us_dead_kids.character {
                   public static void UseSecondaryWeapon(string characterID) {
                         var inventories = Inventory.Service.Get(characterID);
                         inventories.ForEach(inventory => { Weapon.Use(inventory.SecondaryWeaponID); });
+                  }
+
+
+                  public static void UseMeleeWeapon(string characterID) {
+                        Weapon.UseMeleeWeapon(characterID);
                   }
 
             }
