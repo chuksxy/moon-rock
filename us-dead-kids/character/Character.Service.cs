@@ -71,6 +71,11 @@ namespace us_dead_kids.character {
                   }
 
 
+                  public static void SetState(bool alive) {
+                        
+                  }
+
+
                   // Move character specified by [ID] in a direction via the Animator.
                   public static void Move(string characterID, Vector3 direction) {
                         void MoveByAnimator(Character c) {

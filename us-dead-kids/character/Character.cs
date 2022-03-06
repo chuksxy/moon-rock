@@ -1,4 +1,6 @@
 using SimpleSQL;
+using us_dead_kids.attribute.health;
+using us_dead_kids.attribute.speed;
 
 namespace us_dead_kids.character {
 
@@ -6,14 +8,25 @@ namespace us_dead_kids.character {
 
             [PrimaryKey] public string ID { get; set; }
 
-            public string Name     { get; set; }
-            public int    Health   { get; set; }
-            public float  Speed    { get; set; }
-            public int    Priority { get; set; }
+            public string Name { get; set; }
+
+            
+            public Health Health() {
+                  return attribute.health.Health.Get(ID);
+            }
+
+
+            // Speed of this character in miles per hour.
+            public Speed Speed() {
+                  return attribute.speed.Speed.Get(ID);
+            }
+
+
+            public int Priority { get; set; }
 
 
             public bool IsAlive() {
-                  return Health > 0;
+                  return Health().Current > 0;
             }
 
       }
