@@ -15,7 +15,7 @@ namespace us_dead_kids.character {
 
                   // Move character specified by [ID] in a direction via the Animator.
                   public static void Move(string characterID, Vector3 direction) {
-                        var db         = UsDeadKids.DB.Manager();
+                        var db         = UsDeadKids.DB.Get();
                         var characters = db.Query<Character>(SQL.ReadCharacter());
                         var speed      = characters.First() != null ? characters.First().Speed : DEFAULT_SPEED;
                         var velocity   = direction * speed;
