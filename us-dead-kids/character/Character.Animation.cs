@@ -10,6 +10,7 @@ namespace us_dead_kids.character {
 
                         public static readonly int MoveX = Animator.StringToHash("MoveX");
                         public static readonly int MoveY = Animator.StringToHash("MoveY");
+                        public static readonly int Dodge = Animator.StringToHash("Dodge");
 
                   }
 

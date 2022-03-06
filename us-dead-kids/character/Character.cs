@@ -12,6 +12,10 @@ namespace us_dead_kids.character {
             public int    Priority { get; set; }
 
 
+            public bool IsAlive() {
+                  return Health > 0;
+            }
+
       }
 
 }
