@@ -21,14 +21,14 @@ namespace us_dead_kids.weapon {
                 + "and w.melee = true";
 
             // Caches
-            private static readonly Dictionary<string, HashSet<Weapon>>
-                  CharacterIDToMeleeWeapons = new Dictionary<string, HashSet<Weapon>>();
+            private static readonly Dictionary<string, List<Weapon>>
+                  CharacterIDToMeleeWeapons = new Dictionary<string, List<Weapon>>();
 
-            private static readonly Dictionary<string, HashSet<Weapon>>
-                  CharacterIDToRangeWeapons = new Dictionary<string, HashSet<Weapon>>();
+            private static readonly Dictionary<string, List<Weapon>>
+                  CharacterIDToRangeWeapons = new Dictionary<string, List<Weapon>>();
 
 
-            private static void CacheMelee(string characterID, HashSet<Weapon> weapons, bool evict = false) {
+            private static void CacheMelee(string characterID, List<Weapon> weapons, bool evict = false) {
                   if (CharacterIDToMeleeWeapons.ContainsKey(characterID) && evict) {
                         CharacterIDToMeleeWeapons.Remove(characterID);
                   }
@@ -46,14 +46,18 @@ namespace us_dead_kids.weapon {
 
             public static void UseMeleeWeapon(string characterID) {
                   UsDeadKids.DB.Exec(db => {
-                        var meleeWeapons = db.Query<Weapon>(GET_ALL_MELEE_WEAPONS_FOR_CHARACTER, characterID);
-                        var chosen       = meleeWeapons.OrderByDescending(w => w.Priority).FirstOrDefault();
+                        var meleeWeapons = CharacterIDToMeleeWeapons.ContainsKey(characterID)
+                              ? CharacterIDToMeleeWeapons[characterID]
+                              : db.Query<Weapon>(GET_ALL_MELEE_WEAPONS_FOR_CHARACTER, characterID);
+
+                        var chosen = meleeWeapons.OrderByDescending(w => w.Priority).FirstOrDefault();
                         if (chosen == null) {
                               Debug.LogWarning($"No melee weapon assigned to character [{characterID}].");
                               return;
                         }
 
                         Use(chosen);
+                        CacheMelee(characterID, meleeWeapons);
                   });
             }
 
