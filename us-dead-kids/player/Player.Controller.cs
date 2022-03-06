@@ -11,6 +11,11 @@ namespace us_dead_kids.player {
                         Character.Service.Move("player", direction);
                   }
 
+
+                  public void UsePrimaryWeapon() {
+                        Character.Service.UsePrimaryWeapon("player");
+                  }
+
             }
 
 

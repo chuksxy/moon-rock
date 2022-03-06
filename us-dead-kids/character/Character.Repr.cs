@@ -1,9 +1,5 @@
 using System;
-using eden;
 using UnityEngine;
-using us_dead_kids.character.equipment.shoe;
-using us_dead_kids.equipment;
-using us_dead_kids.locomotion;
 
 namespace us_dead_kids.character {
 
@@ -24,24 +20,6 @@ namespace us_dead_kids.character {
 
                   private void Awake() {
                         _animator = GetComponentInChildren<Animator>();
-                  }
-
-
-                  // Move character in a specific direction.
-                  public void Move(Vector3 direction) {
-                        void MoveViaAnimator(Animator animator, Vector3 moveDirection, float modifier) {
-                              var speed = Mathf.Max(moveDirection.x, moveDirection.y) * modifier;
-                              animator.SetFloat(Animation.Param.MoveX, speed);
-                        }
-
-                        var speedModifier = Eden.GetService<Equipment>()
-                                                .Tables()
-                                                .GetTable<Shoe.Table, Shoe>()
-                                                .Read(characterID)
-                                                .SpeedModifier;
-
-                        Eden.GetService<Locomotion>()
-                            .MoveViaAnimator(characterID, _animator, direction, speedModifier, MoveViaAnimator);
                   }
 
 
