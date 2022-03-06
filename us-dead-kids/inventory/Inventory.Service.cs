@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -12,20 +13,20 @@ namespace us_dead_kids.inventory {
 
             public static class Service {
 
-                  public static string GetPrimaryWeaponID(string characterID) {
+                  public static List<Inventory> Get(string characterID) {
                         var db = UsDeadKids.DB.Get();
                         if (db == null) {
-                              Debug.LogWarning($"cannot get character's [{characterID}] primary weapon, DB is null.");
-                              return "";
+                              Debug.LogWarning($"cannot get character's [{characterID}] inventory, DB is null.");
+                              return new List<Inventory>();
                         }
 
                         var inventories = db.Query<Inventory>(FIND_INVENTORY_BY_CHARACTER_ID, characterID);
                         if (inventories == null || inventories.Count == 0) {
                               Debug.LogWarning($"inventory for character [{characterID}] not present.");
-                              return "";
+                              return new List<Inventory>();
                         }
 
-                        return inventories.Select(i => i.PrimaryWeaponID).FirstOrDefault();
+                        return inventories;
                   }
 
             }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using us_dead_kids.inventory;
+using us_dead_kids.weapon;
 
 namespace us_dead_kids.character {
 
@@ -71,15 +72,10 @@ namespace us_dead_kids.character {
                   }
 
 
-                  public static void SetState(bool alive) {
-                        
-                  }
-
-
                   // Move character specified by [ID] in a direction via the Animator.
                   public static void Move(string characterID, Vector3 direction) {
                         void MoveByAnimator(Character c) {
-                              var velocity = direction * c.Speed;
+                              var velocity = direction * c.Speed().Current;
                               InvokeOnAvatar(c.ID, avatar => {
                                     avatar.GetAnimator().SetFloat(Animation.Param.MoveX, velocity.x);
                                     avatar.GetAnimator().SetFloat(Animation.Param.MoveY, velocity.y);
@@ -111,8 +107,15 @@ namespace us_dead_kids.character {
 
                   // Use Primary Weapon equipped.
                   public static void UsePrimaryWeapon(string characterID) {
-                        var weaponID = Inventory.Service.GetPrimaryWeaponID(characterID);
-                        // Weapon.Fire(weaponID);
+                        var inventories = Inventory.Service.Get(characterID);
+                        inventories.ForEach(inventory => { Weapon.Use(inventory.PrimaryWeaponID); });
+                  }
+
+
+                  // Use Secondary Weapon equipped.
+                  public static void UseSecondaryWeapon(string characterID) {
+                        var inventories = Inventory.Service.Get(characterID);
+                        inventories.ForEach(inventory => { Weapon.Use(inventory.SecondaryWeaponID); });
                   }
 
             }
