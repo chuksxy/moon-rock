@@ -8,8 +8,8 @@ namespace us_dead_kids.character {
 
                   public static class Param {
 
-                        public static readonly int Move = Animator.StringToHash("Move");
-                        public static readonly int Jump = Animator.StringToHash("Jump");
+                        public static readonly int MoveX = Animator.StringToHash("MoveX");
+                        public static readonly int MoveY = Animator.StringToHash("MoveY");
 
                   }
 
