@@ -1,4 +1,5 @@
 using System.Linq;
+using UnityEngine;
 
 namespace us_dead_kids.weapon {
 
@@ -26,6 +27,7 @@ namespace us_dead_kids.weapon {
                         var meleeWeapons = db.Query<Weapon>(GET_ALL_MELEE_WEAPONS_FOR_CHARACTER, characterID);
                         var chosen       = meleeWeapons.OrderByDescending(w => w.Priority).FirstOrDefault();
                         if (chosen == null) {
+                              Debug.LogWarning($"No melee weapon assigned to character [{characterID}].");
                               return;
                         }
 
