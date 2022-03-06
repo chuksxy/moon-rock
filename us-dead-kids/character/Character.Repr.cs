@@ -5,7 +5,7 @@ namespace us_dead_kids.character {
 
       public partial class Character {
 
-            public class Repr : MonoBehaviour {
+            public class Avatar : MonoBehaviour {
 
                   [SerializeField] private string characterID;
 
@@ -13,7 +13,7 @@ namespace us_dead_kids.character {
 
 
                   // Get the Unity's representation of a Character by it's ID.
-                  public static Repr Get(string characterID) {
+                  public static Avatar Get(string characterID) {
                         throw new NotImplementedException();
                   }
 
