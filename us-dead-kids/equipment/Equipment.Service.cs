@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Rendering;
 
-namespace eden.equipment {
+namespace us_dead_kids.equipment {
 
       public partial class Equipment {
 

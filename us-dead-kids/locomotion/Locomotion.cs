@@ -1,12 +1,11 @@
 using System;
+using eden;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-namespace eden.locomotion {
+namespace us_dead_kids.locomotion {
 
       public class Locomotion : Eden.IService {
-
-            private static readonly Eden.ServiceUnit<Locomotion> ActiveUnit = Eden.ServiceUnit<Locomotion>.New();
 
             private readonly SerializedDictionary<string, Vector3> _entityPositions;
 
@@ -18,7 +17,7 @@ namespace eden.locomotion {
 
 
             // New Locomotion service.
-            public static Eden.IService New() {
+            public static Locomotion New() {
                   return new Locomotion(new SerializedDictionary<string, Vector3>());
             }
 
@@ -43,26 +42,6 @@ namespace eden.locomotion {
                   moveFunc.Invoke(animator, direction, modifier);
             }
 
-
-            // Jump Via Animator in the direction specified and apply modifier.
-            public void JumpViaAnimator(string entityID, Animator animator, Action<Animator> jumpFunc) {
-                  if (!_entityPositions.ContainsKey(entityID)) {
-                        Debug.LogWarning($"Entity [{entityID}] cannot jump. It is not registered.");
-                        return;
-                  }
-
-                  if (animator == null) {
-                        Debug.LogWarning($"Entity [{entityID}] cannot jump. It does not have an animator present.");
-                        return;
-                  }
-
-                  jumpFunc.Invoke(animator);
-            }
-
-
-            public Eden.ServiceUnit<Locomotion> Register() {
-                  return ActiveUnit.Init(this);
-            }
 
       }
 

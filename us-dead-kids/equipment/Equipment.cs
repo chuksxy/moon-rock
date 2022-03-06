@@ -1,8 +1,6 @@
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Rendering;
+using eden;
 
-namespace eden.equipment {
+namespace us_dead_kids.equipment {
 
       public partial class Equipment : Eden.IService {
 

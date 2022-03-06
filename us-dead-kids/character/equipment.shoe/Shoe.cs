@@ -1,7 +1,6 @@
 using System.Collections.Generic;
-using eden.equipment;
 
-namespace moon.rock.character.equipment.shoe {
+namespace us_dead_kids.character.equipment.shoe {
 
       public partial class Shoe {
 

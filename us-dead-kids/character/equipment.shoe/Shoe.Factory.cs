@@ -1,6 +1,6 @@
-using eden.equipment;
+using us_dead_kids.equipment;
 
-namespace moon.rock.character.equipment.shoe {
+namespace us_dead_kids.character.equipment.shoe {
 
       public partial class Shoe {
 

@@ -1,9 +1,10 @@
 using eden;
-using eden.equipment;
-using moon.rock.character.equipment.shoe;
 using UnityEngine;
+using us_dead_kids.character.equipment.shoe;
+using us_dead_kids.equipment;
+using us_dead_kids.locomotion;
 
-namespace moon.rock.character {
+namespace us_dead_kids.character {
 
       public partial class Character : MonoBehaviour {
 
@@ -30,22 +31,13 @@ namespace moon.rock.character {
                                           .Read(characterID)
                                           .SpeedModifier;
 
-                  Eden.GetService<eden.locomotion.Locomotion>()
+                  Eden.GetService<Locomotion>()
                       .MoveViaAnimator(characterID, _animator, direction, speedModifier, MoveViaAnimator);
             }
 
 
-            // Jump in a specific direction.
-            public void Jump(Vector3 direction) {
-                  void JumpViaAnimator(Animator animator) {
-                        animator.SetTrigger(Animation.Param.Jump);
-                  }
-
-                  Eden.GetService<eden.locomotion.Locomotion>().JumpViaAnimator(characterID, _animator, JumpViaAnimator);
-            }
-
-
             // Interact with an entity in the world.
+            // Pick up weapons in the world. E.g Picking up a Great-sword will change your melee move-set.
             public void Interact() { }
 
 
@@ -53,8 +45,12 @@ namespace moon.rock.character {
             public void UseMelee() { }
 
 
-            // Use Charge Attack.
-            public void UseChargeAttack() { }
+            // Use Skill in the specified slot.
+            // 1 - Melee
+            // 2 - Gun Skill
+            // 3 -
+            // 4 - Grenade?
+            public void UseSkill(int slot) { }
 
 
             // Use Primary Weapon.
@@ -63,6 +59,14 @@ namespace moon.rock.character {
 
             // Use Secondary Weapon.
             public void UseSecondaryWeapon() { }
+
+
+            // Use Item equipped in slot
+            public void UseItem() { }
+
+
+            // Select Item in item slot.
+            public void SelectItem(int x, int y) { }
 
 
             // Dodge an incoming attack.
@@ -75,6 +79,10 @@ namespace moon.rock.character {
 
             // Take Damage from an entity in the world.
             public void TakeDamage(string culpritID) { }
+
+
+            // Set state to Alive or Dead.
+            public void SetState(bool alive) { }
 
       }
 

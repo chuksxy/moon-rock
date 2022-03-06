@@ -3,6 +3,7 @@ using System.Linq;
 using eden;
 using moon.rock.world;
 using UnityEngine;
+using us_dead_kids.locomotion;
 
 namespace moon.rock {
 
@@ -11,7 +12,7 @@ namespace moon.rock {
 
             private void Awake() {
                   Eden.Configure.New()
-                      .Register(eden.locomotion.Locomotion.New())
+                      .Register(Locomotion.New())
                       .Init();
             }
 

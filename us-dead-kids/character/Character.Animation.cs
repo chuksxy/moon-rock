@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace moon.rock.character {
+namespace us_dead_kids.character {
 
       public partial class Character {
 
