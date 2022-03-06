@@ -8,9 +8,10 @@ namespace us_dead_kids.character {
 
             [PrimaryKey] public string ID { get; set; }
 
-            public string Name { get; set; }
+            public string Name     { get; set; }
+            public int    Priority { get; set; }
 
-            
+
             public Health Health() {
                   return attribute.health.Health.Get(ID);
             }
@@ -20,9 +21,6 @@ namespace us_dead_kids.character {
             public Speed Speed() {
                   return attribute.speed.Speed.Get(ID);
             }
-
-
-            public int Priority { get; set; }
 
 
             public bool IsAlive() {

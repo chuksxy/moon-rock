@@ -13,17 +13,27 @@ namespace us_dead_kids.character {
 
                   private static readonly Dictionary<string, Character> CharacterCache = new Dictionary<string, Character>();
 
+                  private const string CREATE_CHARACTER_TABLE =
+                        "create table ";
+
                   private const string GET_CHARACTER_BY_ID =
                         "select * " +
                         "from character c " +
                         "where c.character_id = ?";
 
-                  public static void Init(SimpleSQL.SimpleSQLManager db) { }
+
+                  public static void Init() {
+                        UsDeadKids.DB.Exec(db => { db.Execute(CREATE_CHARACTER_TABLE); });
+                  }
 
 
-                  private static void Cache(Character c, bool evict = false) {
-                        if (!CharacterCache.ContainsKey(c.ID) || evict) {
-                              CharacterCache.Add(c.ID, c);
+                  private static void Cache(Character character, bool evict = false) {
+                        if (CharacterCache.ContainsKey(character.ID) && evict) {
+                              CharacterCache.Remove(character.ID);
+                        }
+
+                        if (!CharacterCache.ContainsKey(character.ID)) {
+                              CharacterCache.Add(character.ID, character);
                         }
                   }
 
