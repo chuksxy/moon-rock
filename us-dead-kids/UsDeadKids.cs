@@ -13,7 +13,7 @@ namespace us_dead_kids {
 
             public void Awake() {
                   _manager = GetComponent<SimpleSQLManager>();
-                  var world       = World.Generator.Generate("", System.DateTime.Now.Ticks);
+                  var world       = World.Generator.Generate("brave.new.world", System.DateTime.Now.Ticks);
                   var protagonist = Character.Generator.Generate("player");
             }
 
@@ -21,6 +21,10 @@ namespace us_dead_kids {
             public static class DB {
 
                   public static SimpleSQLManager Get() {
+                        if (_manager == null) {
+                              Debug.LogWarning("Attempting to get DB manager which is currently null. Assign it in the editor.");
+                        }
+
                         return _manager;
                   }
 
