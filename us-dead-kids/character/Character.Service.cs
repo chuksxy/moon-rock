@@ -13,6 +13,7 @@ namespace us_dead_kids.character {
 
                   // Move character specified by [ID] in a direction via the Animator.
                   public static void Move(string characterID, Vector3 direction) {
+                        // Have an in memory cache for attributes that don't change too often.
                         var db = UsDeadKids.DB.Get();
                         if (db == null) {
                               Debug.LogWarning($"Cannot move character [{characterID}], it is null.");
@@ -36,3 +37,5 @@ namespace us_dead_kids.character {
             }
 
       }
+
+}
