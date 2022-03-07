@@ -1,11 +1,10 @@
 using System;
-using eden;
 using UnityEngine;
 using UnityEngine.Rendering;
 
 namespace us_dead_kids.locomotion {
 
-      public class Locomotion : Eden.IService {
+      public class Locomotion {
 
             private readonly SerializedDictionary<string, Vector3> _entityPositions;
 
