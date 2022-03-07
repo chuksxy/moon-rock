@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using us_dead_kids.inventory;
 using us_dead_kids.weapon;
 
 namespace us_dead_kids.character {
