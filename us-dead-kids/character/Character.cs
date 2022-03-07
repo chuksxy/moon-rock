@@ -6,8 +6,7 @@ namespace us_dead_kids.character {
 
       public partial class Character {
 
-            [PrimaryKey] public string ID { get; set; }
-
+            public string ID       { get; set; }
             public string Name     { get; set; }
             public int    Priority { get; set; }
 

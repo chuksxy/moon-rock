@@ -13,9 +13,6 @@ namespace us_dead_kids.character {
 
                   private static readonly Dictionary<string, Character> CharacterCache = new Dictionary<string, Character>();
 
-                  private const string CREATE_CHARACTER_TABLE =
-                        "create table ";
-
                   private const string GET_CHARACTER_BY_ID =
                         "select * " +
                         "from character c " +
@@ -23,7 +20,18 @@ namespace us_dead_kids.character {
 
 
                   public static void Init() {
-                        UsDeadKids.DB.Exec(db => { db.Execute(CREATE_CHARACTER_TABLE); });
+                        UsDeadKids.DB.Exec(db => {
+                              const string sql =
+                                    @"
+                                          create table characters(
+                                              id string not null,
+                                              name string not null,
+                                              priority int,
+                                              primary key (id)
+                                          )
+                                    ";
+                              db.Execute(sql);
+                        });
                   }
 
 

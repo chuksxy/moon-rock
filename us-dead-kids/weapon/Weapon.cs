@@ -36,7 +36,7 @@ namespace us_dead_kids.weapon {
                                     character_id  string not null,
                                     melee boolean,
                                     ranged boolean,
-                                    priority int
+                                    priority int,
                                     primary key(id)
                                 )       
                               ";
