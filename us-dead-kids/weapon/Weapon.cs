@@ -38,8 +38,7 @@ namespace us_dead_kids.weapon {
                                     ranged boolean,
                                     priority int,
                                     primary key(id)
-                                )       
-                              ";
+                                )";
 
 
                         db.Execute(sql);
