@@ -39,8 +39,7 @@ namespace us_dead_kids.weapon {
                                     priority int,
                                     primary key(id)
                                 )";
-
-
+                        
                         db.Execute(sql);
                   });
             }
