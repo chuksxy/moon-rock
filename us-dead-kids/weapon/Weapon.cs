@@ -9,6 +9,8 @@ namespace us_dead_kids.weapon {
             // Properties of a Weapon.
             public string ID          { get; set; }
             public string CharacterID { get; set; }
+            public bool   Primary     { get; set; }
+            public bool   Auxiliary   { get; set; }
             public bool   Melee       { get; set; }
             public bool   Ranged      { get; set; }
             public int    Priority    { get; set; }
@@ -73,9 +75,13 @@ namespace us_dead_kids.weapon {
 
 
             private static List<Weapon> GetAllPrimary(string characterID) {
+                  if (CharacterIDsToMeleeWeapons.ContainsKey(characterID)) {
+                        return CharacterIDsToMeleeWeapons[characterID];
+                  }
+
                   const string sql =
                         @"select * from weapons w where w.character_id=? and w.primary=true";
-                  
+
                   var weapons = UsDeadKids.DB.Exec(db => db.Query<Weapon>(sql, characterID));
 
                   return weapons ?? new List<Weapon>();
