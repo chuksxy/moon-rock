@@ -69,12 +69,23 @@ namespace us_dead_kids.weapon {
             public static void Use(Weapon weapon) { }
 
 
-            public static void UsePrimaryWeapon() { }
+            public static void UsePrimaryWeapon(string characterID) {
+                  var weapon = GetAllPrimary(characterID).OrderByDescending(w => w.Priority).FirstOrDefault(null);
+                  if (weapon == null) {
+                        Debug.LogWarning($"character [{characterID}] does not have a primary weapon assigned");
+                        return;
+                  }
 
-            public static void UseSecondaryWeapon() { }
+                  Use(weapon);
+            }
 
 
-            private static List<Weapon> GetAllPrimary(string characterID) {
+            public static void UseSecondaryWeapon() {
+                  
+            }
+
+
+            private static IEnumerable<Weapon> GetAllPrimary(string characterID) {
                   if (CharacterIDsToMeleeWeapons.ContainsKey(characterID)) {
                         return CharacterIDsToMeleeWeapons[characterID];
                   }
