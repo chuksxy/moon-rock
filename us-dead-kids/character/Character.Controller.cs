@@ -9,7 +9,7 @@ namespace us_dead_kids.character {
                   [SerializeField] private string characterID = "";
 
 
-                  public void Init(string id) {
+                  public void Assign(string id) {
                         if (string.IsNullOrEmpty(id)) {
                               Debug.LogWarning("character ID cannot be blank");
                               return;
