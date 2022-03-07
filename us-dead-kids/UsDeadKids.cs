@@ -15,7 +15,7 @@ namespace us_dead_kids {
 
             private void Awake() {
                   _manager = GetComponent<SimpleSQLManager>();
-                  
+
                   if (IsNewGame()) {
                         Character.Service.Init();
                         Weapon.Service.Init();
@@ -24,7 +24,7 @@ namespace us_dead_kids {
 
 
             private bool IsNewGame() {
-                  return true;
+                  throw new NotImplementedException();
             }
 
 
