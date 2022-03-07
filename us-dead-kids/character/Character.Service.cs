@@ -22,12 +22,12 @@ namespace us_dead_kids.character {
                   public static void Init() {
                         UsDeadKids.DB.Exec(db => {
                               const string sql =
-                                    @" create table characters (
+                                    @"create table characters (
                                               id string not null,
                                               name string not null,
                                               priority int,
-                                              primary key (id))
-                                    ";
+                                              primary key (id)
+                                      )";
                               db.Execute(sql);
                         });
                   }
