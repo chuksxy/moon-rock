@@ -76,6 +76,7 @@ namespace us_dead_kids.weapon {
 
                   const string sql =
                         @"select * from weapons w where w.character_id=? and w.primary=false";
+                  
                   var weapons = UsDeadKids.DB.Exec(db => db.Query<Weapon>(sql, characterID));
 
                   return weapons ?? new List<Weapon>();
@@ -89,6 +90,7 @@ namespace us_dead_kids.weapon {
 
                   const string sql =
                         @"select * from weapons w where w.character_id=? and w.primary=true";
+                  
                   var weapons = UsDeadKids.DB.Exec(db => db.Query<Weapon>(sql, characterID));
 
                   return weapons ?? new List<Weapon>();
