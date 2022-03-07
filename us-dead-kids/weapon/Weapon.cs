@@ -30,7 +30,7 @@ namespace us_dead_kids.weapon {
                   CharacterIDsToPrimaryWeapons = new Dictionary<string, List<Weapon>>();
 
             private static readonly Dictionary<string, List<Weapon>>
-                  CharacterIDsToRangeWeapons = new Dictionary<string, List<Weapon>>();
+                  CharacterIDsToSecondaryWeapons = new Dictionary<string, List<Weapon>>();
 
 
             // Init Service and creating the `characters` table.
@@ -69,6 +69,32 @@ namespace us_dead_kids.weapon {
             public static void Use(Weapon weapon) { }
 
 
+            private static IEnumerable<Weapon> GetAllSecondary(string characterID) {
+                  if (CharacterIDsToSecondaryWeapons.ContainsKey(characterID)) {
+                        return CharacterIDsToSecondaryWeapons[characterID];
+                  }
+
+                  const string sql =
+                        @"select * from weapons w where w.character_id=? and w.primary=false";
+                  var weapons = UsDeadKids.DB.Exec(db => db.Query<Weapon>(sql, characterID));
+
+                  return weapons ?? new List<Weapon>();
+            }
+
+
+            private static IEnumerable<Weapon> GetAllPrimary(string characterID) {
+                  if (CharacterIDsToPrimaryWeapons.ContainsKey(characterID)) {
+                        return CharacterIDsToPrimaryWeapons[characterID];
+                  }
+
+                  const string sql =
+                        @"select * from weapons w where w.character_id=? and w.primary=true";
+                  var weapons = UsDeadKids.DB.Exec(db => db.Query<Weapon>(sql, characterID));
+
+                  return weapons ?? new List<Weapon>();
+            }
+
+
             public static void UsePrimaryWeapon(string characterID) {
                   var weapon = GetAllPrimary(characterID).OrderByDescending(w => w.Priority).FirstOrDefault(null);
                   if (weapon == null) {
@@ -80,22 +106,14 @@ namespace us_dead_kids.weapon {
             }
 
 
-            public static void UseSecondaryWeapon() {
-                  
-            }
-
-
-            private static IEnumerable<Weapon> GetAllPrimary(string characterID) {
-                  if (CharacterIDsToMeleeWeapons.ContainsKey(characterID)) {
-                        return CharacterIDsToMeleeWeapons[characterID];
+            public static void UseSecondaryWeapon(string characterID) {
+                  var weapon = GetAllSecondary(characterID).OrderByDescending(w => w.Priority).FirstOrDefault(null);
+                  if (weapon == null) {
+                        Debug.LogWarning($"character [{characterID}] does not have a secondary weapon assigned");
+                        return;
                   }
 
-                  const string sql =
-                        @"select * from weapons w where w.character_id=? and w.primary=true";
-
-                  var weapons = UsDeadKids.DB.Exec(db => db.Query<Weapon>(sql, characterID));
-
-                  return weapons ?? new List<Weapon>();
+                  Use(weapon);
             }
 
 
