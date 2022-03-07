@@ -36,6 +36,11 @@ namespace us_dead_kids {
                         }
                   }
 
+
+                  public static R Exec<R>(Func<SimpleSQLManager, R> func) {
+                        return Get() != null ? func.Invoke(_manager) : default;
+                  }
+
             }
 
       }

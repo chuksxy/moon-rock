@@ -22,10 +22,13 @@ namespace us_dead_kids.weapon {
 
             // Caches
             private static readonly Dictionary<string, List<Weapon>>
-                  CharacterIDToMeleeWeapons = new Dictionary<string, List<Weapon>>();
+                  CharacterIDsToMeleeWeapons = new Dictionary<string, List<Weapon>>();
 
             private static readonly Dictionary<string, List<Weapon>>
-                  CharacterIDToRangeWeapons = new Dictionary<string, List<Weapon>>();
+                  CharacterIDsToPrimaryWeapons = new Dictionary<string, List<Weapon>>();
+
+            private static readonly Dictionary<string, List<Weapon>>
+                  CharacterIDsToRangeWeapons = new Dictionary<string, List<Weapon>>();
 
 
             // Init Service and creating the `characters` table.
@@ -35,11 +38,13 @@ namespace us_dead_kids.weapon {
                               @"create table weapons (
                                     id string not null,
                                     character_id  string not null,
+                                    primary boolean,
+                                    auxiliary boolean,
                                     melee boolean,
                                     ranged boolean,
                                     priority int,
                                     primary key(id)
-                                )";
+                              )";
 
                         db.Execute(sql);
                   });
@@ -47,12 +52,12 @@ namespace us_dead_kids.weapon {
 
 
             private static void CacheMelee(string characterID, List<Weapon> weapons, bool evict = false) {
-                  if (CharacterIDToMeleeWeapons.ContainsKey(characterID) && evict) {
-                        CharacterIDToMeleeWeapons.Remove(characterID);
+                  if (CharacterIDsToMeleeWeapons.ContainsKey(characterID) && evict) {
+                        CharacterIDsToMeleeWeapons.Remove(characterID);
                   }
 
-                  if (!CharacterIDToMeleeWeapons.ContainsKey(characterID)) {
-                        CharacterIDToMeleeWeapons.Add(characterID, weapons);
+                  if (!CharacterIDsToMeleeWeapons.ContainsKey(characterID)) {
+                        CharacterIDsToMeleeWeapons.Add(characterID, weapons);
                   }
             }
 
@@ -62,10 +67,25 @@ namespace us_dead_kids.weapon {
             public static void Use(Weapon weapon) { }
 
 
+            public static void UsePrimaryWeapon() { }
+
+            public static void UseSecondaryWeapon() { }
+
+
+            private static List<Weapon> GetAllPrimary(string characterID) {
+                  const string sql =
+                        @"select * from weapons w where w.character_id=? and w.primary=true";
+                  
+                  var weapons = UsDeadKids.DB.Exec(db => db.Query<Weapon>(sql, characterID));
+
+                  return weapons ?? new List<Weapon>();
+            }
+
+
             public static void UseMeleeWeapon(string characterID) {
                   UsDeadKids.DB.Exec(db => {
-                        var meleeWeapons = CharacterIDToMeleeWeapons.ContainsKey(characterID)
-                              ? CharacterIDToMeleeWeapons[characterID]
+                        var meleeWeapons = CharacterIDsToMeleeWeapons.ContainsKey(characterID)
+                              ? CharacterIDsToMeleeWeapons[characterID]
                               : db.Query<Weapon>(GET_ALL_MELEE_WEAPONS_FOR_CHARACTER, characterID);
 
                         var chosen = meleeWeapons.OrderByDescending(w => w.Priority).FirstOrDefault();
