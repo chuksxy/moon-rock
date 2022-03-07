@@ -28,6 +28,7 @@ namespace us_dead_kids.weapon {
                   CharacterIDToRangeWeapons = new Dictionary<string, List<Weapon>>();
 
 
+            // Init Service and creating the `characters` table.
             private static void Init() {
                   UsDeadKids.DB.Exec(db => {
                         const string sql =
@@ -39,7 +40,7 @@ namespace us_dead_kids.weapon {
                                     priority int,
                                     primary key(id)
                                 )";
-                        
+
                         db.Execute(sql);
                   });
             }
