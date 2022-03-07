@@ -48,7 +48,7 @@ namespace us_dead_kids.character {
 
 
                   public void UsePrimaryWeapon() {
-                        Service.UsePrimaryWeapon("player");
+                        Service.UsePrimaryWeapon(characterID);
                   }
 
 
