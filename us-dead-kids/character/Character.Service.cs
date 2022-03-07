@@ -86,6 +86,11 @@ namespace us_dead_kids.character {
                   }
 
 
+                  public static void Interact(string characterID) {
+                        throw new NotImplementedException();
+                  }
+
+
                   // Move character specified by [ID] in a direction via the Animator.
                   public static void Move(string characterID, Vector3 direction) {
                         void MoveByAnimator(Character c) {
@@ -119,6 +124,11 @@ namespace us_dead_kids.character {
                   }
 
 
+                  public static void UseSkill(string characterID, int slot) {
+                        throw new NotImplementedException();
+                  }
+
+
                   // Use Primary Weapon equipped.
                   public static void UsePrimaryWeapon(string characterID) {
                         Weapon.UsePrimary(characterID);
@@ -133,6 +143,11 @@ namespace us_dead_kids.character {
 
                   public static void UseMeleeWeapon(string characterID) {
                         Weapon.UseMelee(characterID);
+                  }
+
+
+                  public static void UseItem(string characterID, int x, int y) {
+                        throw new NotImplementedException();
                   }
 
             }
