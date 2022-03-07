@@ -95,7 +95,7 @@ namespace us_dead_kids.weapon {
             }
 
 
-            public static void UsePrimaryWeapon(string characterID) {
+            public static void UsePrimary(string characterID) {
                   var weapon = GetAllPrimary(characterID).OrderByDescending(w => w.Priority).FirstOrDefault(null);
                   if (weapon == null) {
                         Debug.LogWarning($"character [{characterID}] does not have a primary weapon assigned");
@@ -106,7 +106,7 @@ namespace us_dead_kids.weapon {
             }
 
 
-            public static void UseSecondaryWeapon(string characterID) {
+            public static void UseSecondary(string characterID) {
                   var weapon = GetAllSecondary(characterID).OrderByDescending(w => w.Priority).FirstOrDefault(null);
                   if (weapon == null) {
                         Debug.LogWarning($"character [{characterID}] does not have a secondary weapon assigned");
@@ -117,7 +117,7 @@ namespace us_dead_kids.weapon {
             }
 
 
-            public static void UseMeleeWeapon(string characterID) {
+            public static void UseMelee(string characterID) {
                   UsDeadKids.DB.Exec(db => {
                         var meleeWeapons = CharacterIDsToMeleeWeapons.ContainsKey(characterID)
                               ? CharacterIDsToMeleeWeapons[characterID]

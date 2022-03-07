@@ -123,20 +123,18 @@ namespace us_dead_kids.character {
 
                   // Use Primary Weapon equipped.
                   public static void UsePrimaryWeapon(string characterID) {
-                        var inventories = Inventory.Service.Get(characterID);
-                        inventories.ForEach(inventory => { Weapon.Use(inventory.PrimaryWeaponID); });
+                        Weapon.UsePrimary(characterID);
                   }
 
 
                   // Use Secondary Weapon equipped.
                   public static void UseSecondaryWeapon(string characterID) {
-                        var inventories = Inventory.Service.Get(characterID);
-                        inventories.ForEach(inventory => { Weapon.Use(inventory.SecondaryWeaponID); });
+                        Weapon.UseSecondary(characterID);
                   }
 
 
                   public static void UseMeleeWeapon(string characterID) {
-                        Weapon.UseMeleeWeapon(characterID);
+                        Weapon.UseMelee(characterID);
                   }
 
             }
