@@ -27,7 +27,7 @@ namespace us_dead_kids.character {
                                               name string not null,
                                               priority int,
                                               primary key (id)
-                                      )";
+                                    )";
                               db.Execute(sql);
                         });
                   }
