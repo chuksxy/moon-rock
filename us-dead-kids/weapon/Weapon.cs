@@ -28,6 +28,25 @@ namespace us_dead_kids.weapon {
                   CharacterIDToRangeWeapons = new Dictionary<string, List<Weapon>>();
 
 
+            private static void Init() {
+                  UsDeadKids.DB.Exec(db => {
+                        const string sql =
+                              @"create table weapons (
+                                    id string not null,
+                                    character_id  string not null,
+                                    melee boolean,
+                                    ranged boolean,
+                                    priority int
+                                    primary key(id)
+                                )       
+                              ";
+
+
+                        db.Execute(sql);
+                  });
+            }
+
+
             private static void CacheMelee(string characterID, List<Weapon> weapons, bool evict = false) {
                   if (CharacterIDToMeleeWeapons.ContainsKey(characterID) && evict) {
                         CharacterIDToMeleeWeapons.Remove(characterID);
