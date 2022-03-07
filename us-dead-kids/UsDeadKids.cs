@@ -2,6 +2,7 @@ using System;
 using SimpleSQL;
 using UnityEngine;
 using us_dead_kids.character;
+using us_dead_kids.weapon;
 using us_dead_kids.world;
 
 namespace us_dead_kids {
@@ -12,10 +13,18 @@ namespace us_dead_kids {
             private static SimpleSQLManager _manager;
 
 
-            public void Awake() {
+            private void Awake() {
                   _manager = GetComponent<SimpleSQLManager>();
-                  var world       = World.Generator.Generate("brave.new.world", System.DateTime.Now.Ticks);
-                  var protagonist = Character.Generator.Generate("player");
+                  
+                  if (IsNewGame()) {
+                        Character.Service.Init();
+                        Weapon.Service.Init();
+                  }
+            }
+
+
+            private bool IsNewGame() {
+                  return true;
             }
 
 

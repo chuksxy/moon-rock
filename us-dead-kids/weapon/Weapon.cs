@@ -32,12 +32,13 @@ namespace us_dead_kids.weapon {
             private static readonly Dictionary<string, List<Weapon>>
                   CharacterIDsToSecondaryWeapons = new Dictionary<string, List<Weapon>>();
 
+            public static class Service {
 
-            // Init Service and creating the `characters` table.
-            private static void Init() {
-                  UsDeadKids.DB.Exec(db => {
-                        const string sql =
-                              @"create table weapons (
+                  // Init Service and creating the `characters` table.
+                  public static void Init() {
+                        UsDeadKids.DB.Exec(db => {
+                              const string sql =
+                                    @"create table weapons (
                                     id string not null,
                                     character_id  string not null,
                                     primary boolean,
@@ -48,8 +49,10 @@ namespace us_dead_kids.weapon {
                                     primary key(id)
                               )";
 
-                        db.Execute(sql);
-                  });
+                              db.Execute(sql);
+                        });
+                  }
+
             }
 
 
@@ -76,7 +79,7 @@ namespace us_dead_kids.weapon {
 
                   const string sql =
                         @"select * from weapons w where w.character_id=? and w.primary=false";
-                  
+
                   var weapons = UsDeadKids.DB.Exec(db => db.Query<Weapon>(sql, characterID));
 
                   return weapons ?? new List<Weapon>();
@@ -90,7 +93,7 @@ namespace us_dead_kids.weapon {
 
                   const string sql =
                         @"select * from weapons w where w.character_id=? and w.primary=true";
-                  
+
                   var weapons = UsDeadKids.DB.Exec(db => db.Query<Weapon>(sql, characterID));
 
                   return weapons ?? new List<Weapon>();
