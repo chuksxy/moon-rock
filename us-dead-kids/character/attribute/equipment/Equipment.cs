@@ -5,7 +5,6 @@ namespace us_dead_kids.character.attribute.equipment {
             public string ID          { get; set; }
             public string CharacterID { get; set; }
 
-
             public static class Table {
 
                   public static void Init() {

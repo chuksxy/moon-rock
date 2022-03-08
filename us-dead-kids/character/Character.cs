@@ -1,4 +1,3 @@
-using SimpleSQL;
 using us_dead_kids.attribute.health;
 using us_dead_kids.attribute.speed;
 
@@ -12,13 +11,13 @@ namespace us_dead_kids.character {
 
 
             public Health Health() {
-                  return attribute.health.Health.Get(ID);
+                  return us_dead_kids.attribute.health.Health.Get(ID);
             }
 
 
             // Speed of this character in miles per hour.
             public Speed Speed() {
-                  return attribute.speed.Speed.Get(ID);
+                  return us_dead_kids.attribute.speed.Speed.Get(ID);
             }
 
 
