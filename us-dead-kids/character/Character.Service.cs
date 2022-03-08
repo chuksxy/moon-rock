@@ -91,6 +91,16 @@ namespace us_dead_kids.character {
                   }
 
 
+                  public static void Rotate(string characterID, Vector3 direction, float speed = 1.0f, bool interpolate = false) {
+                        InvokeOnAvatar(characterID, a => {
+                              var rotation = Quaternion.LookRotation(direction);
+                              a.transform.rotation = interpolate
+                                    ? Quaternion.Lerp(a.transform.rotation, rotation, Time.deltaTime * speed)
+                                    : rotation;
+                        });
+                  }
+
+
                   // Move character specified by [ID] in a direction via the Animator.
                   public static void Move(string characterID, Vector3 direction) {
                         void MoveByAnimator(Character c) {
