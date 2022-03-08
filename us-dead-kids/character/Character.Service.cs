@@ -10,12 +10,6 @@ namespace us_dead_kids.character {
             public static class Service {
 
 
-                  private const string GET_CHARACTER_BY_ID =
-                        "select * " +
-                        "from character c " +
-                        "where c.character_id = ?";
-
-
                   public static void Init() {
                         UsDeadKids.DB.Exec(db => {
                               const string sql =
@@ -47,7 +41,12 @@ namespace us_dead_kids.character {
                               return;
                         }
 
-                        var characters = db.Query<Character>(GET_CHARACTER_BY_ID, characterID);
+                        const string sql =
+                              "select * "
+                            + "from character c "
+                            + "where c.character_id = ?";
+
+                        var characters = db.Query<Character>(sql, characterID);
                         if (characters == null || characters.Count == 0) {
                               Debug.LogWarning($"could not find character with ID [{characterID}].");
                               return;
@@ -69,7 +68,7 @@ namespace us_dead_kids.character {
 
 
                   public static void Rotate(string characterID, Vector3 direction, float speed = 1.0f, bool interpolate = false) {
-                        Character.Avatar.Invoke(characterID, a => {
+                        Avatar.Invoke(characterID, a => {
                               var rotation = Quaternion.LookRotation(direction);
                               a.transform.rotation = interpolate
                                     ? Quaternion.Lerp(a.transform.rotation, rotation, Time.deltaTime * speed)
