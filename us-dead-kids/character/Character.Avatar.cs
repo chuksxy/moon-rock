@@ -18,6 +18,17 @@ namespace us_dead_kids.character {
                   }
 
 
+                  public static void Invoke(string characterID, Action<Avatar> action) {
+                        var avatar = Avatar.Get(characterID);
+                        if (avatar == null) {
+                              Debug.LogWarning($"avatar with ID [{characterID}] not found.");
+                              return;
+                        }
+
+                        action.Invoke(avatar);
+                  }
+
+
                   private void Awake() {
                         _animator = GetComponentInChildren<Animator>();
                   }

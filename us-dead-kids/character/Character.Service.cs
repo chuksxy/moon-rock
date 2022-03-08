@@ -42,7 +42,7 @@ namespace us_dead_kids.character {
                   }
 
 
-                  private static void InvokeOnCharacter(string characterID, Action<Character> action, bool force = false) {
+                  private static void Invoke(string characterID, Action<Character> action, bool force = false) {
                         if (CharacterCache.ContainsKey(characterID)) {
                               var character = CharacterCache[characterID];
                               var execute   = force || character.IsAlive();
@@ -75,24 +75,13 @@ namespace us_dead_kids.character {
                   }
 
 
-                  private static void InvokeOnAvatar(string characterID, Action<Avatar> action) {
-                        var avatar = Avatar.Get(characterID);
-                        if (avatar == null) {
-                              Debug.LogWarning($"avatar with ID [{characterID}] not found.");
-                              return;
-                        }
-
-                        action.Invoke(avatar);
-                  }
-
-
                   public static void Interact(string characterID) {
                         throw new NotImplementedException();
                   }
 
 
                   public static void Rotate(string characterID, Vector3 direction, float speed = 1.0f, bool interpolate = false) {
-                        InvokeOnAvatar(characterID, a => {
+                        Character.Avatar.Invoke(characterID, a => {
                               var rotation = Quaternion.LookRotation(direction);
                               a.transform.rotation = interpolate
                                     ? Quaternion.Lerp(a.transform.rotation, rotation, Time.deltaTime * speed)
@@ -105,19 +94,19 @@ namespace us_dead_kids.character {
                   public static void Move(string characterID, Vector3 direction) {
                         void MoveByAnimator(Character c) {
                               var velocity = direction * c.Speed().Current;
-                              InvokeOnAvatar(c.ID, avatar => {
+                              Avatar.Invoke(c.ID, avatar => {
                                     avatar.GetAnimator().SetFloat(Animation.Param.MoveX, velocity.x);
                                     avatar.GetAnimator().SetFloat(Animation.Param.MoveY, velocity.y);
                               });
                         }
 
-                        InvokeOnCharacter(characterID, MoveByAnimator);
+                        Invoke(characterID, MoveByAnimator);
                   }
 
 
                   public static void Dodge(string characterID, Vector3 direction) {
-                        InvokeOnCharacter(characterID, c => {
-                              InvokeOnAvatar(c.ID, avatar => {
+                        Invoke(characterID, c => {
+                              Avatar.Invoke(c.ID, avatar => {
                                     avatar.GetAnimator().SetFloat(Animation.Param.MoveX, direction.x);
                                     avatar.GetAnimator().SetFloat(Animation.Param.MoveY, direction.y);
                                     avatar.GetAnimator().SetTrigger(Animation.Param.Dodge);
@@ -127,8 +116,8 @@ namespace us_dead_kids.character {
 
 
                   public static void Guard(string characterID) {
-                        InvokeOnCharacter(characterID, c => {
-                              InvokeOnAvatar(c.ID,
+                        Invoke(characterID, c => {
+                              Avatar.Invoke(c.ID,
                                     avatar => { avatar.GetAnimator().SetTrigger(Animation.Param.Guard); });
                         });
                   }
