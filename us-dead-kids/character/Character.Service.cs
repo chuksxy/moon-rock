@@ -9,7 +9,6 @@ namespace us_dead_kids.character {
 
             public static class Service {
 
-                  private static readonly Dictionary<string, Character> CharacterCache = new Dictionary<string, Character>();
 
                   private const string GET_CHARACTER_BY_ID =
                         "select * " +
@@ -31,20 +30,9 @@ namespace us_dead_kids.character {
                   }
 
 
-                  private static void Cache(Character character, bool evict = false) {
-                        if (CharacterCache.ContainsKey(character.ID) && evict) {
-                              CharacterCache.Remove(character.ID);
-                        }
-
-                        if (!CharacterCache.ContainsKey(character.ID)) {
-                              CharacterCache.Add(character.ID, character);
-                        }
-                  }
-
-
                   private static void Invoke(string characterID, Action<Character> action, bool force = false) {
-                        if (CharacterCache.ContainsKey(characterID)) {
-                              var character = CharacterCache[characterID];
+                        if (Cache.Get().ContainsKey(characterID)) {
+                              var character = Cache.Get()[characterID];
                               var execute   = force || character.IsAlive();
 
                               if (execute) {
@@ -70,7 +58,7 @@ namespace us_dead_kids.character {
                               if (!force && !c.IsAlive()) return;
 
                               action.Invoke(c);
-                              Cache(c);
+                              Cache.Put(c);
                         });
                   }
 
