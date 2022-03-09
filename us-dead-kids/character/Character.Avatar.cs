@@ -12,21 +12,20 @@ namespace us_dead_kids.character {
 
                   private Animator _animator;
 
-                  static class Cache {
+                  private static class Cache {
 
                         public static readonly Dictionary<string, Avatar> Store = new Dictionary<string, Avatar>();
 
                   }
 
 
-                  // Get the Unity's representation of a Character by it's ID.
+                  // Get Avatar by [characterID].
                   private static Avatar Get(string characterID) {
-                        if (Cache.Store.ContainsKey(characterID)) {
-                              return Cache.Store[characterID];
-                        }
+                        return Cache.Store.ContainsKey(characterID) ? Cache.Store[characterID] : null;
                   }
 
 
+                  // Invoke [action] on a character if present.
                   public static void Invoke(string characterID, Action<Avatar> action) {
                         var avatar = Avatar.Get(characterID);
                         if (avatar == null) {
@@ -48,6 +47,7 @@ namespace us_dead_kids.character {
                   }
 
 
+                  // Assign [id] to Avatar.
                   public void Assign(string id) {
                         if (string.IsNullOrEmpty(id)) {
                               Debug.LogWarning("character ID cannot be blank");
@@ -59,6 +59,13 @@ namespace us_dead_kids.character {
                   }
 
 
+                  // Init Avatar
+                  public void Init() {
+                        Cache.Store.Add(characterID, this);
+                  }
+
+
+                  // Move Avatar in direction.
                   public void Move(Vector3 direction) {
                         Service.Move(characterID, direction);
                   }
