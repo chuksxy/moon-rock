@@ -4,10 +4,13 @@ namespace us_dead_kids.character {
 
       public partial class Character {
 
-            private static readonly Dictionary<string, Character> Store = new Dictionary<string, Character>();
 
             public static class Cache {
 
+                  private static readonly Dictionary<string, Character> Store = new Dictionary<string, Character>();
+
+
+                  // Put Character into the in-memory cache and optionally force an eviction if an entry already exists.
                   internal static void Put(Character character, bool evict = false) {
                         if (Store.ContainsKey(character.ID) && evict) {
                               Store.Remove(character.ID);

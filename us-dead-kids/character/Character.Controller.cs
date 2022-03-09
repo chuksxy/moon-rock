@@ -15,7 +15,8 @@ namespace us_dead_kids.character {
                               return;
                         }
 
-                        characterID = id;
+                        characterID     = id;
+                        gameObject.name = characterID;
                   }
 
 
