@@ -47,8 +47,8 @@ namespace us_dead_kids.character {
                   }
 
 
-                  // Assign [id] to Avatar.
-                  public void Assign(string id) {
+                  // Init Avatar and assign it an ID.
+                  public void Init(string id) {
                         if (string.IsNullOrEmpty(id)) {
                               Debug.LogWarning("character ID cannot be blank");
                               return;
@@ -56,11 +56,6 @@ namespace us_dead_kids.character {
 
                         characterID     = id;
                         gameObject.name = characterID;
-                  }
-
-
-                  // Init Avatar
-                  public void Init() {
                         Cache.Store.Add(characterID, this);
                   }
 
