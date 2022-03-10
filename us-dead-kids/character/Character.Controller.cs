@@ -9,14 +9,15 @@ namespace us_dead_kids.character {
                   [SerializeField] private string characterID = "";
 
 
-                  public void Assign(string id) {
-                        if (string.IsNullOrEmpty(id)) {
+                  public void Init(Character c) {
+                        if (string.IsNullOrEmpty(c.ID)) {
                               Debug.LogWarning("character ID cannot be blank");
                               return;
                         }
 
-                        characterID     = id;
+                        characterID     = c.ID;
                         gameObject.name = characterID;
+                        Service.Init(c);
                   }
 
 

@@ -1,3 +1,4 @@
+using SimpleSQL;
 using us_dead_kids.attribute.health;
 using us_dead_kids.attribute.speed;
 
@@ -5,9 +6,9 @@ namespace us_dead_kids.character {
 
       public partial class Character {
 
-            public string ID       { get; set; }
-            public string Name     { get; set; }
-            public int    Priority { get; set; }
+            [PrimaryKey] public string ID       { get; set; }
+            public              string Name     { get; set; }
+            public              int    Priority { get; set; }
 
 
             public Health Health() {

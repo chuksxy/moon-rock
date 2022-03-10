@@ -17,7 +17,7 @@ namespace us_dead_kids {
                   _manager = GetComponent<SimpleSQLManager>();
 
                   if (IsNewGame()) {
-                        Character.Service.Init();
+                        Character.Service.Setup();
                         Weapon.Service.Init();
                   }
             }

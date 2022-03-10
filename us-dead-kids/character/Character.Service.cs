@@ -10,7 +10,7 @@ namespace us_dead_kids.character {
             public static class Service {
 
 
-                  public static void Init() {
+                  public static void Setup() {
                         UsDeadKids.DB.Exec(db => {
                               const string sql =
                                     @"create table characters (
@@ -58,6 +58,13 @@ namespace us_dead_kids.character {
 
                               action.Invoke(c);
                               Cache.Put(c);
+                        });
+                  }
+
+
+                  public static void Init(Character c) {
+                        UsDeadKids.DB.Exec(db => {
+                              db.Insert(c);
                         });
                   }
 
