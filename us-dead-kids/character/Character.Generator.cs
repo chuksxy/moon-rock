@@ -10,20 +10,7 @@ namespace us_dead_kids.character {
                         var g = new GameObject();
                         if (!SetupAnimator(g)) return null;
                         SetupRigidBody(g);
-                        return SetupController(name, priority, g);
-                  }
-
-
-                  private static Controller SetupController(string name, int priority, GameObject gameObject) {
-                        var controller  = gameObject.AddComponent<Controller>();
-                        var characterID = $"character_{System.Guid.NewGuid().ToString()}";
-                        var character = new Character() {
-                              ID       = characterID,
-                              Name     = name,
-                              Priority = priority
-                        };
-                        controller.Init(character);
-                        return controller;
+                        return Controller.Setup(name, priority, g);
                   }
 
 

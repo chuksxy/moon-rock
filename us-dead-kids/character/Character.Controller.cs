@@ -9,6 +9,19 @@ namespace us_dead_kids.character {
                   [SerializeField] private string characterID = "";
 
 
+                  public static Controller Setup(string name, int priority, GameObject gameObject) {
+                        var controller  = gameObject.AddComponent<Controller>();
+                        var characterID = $"character_{System.Guid.NewGuid().ToString()}";
+                        var character = new Character() {
+                              ID       = characterID,
+                              Name     = name,
+                              Priority = priority
+                        };
+                        controller.Init(character);
+                        return controller;
+                  }
+
+
                   public void Init(Character c) {
                         if (string.IsNullOrEmpty(c.ID)) {
                               Debug.LogWarning("character ID cannot be blank");
