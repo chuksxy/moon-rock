@@ -5,9 +5,9 @@ namespace us_dead_kids.character.attribute.equipment {
             public string ID          { get; set; }
             public string CharacterID { get; set; }
 
-            public static class Table {
+            public static class Service {
 
-                  public static void Init() {
+                  public static void Setup() {
                         UsDeadKids.DB.Exec(db => {
                               const string sql =
                                     @"create table equipment (

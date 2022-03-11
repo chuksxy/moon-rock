@@ -26,6 +26,11 @@ namespace us_dead_kids.character {
                   return Health().Current > 0;
             }
 
+
+            public Avatar GetAvatar() {
+                  return Avatar.Get(ID);
+            }
+
       }
 
 }

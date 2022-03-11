@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 
 namespace us_dead_kids.character {
 
@@ -19,15 +20,60 @@ namespace us_dead_kids.character {
                   }
 
 
+                  // Setup Character's animation controller at runtime.
+                  private static bool SetupAnimator(GameObject g) {
+                        var animatorController =
+                              Resources.Load("master_controller.controller");
+                        if (animatorController == null) {
+                              Debug.LogWarning("animation controller not found when generating character.");
+                              return false;
+                        }
+
+                        var animator = g.AddComponent<Animator>();
+                        animator.runtimeAnimatorController = animatorController as RuntimeAnimatorController;
+
+                        return true;
+                  }
+
+
+                  // Setup character's rigid body as a child game object.
+                  private static void SetupRigidBody(GameObject parent) {
+                        var g = new GameObject();
+                        g.transform.SetParent(parent.transform);
+                        g.AddComponent<Rigidbody>();
+                  }
+
+
+                  // Create Avatar from character declaration
+                  public static Avatar Create(Character c) {
+                        var g = new GameObject();
+
+                        if (!SetupAnimator(g)) return null;
+                        SetupRigidBody(g);
+
+                        var avatar = g.AddComponent<Avatar>();
+                        if (string.IsNullOrEmpty(c.ID)) {
+                              Debug.LogWarning("character ID cannot be blank");
+                              return null;
+                        }
+
+                        avatar.characterID     = c.ID;
+                        avatar.gameObject.name = avatar.characterID;
+
+                        Cache.Store.Add(avatar.characterID, avatar);
+                        return avatar;
+                  }
+
+
                   // Get Avatar by [characterID].
-                  private static Avatar Get(string characterID) {
+                  internal static Avatar Get(string characterID) {
                         return Cache.Store.ContainsKey(characterID) ? Cache.Store[characterID] : null;
                   }
 
 
                   // Invoke [action] on a character if present.
                   public static void Invoke(string characterID, Action<Avatar> action) {
-                        var avatar = Avatar.Get(characterID);
+                        var avatar = Get(characterID);
                         if (avatar == null) {
                               Debug.LogWarning($"avatar with ID [{characterID}] not found.");
                               return;
@@ -44,19 +90,6 @@ namespace us_dead_kids.character {
 
                   internal Animator GetAnimator() {
                         return _animator;
-                  }
-
-
-                  // Init Avatar and assign it an ID.
-                  public void Init(string id) {
-                        if (string.IsNullOrEmpty(id)) {
-                              Debug.LogWarning("character ID cannot be blank");
-                              return;
-                        }
-
-                        characterID     = id;
-                        gameObject.name = characterID;
-                        Cache.Store.Add(characterID, this);
                   }
 
 

@@ -62,10 +62,8 @@ namespace us_dead_kids.character {
                   }
 
 
-                  public static void Init(Character c) {
-                        UsDeadKids.DB.Exec(db => {
-                              db.Insert(c);
-                        });
+                  public static void Persist(Character c) {
+                        UsDeadKids.DB.Exec(db => { db.Insert(c); });
                   }
 
 
