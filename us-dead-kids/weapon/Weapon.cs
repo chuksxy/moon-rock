@@ -34,7 +34,7 @@ namespace us_dead_kids.weapon {
 
             public static class Service {
 
-                  // Init Service and creating the `characters` table.
+                  // Init Service and creating the `weapons` table.
                   public static void Init() {
                         UsDeadKids.DB.Exec(db => {
                               const string sql =
