@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using SimpleSQL;
 using us_dead_kids.attribute.health;
 using us_dead_kids.attribute.speed;
@@ -9,6 +11,12 @@ namespace us_dead_kids.character {
             [PrimaryKey] public string ID       { get; set; }
             public              string Name     { get; set; }
             public              int    Priority { get; set; }
+            public              string Tags     { get; set; }
+
+
+            public List<string> GetTags() {
+                  return Tags.Split(';').ToList();
+            }
 
 
             public Health Health() {

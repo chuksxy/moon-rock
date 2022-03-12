@@ -1,4 +1,7 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 
 namespace us_dead_kids.attribute.health {
 
@@ -8,6 +11,13 @@ namespace us_dead_kids.attribute.health {
             public string EntityID { get; set; }
             public int    Current  { get; set; }
             public int    Max      { get; set; }
+
+
+            private static class Cache {
+
+                  public static readonly Dictionary<string, Health> CharacterIDsToHealth = new Dictionary<string, Health>();
+
+            }
 
             public class Service {
 
@@ -40,8 +50,29 @@ namespace us_dead_kids.attribute.health {
             }
 
 
+            internal static List<Health> Query(string entityID) {
+                  const string sql = @"select * from health where entity_id=?";
+
+                  return UsDeadKids.DB.Exec(db => db.Query<Health>(sql, entityID));
+            }
+
+
             public static Health Get(string entityID) {
-                  throw new NotImplementedException();
+                  if (Cache.CharacterIDsToHealth.ContainsKey(entityID)) {
+                        return Cache.CharacterIDsToHealth[entityID];
+                  }
+
+                  var health = Query(entityID);
+                  if (health == null || health.Count == 0) {
+                        Debug.LogWarning($"No health entry for entity [{entityID}] found.");
+                        return null;
+                  }
+
+                  if (health.Count > 1) {
+                        Debug.LogWarning($"Multiple health entries for entity [{entityID}] found.");
+                  }
+
+                  return health.First();
             }
 
       }
