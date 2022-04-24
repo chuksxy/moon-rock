@@ -19,7 +19,7 @@ namespace us_dead_kids.character {
 
             }
 
-            public class Builder {
+            public static class Builder {
 
                   // Create a new character in the world.
                   public static Character Create(Build b) {

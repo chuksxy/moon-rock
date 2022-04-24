@@ -4,12 +4,12 @@ using moon.rock.world.props;
 using tartarus.graph;
 using UnityEngine;
 
-namespace moon.rock.world.actor.mobilearmour {
+namespace moon.rock.world.mobilearmour {
 
       public partial class MobileArmour {
 
             // Create Mobile Armour from graph.
-            public static Interface Create(Graph graph) {
+            public static Controller Create(Graph graph) {
                   var frame = graph.FindFirstByTag("frame");
                   var head  = graph.FindFirstByTag("head");
                   var torso = graph.FindFirstByTag("torso");
@@ -20,7 +20,7 @@ namespace moon.rock.world.actor.mobilearmour {
                   CreateHead(head);
                   CreateTorso(torso);
 
-                  return new GameObject().AddComponent<Interface>();
+                  return new GameObject().AddComponent<Controller>();
             }
 
 
