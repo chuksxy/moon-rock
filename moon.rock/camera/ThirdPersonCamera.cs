@@ -48,6 +48,11 @@ namespace moon.rock.camera {
 
 
             public void Track(Avatar target) {
+                  var old = _last.Item1.name;
+                  if (_last != null && old != target.name) {
+                        Debug.LogWarning($"swapping camera target from {old} to {target.name}");
+                  }
+
                   target.Moved += (avatar, direction) => { _last = new Tuple<Avatar, Vector3>(avatar, direction); };
             }
 
