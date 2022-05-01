@@ -32,7 +32,7 @@ namespace moon.rock.camera {
                         }
 
                         if (cam == null) {
-                              Debug.LogWarning("cannot track target because target is missing");
+                              Debug.LogWarning("cannot track target because camera is missing");
                               return;
                         }
 
