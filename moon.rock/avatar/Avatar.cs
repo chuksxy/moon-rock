@@ -1,13 +1,41 @@
 using UnityEngine;
 
-namespace moon.rock.controller {
+namespace moon.rock.avatar {
 
-      public class Controller : MonoBehaviour {
+      public partial class Avatar : MonoBehaviour {
+
+            private GameObject _anchor;
+            private GameObject _avatar;
+
+            private Rigidbody           _rb;
+            private Animator            _animator;
+            private CharacterController _controller;
+
+
+            public void Start() {
+                  void ConfigureAnchor() {
+                        _anchor = new GameObject($"{gameObject.name}.anchor");
+                        _rb     = _anchor.AddComponent<Rigidbody>();
+                        _anchor.transform.SetParent(gameObject.transform);
+                  }
+
+                  void ConfigureAvatar() {
+                        _avatar     = new GameObject($"{gameObject.name}.avatar");
+                        _animator   = _avatar.AddComponent<Animator>();
+                        _controller = _avatar.AddComponent<CharacterController>();
+                        _avatar.transform.SetParent(gameObject.transform);
+                  }
+
+                  ConfigureAnchor();
+                  ConfigureAvatar();
+                  InitEventBus();
+            }
 
 
             // Left analog stick to move
             public void Move(Vector3 direction) {
                   // calculate movement speed
+                  Moved(this, direction);
             }
 
 
@@ -57,7 +85,10 @@ namespace moon.rock.controller {
 
 
             // Press ❌ to jump
-            public void Jump() { }
+            public void Jump() {
+                  // Stub Implementation
+                  Jumped(this, Vector3.one);
+            }
 
 
             // Hold L1 + ❌ for a high jump
@@ -101,6 +132,7 @@ namespace moon.rock.controller {
 
             // Adjust the config of the selected part or use them in some cases.
             public void ConfigurePart(int value) { }
+
 
       }
 
