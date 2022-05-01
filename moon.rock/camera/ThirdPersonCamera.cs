@@ -25,12 +25,12 @@ namespace moon.rock.camera {
             private void LateUpdate() {
                   void TrackTarget() {
                         if (_last == null) {
-                              Debug.LogWarning("cannot track, target is missing");
+                              Debug.LogWarning("cannot track target because target is missing");
                               return;
                         }
 
                         if (cam == null) {
-                              Debug.LogWarning("cannot track, camera is missing");
+                              Debug.LogWarning("cannot track target because target is missing");
                               return;
                         }
 
