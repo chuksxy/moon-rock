@@ -8,6 +8,7 @@ namespace moon.rock.camera {
 
             public Camera cam;
 
+            // Last recorded target and the direction it moved in.
             private Tuple<Avatar, Vector3> _last;
 
 
@@ -23,6 +24,7 @@ namespace moon.rock.camera {
 
 
             private void LateUpdate() {
+                  // Track Target at the event of the frame update cycle
                   void TrackTarget() {
                         if (_last == null) {
                               Debug.LogWarning("cannot track target because target is missing");
