@@ -32,31 +32,28 @@ namespace moon.rock.avatar {
             }
 
 
-            // Left analog stick to move
             public void Move(Vector3 direction) {
                   // calculate movement speed
+                  Debug.Log($"I am moving in direction ({direction.x}, {direction.y}, {direction.z})");
                   Moved(this, direction);
             }
 
 
-            // Right analog stick to aim
             public void Aim(Vector3 cursor) { }
 
 
-            // Press L2 to fire Left hand weapon
-            public void UseLeftHandWeapon() { }
+            public void UseLeftHandWeapon(double duration) { }
 
 
-            // Hold ▲ then L2 to cycle weapon in left hand
-            public void CycleLeftWeapon() { }
+            public void CycleLeftWeapon() {
+                  Debug.Log("swapping left hand weapon");
+            }
 
 
-            // Hold ▲ then R2 to cycle weapon in right hand
+            public void UseRightHandWeapon(double duration) { }
+
+
             public void CycleRightWeapon() { }
-
-
-            // Press R2 to fire right hand weapon
-            public void UseRightHandWeapon() { }
 
 
             // Press R3 to Perform Melee
