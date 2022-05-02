@@ -34,15 +34,16 @@ namespace moon.rock.controller {
 
             // Press L2 to fire Left hand weapon
             public void UseLeftHandWeapon(InputAction.CallbackContext ctx) {
-                  if (ctx.performed) {
-                        _avatar.UseLeftHandWeapon(ctx.duration);
-                  }
+                  _avatar.UseLeftHandWeapon(ctx.duration);
             }
 
 
             // Hold ▲ then L2 to cycle weapon in left hand
             public void CycleLeftWeapon(InputAction.CallbackContext ctx) {
-                  _avatar.CycleLeftWeapon();
+                  if (ctx.canceled) return;
+                  if (ctx.started) {
+                        _avatar.CycleLeftWeapon();
+                  }
             }
 
 
@@ -53,7 +54,12 @@ namespace moon.rock.controller {
 
 
             // Hold ▲ then R2 to cycle weapon in right hand
-            public void CycleRightWeapon(InputAction.CallbackContext ctx) { }
+            public void CycleRightWeapon(InputAction.CallbackContext ctx) {
+                  if (ctx.canceled) return;
+                  if (ctx.started) {
+                        _avatar.CycleRightWeapon();
+                  }
+            }
 
 
             // Press R3 to Perform Melee
