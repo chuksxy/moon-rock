@@ -4,7 +4,7 @@ namespace moon.rock.avatar {
 
       public partial class Avatar {
 
-
+            // Move Avatar via Rigidbody and Animation Controller
             public void Move(Vector3 direction) {
                   // calculate movement speed
                   if (BoostersActivated()) {
