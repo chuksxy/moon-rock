@@ -5,7 +5,8 @@ namespace moon.rock.avatar {
       public partial class Avatar {
 
             // Move Avatar via Rigidbody and Animation Controller
-            public void Move(Vector3 direction) {
+            // Locomotion should be via curves
+            public void Move(Vector3 direction, Transform pivot) {
                   // calculate movement speed
                   if (BoostersActivated()) {
                         _rb.AddForce(direction * MaxSpeed());

@@ -54,7 +54,7 @@ namespace moon.rock.avatar {
             }
 
 
-            public void Aim(Vector3 cursor) { }
+            public void Aim(Vector3 cursor, Transform anchor) { }
 
 
             public void UseLeftHandWeapon(double duration) { }

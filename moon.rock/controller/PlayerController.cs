@@ -8,6 +8,7 @@ namespace moon.rock.controller {
       public class PlayerController : MonoBehaviour {
 
             private Avatar _avatar;
+            private Camera _camera;
 
 
             private void Start() {
@@ -15,20 +16,25 @@ namespace moon.rock.controller {
                   if (_avatar == null) {
                         Debug.LogError("cannot assign controller to null avatar");
                   }
+
+                  _camera = GameObject.Find("Camera").GetComponent<Camera>();
+                  if (_camera == null) {
+                        Debug.LogError("cannot assign controller, cannot find main camera");
+                  }
             }
 
 
             // Left analog stick to move
             public void Move(InputAction.CallbackContext ctx) {
                   var direction = ctx.ReadValue<Vector2>();
-                  _avatar.Move(new Vector3(direction.x, 0, direction.y));
+                  _avatar.Move(new Vector3(direction.x, 0, direction.y), _camera.transform);
             }
 
 
             // Right analog stick to aim
             public void Aim(InputAction.CallbackContext ctx) {
                   var direction = ctx.ReadValue<Vector2>();
-                  _avatar.Aim(direction);
+                  _avatar.Aim(direction, _camera.transform);
             }
 
 

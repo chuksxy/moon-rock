@@ -1,4 +1,5 @@
 using System;
+using Cinemachine;
 using UnityEngine;
 using Avatar = moon.rock.avatar.Avatar;
 
@@ -6,20 +7,20 @@ namespace moon.rock.camera {
 
       public class ThirdPersonCamera : MonoBehaviour {
 
-            public Camera cam;
+            public CinemachineFreeLook thirdPersonCam;
 
             // Last recorded target and the direction it moved in.
             private Tuple<Avatar, Vector3> _last;
 
 
             private void Start() {
-                  if (cam != null) {
+                  if (thirdPersonCam != null) {
                         return;
                   }
 
                   Debug.LogWarning("camera is null, re-creating it");
 
-                  cam = new Camera();
+                  thirdPersonCam = new GameObject().AddComponent<CinemachineFreeLook>();
             }
 
 
@@ -31,7 +32,7 @@ namespace moon.rock.camera {
                               return;
                         }
 
-                        if (cam == null) {
+                        if (thirdPersonCam == null) {
                               Debug.LogWarning("cannot track target because camera is missing");
                               return;
                         }
@@ -40,7 +41,7 @@ namespace moon.rock.camera {
                         var directionMoved = _last.Item2;
 
                         // Stub implementation 
-                        cam.transform.LookAt(target.transform.position, directionMoved);
+                        thirdPersonCam.transform.LookAt(target.transform.position, directionMoved);
                   }
 
                   TrackTarget();
