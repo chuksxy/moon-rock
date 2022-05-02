@@ -53,7 +53,7 @@ namespace moon.rock.camera {
                         Debug.LogWarning($"swapping camera target from {old} to {target.name}");
                   }
 
-                  target.Moved += (avatar, direction) => { _last = new Tuple<Avatar, Vector3>(avatar, direction); };
+                  target.MovedEvents += (avatar, direction) => { _last = new Tuple<Avatar, Vector3>(avatar, direction); };
             }
 
       }

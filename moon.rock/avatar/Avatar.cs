@@ -35,7 +35,7 @@ namespace moon.rock.avatar {
             public void Move(Vector3 direction) {
                   // calculate movement speed
                   Debug.Log($"I am moving in direction ({direction.x}, {direction.y}, {direction.z})");
-                  Moved(this, direction);
+                  MovedEvents(this, direction);
             }
 
 
@@ -84,7 +84,7 @@ namespace moon.rock.avatar {
             // Press ❌ to jump
             public void Jump() {
                   // Stub Implementation
-                  Jumped(this, Vector3.one);
+                  JumpedEvents(this, Vector3.one);
             }
 
 

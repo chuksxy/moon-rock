@@ -8,13 +8,13 @@ namespace moon.rock.avatar {
 
             public delegate void OnJumped(Avatar avatar, Vector3 direction);
 
-            public OnMoved  Moved  { get; set; }
-            public OnJumped Jumped { get; set; }
+            public OnMoved  MovedEvents  { get; set; }
+            public OnJumped JumpedEvents { get; set; }
 
 
             private void InitEventBus() {
-                  Moved  = (a, dir) => { };
-                  Jumped = (a, dir) => { };
+                  MovedEvents  = (a, dir) => { };
+                  JumpedEvents = (a, dir) => { };
             }
 
       }
