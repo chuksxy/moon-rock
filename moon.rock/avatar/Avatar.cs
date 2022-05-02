@@ -9,13 +9,15 @@ namespace moon.rock.avatar {
 
             private Rigidbody           _rb;
             private Animator            _animator;
+            private Collider            _collider;
             private CharacterController _controller;
 
 
             public void Start() {
                   void ConfigureAnchor() {
-                        _anchor = new GameObject($"{gameObject.name}.anchor");
-                        _rb     = _anchor.AddComponent<Rigidbody>();
+                        _anchor   = new GameObject($"{gameObject.name}.anchor");
+                        _rb       = _anchor.AddComponent<Rigidbody>();
+                        _collider = _anchor.AddComponent<CapsuleCollider>();
                         _anchor.transform.SetParent(gameObject.transform);
                   }
 
@@ -32,10 +34,23 @@ namespace moon.rock.avatar {
             }
 
 
-            public void Move(Vector3 direction) {
-                  // calculate movement speed
-                  Debug.Log($"I am moving in direction ({direction.x}, {direction.y}, {direction.z})");
-                  MovedEvents(this, direction);
+            private bool BoostersActivated() {
+                  return true;
+            }
+
+
+            private float AverageSpeed() {
+                  return 14.0f;
+            }
+
+
+            private float MinSpeed() {
+                  return 6.0f;
+            }
+
+
+            private float MaxSpeed() {
+                  return 18.0f;
             }
 
 
