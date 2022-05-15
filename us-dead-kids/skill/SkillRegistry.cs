@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -27,9 +26,9 @@ namespace us_dead_kids.skill {
 
 
             public static Skill Read(AnimatorStateInfo i) {
-                  var skillID = i.shortNameHash;
-                  if (Skills.ContainsKey(skillID)) return Skills[skillID];
-                  Debug.LogWarning($"Attempting to access skill not in registry [{skillID}]");
+                  var skillHash = i.shortNameHash;
+                  if (Skills.ContainsKey(skillHash)) return Skills[skillHash];
+                  Debug.LogWarning($"Attempting to access skill not in registry [{i.ToString()}]");
                   return null;
             }
 

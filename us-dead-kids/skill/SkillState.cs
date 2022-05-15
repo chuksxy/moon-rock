@@ -8,9 +8,10 @@ namespace us_dead_kids.skill {
             }
 
 
-            public string ID          { get; }
-            public int    SkillHash   { get; }
-            public bool   IsCancelled { get; set; }
+            public string ID             { get; }
+            public int    SkillHash      { get; }
+            public bool   IsCancelled    { get; set; }
+            public float  NormalisedTime { get; set; }
 
       }
 

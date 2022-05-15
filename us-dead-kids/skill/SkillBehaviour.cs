@@ -15,6 +15,17 @@ namespace us_dead_kids.skill {
             }
 
 
+            public override void OnStateUpdate(Animator a, AnimatorStateInfo i, int layer) {
+                  var skill = SkillRegistry.Read(i);
+                  if (skill == null) {
+                        Debug.LogWarning($"Attempting to access null skill assigned to [{a.name}]");
+                        return;
+                  }
+
+                  skill.Update(a, i, layer);
+            }
+
+
             public override void OnStateExit(Animator a, AnimatorStateInfo i, int layer) {
                   var skill = SkillRegistry.Read(i);
                   if (skill == null) {

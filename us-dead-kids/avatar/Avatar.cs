@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Unity.Jobs.LowLevel.Unsafe;
 using UnityEngine;
@@ -128,6 +129,10 @@ namespace us_dead_kids.avatar {
                   return null;
             }
 
+
+            public void InvokeAsync(Func<IEnumerator> action) {
+                  StartCoroutine(action.Invoke());
+            }
 
             public void Interact() {
                   Exec(() => { GetAnimator().SetTrigger(AnimParams.Interact); });
