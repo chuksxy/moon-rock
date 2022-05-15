@@ -20,8 +20,8 @@ namespace us_dead_kids.skill {
             }
 
 
-            internal void Cancel(Animator animator) {
-                  actions.ForEach(action => SkillAction.Cancel(animator));
+            internal void Cancel(Animator animator, AnimatorStateInfo info, int layer) {
+                  actions.ForEach(action => SkillAction.Cancel(this, animator, info, layer));
             }
 
 
