@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using Unity.Jobs.LowLevel.Unsafe;
 using UnityEngine;
+using us_dead_kids.skill;
 
 namespace us_dead_kids.avatar {
 
@@ -9,6 +11,9 @@ namespace us_dead_kids.avatar {
 
             private Animator   _animator;
             private GameObject _avatar;
+
+            private readonly Dictionary<string, SkillState> _skillStates = new Dictionary<string, SkillState>();
+
 
             private static class AnimParams {
 
@@ -103,10 +108,24 @@ namespace us_dead_kids.avatar {
             }
 
 
+            public void TrackSkillState(SkillState s) {
+                  if (_skillStates.ContainsKey(s.ID)) return;
+                  Debug.Log($"Skill [{s.ID}] used for the first time, tracking state.");
+                  _skillStates.Add(s.ID, s);
+            }
+
+
+            public SkillState GetSkillState(string skillID) {
+                  if (_skillStates.ContainsKey(skillID)) return _skillStates[skillID];
+                  Debug.LogWarning($"Attempting to access skill [{skillID}] not assigned to avatar.");
+                  return null;
+            }
+
+
             public void Interact() {
                   Exec(() => { GetAnimator().SetTrigger(AnimParams.Interact); });
             }
-            
+
 
       }
 

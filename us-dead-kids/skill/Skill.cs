@@ -5,14 +5,14 @@ namespace us_dead_kids.skill {
 
       public class Skill : ScriptableObject {
 
-            [SerializeField] private string             skillID;
-            [SerializeField] private List<SkillTrigger> actions;
+            [SerializeField] private string            skillID;
+            [SerializeField] private List<SkillAction> actions;
 
             public string ID => skillID;
 
             // Actions assigned to skill. e.g
             // Lock On, Trace Weapon e.t.c
-            public List<SkillTrigger> Actions => actions;
+            public List<SkillAction> Actions => actions;
 
 
             internal void Invoke(Animator animator, AnimatorStateInfo info, int layer) {
@@ -20,8 +20,13 @@ namespace us_dead_kids.skill {
             }
 
 
-            internal void Cancel() {
-                  actions.ForEach(action => action.Cancel());
+            internal void Cancel(Animator animator) {
+                  actions.ForEach(action => SkillAction.Cancel(animator));
+            }
+
+
+            public SkillState ToState(int skillNameHash) {
+                  return new SkillState(skillID, skillNameHash);
             }
 
       }

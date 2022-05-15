@@ -22,7 +22,7 @@ namespace us_dead_kids.skill {
                         return;
                   }
 
-                  skill.Cancel();
+                  skill.Cancel(animator);
             }
 
       }
