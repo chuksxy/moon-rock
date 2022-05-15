@@ -22,7 +22,7 @@ namespace us_dead_kids.skill {
                         return;
                   }
 
-                  skill.Update(a, i, layer);
+                  skill.Tick(a, i, layer);
             }
 
 

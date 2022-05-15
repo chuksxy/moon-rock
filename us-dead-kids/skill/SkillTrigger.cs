@@ -32,7 +32,7 @@ namespace us_dead_kids.skill {
                   var state = ReadState(s, i, a);
                   if (state == null) return;
 
-                  //state.IsCancelled = true;
+                  state.IsCancelled = true;
             }
 
 
@@ -55,21 +55,14 @@ namespace us_dead_kids.skill {
 
             private IEnumerator Begin(Skill s, Animator a, AnimatorStateInfo i) {
                   var state = ReadState(s, i, a);
-                  Debug.Log($"[{a.name}] begin skill [{s.ID}]");
-                  //yield return new WaitUntil(() => i.normalizedTime >= BeingTime && state is {IsCancelled: false});
-                  while (i.normalizedTime < BeingTime) {
-                        Debug.Log($"skill [{s.ID}] is at time [{i.normalizedTime}]");
-                        yield return null;
-                  }
-
-                  Debug.Log($"[{a.name}] invoke skill [{s.ID}]");
+                  yield return new WaitUntil(() => state.NormalisedTime >= BeingTime && state is {IsCancelled: false});
                   BeginEvent?.Invoke(s, a);
             }
 
 
             private IEnumerator End(Skill s, Animator a, AnimatorStateInfo i) {
                   var state = ReadState(s, i, a);
-                  yield return new WaitUntil(() => i.normalizedTime >= EndTime && state is {IsCancelled: false});
+                  yield return new WaitUntil(() => state.NormalisedTime >= EndTime && state is {IsCancelled: false});
                   EndEvent?.Invoke(s, a);
             }
 

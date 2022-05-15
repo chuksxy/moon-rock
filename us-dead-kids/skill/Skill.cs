@@ -28,7 +28,7 @@ namespace us_dead_kids.skill {
             }
 
 
-            internal void Update(Animator a, AnimatorStateInfo i, int layer) {
+            internal void Tick(Animator a, AnimatorStateInfo i, int layer) {
                   var avatar = a.GetComponentInParent<Avatar>();
                   if (avatar == null) {
                         Debug.LogWarning($"skill [{skillID}] attempting to access null avatar on [{a.name}].");
