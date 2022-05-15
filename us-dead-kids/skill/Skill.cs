@@ -17,59 +17,42 @@ namespace us_dead_kids.skill {
 
             public class Action : ScriptableObject {
 
-                  [SerializeField] private float                actionID;
-                  [SerializeField] private float                startTime;
-                  [SerializeField] private float                endTime;
-                  [SerializeField] private UnityEvent<Animator> startEvent;
-                  [SerializeField] private UnityEvent<Animator> endEvent;
+                  [SerializeField] private float                       actionID;
+                  [SerializeField] private float                       startTime;
+                  [SerializeField] private float                       endTime;
+                  [SerializeField] private UnityEvent<Skill, Animator> startEvent;
+                  [SerializeField] private UnityEvent<Skill, Animator> endEvent;
 
 
-                  public void Invoke(Animator animator, AnimatorStateInfo info, int layer) {
+                  public void Invoke(Skill s, Animator animator, AnimatorStateInfo info, int layer) {
                         var avatar = animator.GetComponent<Avatar>();
                         if (avatar == null) {
                               Debug.LogWarning($"Avatar not assigned to game object [{animator.name}]");
                         }
 
-                        avatar.StartCoroutine(Start(animator, info));
-                        avatar.StartCoroutine(End(animator, info));
+                        avatar.StartCoroutine(Start(s, animator, info));
+                        avatar.StartCoroutine(End(s, animator, info));
                   }
 
 
-                  private IEnumerator Start(Animator animator, AnimatorStateInfo i) {
+                  private IEnumerator Start(Skill s, Animator animator, AnimatorStateInfo i) {
                         yield return new WaitUntil(() => i.normalizedTime >= startTime);
-                        startEvent?.Invoke(animator);
+                        startEvent?.Invoke(s, animator);
                   }
 
 
-                  private IEnumerator End(Animator animator, AnimatorStateInfo i) {
+                  private IEnumerator End(Skill s, Animator animator, AnimatorStateInfo i) {
                         yield return new WaitUntil(() => i.normalizedTime >= endTime);
-                        endEvent?.Invoke(animator);
+                        endEvent?.Invoke(s, animator);
                   }
 
             }
 
 
-            private void Invoke(Animator animator, AnimatorStateInfo info, int layer) {
-                  actions.ForEach(action => action.Invoke(animator, info, layer));
+            internal void Invoke(Animator animator, AnimatorStateInfo info, int layer) {
+                  actions.ForEach(action => action.Invoke(this, animator, info, layer));
             }
-
-
-            public class Behaviour : StateMachineBehaviour {
-
-                  public override void OnStateEnter(Animator animator, AnimatorStateInfo info, int layer) {
-                        var skill = SkillRegistry.Read(info);
-                        if (skill == null) {
-                              Debug.LogWarning($"Attempting to access null skill assigned to [{animator.name}]");
-                              return;
-                        }
-
-                        skill.Invoke(animator, info, layer);
-                  }
-
-            }
-
 
       }
-
 
 }
