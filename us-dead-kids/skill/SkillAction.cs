@@ -14,7 +14,7 @@ namespace us_dead_kids.skill {
             [SerializeField] private UnityEvent<Skill, Animator> endEvent;
 
 
-            public void Invoke(Skill s, Animator a, AnimatorStateInfo i, int l) {
+            public void Invoke(Skill s, Animator a, AnimatorStateInfo i, int layer) {
                   var avatar = a.GetComponent<Avatar>();
                   if (avatar == null) {
                         Debug.LogWarning($"Avatar not assigned to game object [{a.name}]");
@@ -29,7 +29,7 @@ namespace us_dead_kids.skill {
             }
 
 
-            public static void Cancel(Skill s, Animator a, AnimatorStateInfo i, int l) {
+            public static void Cancel(Skill s, Animator a, AnimatorStateInfo i, int layer) {
                   var state = ReadState(s, i, a);
                   if (state == null) return;
 
