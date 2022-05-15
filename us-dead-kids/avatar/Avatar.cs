@@ -20,7 +20,7 @@ namespace us_dead_kids.avatar {
                   public static readonly int Guard    = Animator.StringToHash("Guard");
                   public static readonly int UseSkill = Animator.StringToHash("Use Skill");
                   public static readonly int UseItem  = Animator.StringToHash("Use Item");
-                  public static readonly int Interact = Animator.StringToHash("Use Item");
+                  public static readonly int Interact = Animator.StringToHash("Iteract");
 
             }
 
