@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace us_dead_kids.skill {
 
-      public class SKillAction {
+      public class SKillEvent {
 
             // Get Weapon, then trace
             public void StartTrace(Skill s, Animator animator) { }
