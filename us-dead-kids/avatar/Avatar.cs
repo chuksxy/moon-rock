@@ -30,7 +30,7 @@ namespace us_dead_kids.avatar {
 
             }
 
-            private readonly string _masterControllerPath = $"{Environment.GetCurrent().ToString().ToLower()}/master.controller";
+            private readonly string _masterControllerPath = $"{Environment.Path()}/master";
 
 
             private void Start() {
