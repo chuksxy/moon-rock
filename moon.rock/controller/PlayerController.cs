@@ -55,6 +55,7 @@ namespace moon.rock.controller {
 
             // Press R2 to fire right hand weapon
             public void UseRightHandWeapon(InputAction.CallbackContext ctx) {
+                  if (ctx.canceled) return;
                   _avatar.UseRightHandWeapon(ctx.duration);
             }
 
