@@ -106,6 +106,7 @@ namespace us_dead_kids.avatar {
             public void Interact() {
                   Exec(() => { GetAnimator().SetTrigger(AnimParams.Interact); });
             }
+            
 
       }
 

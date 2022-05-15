@@ -5,13 +5,15 @@ using Avatar = us_dead_kids.avatar.Avatar;
 
 namespace us_dead_kids.skill {
 
-      public class SkillAction : ScriptableObject {
+      public class SkillTrigger : ScriptableObject {
 
             [SerializeField] private float                       actionID;
             [SerializeField] private float                       startTime;
             [SerializeField] private float                       endTime;
             [SerializeField] private UnityEvent<Skill, Animator> startEvent;
             [SerializeField] private UnityEvent<Skill, Animator> endEvent;
+
+            private bool IsCancelled { get; set; }
 
 
             public void Invoke(Skill s, Animator animator, AnimatorStateInfo info, int layer) {
@@ -20,22 +22,28 @@ namespace us_dead_kids.skill {
                         Debug.LogWarning($"Avatar not assigned to game object [{animator.name}]");
                   }
 
+                  IsCancelled = false;
+
                   avatar.StartCoroutine(Start(s, animator, info));
                   avatar.StartCoroutine(End(s, animator, info));
             }
 
 
+            public void Cancel() {
+                  IsCancelled = true;
+            }
+
+
             private IEnumerator Start(Skill s, Animator animator, AnimatorStateInfo i) {
-                  yield return new WaitUntil(() => i.normalizedTime >= startTime);
+                  yield return new WaitUntil(() => i.normalizedTime >= startTime && IsCancelled);
                   startEvent?.Invoke(s, animator);
             }
 
 
             private IEnumerator End(Skill s, Animator animator, AnimatorStateInfo i) {
-                  yield return new WaitUntil(() => i.normalizedTime >= endTime);
+                  yield return new WaitUntil(() => i.normalizedTime >= endTime && !IsCancelled);
                   endEvent?.Invoke(s, animator);
             }
-
 
       }
 
