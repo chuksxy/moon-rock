@@ -8,7 +8,7 @@ namespace us_dead_kids.skill {
       public class SkillAction : ScriptableObject {
 
             [SerializeField] private string                      actionID;
-            [SerializeField] private float                       startTime;
+            [SerializeField] private float                       beingTime;
             [SerializeField] private float                       endTime;
             [SerializeField] private UnityEvent<Skill, Animator> startEvent;
             [SerializeField] private UnityEvent<Skill, Animator> endEvent;
@@ -24,7 +24,7 @@ namespace us_dead_kids.skill {
                   var state = ReadState(s, i, avatar);
                   state.IsCancelled = false;
 
-                  avatar.StartCoroutine(Start(s, a, i));
+                  avatar.StartCoroutine(Begin(s, a, i));
                   avatar.StartCoroutine(End(s, a, i));
             }
 
@@ -54,9 +54,9 @@ namespace us_dead_kids.skill {
             }
 
 
-            private IEnumerator Start(Skill s, Animator a, AnimatorStateInfo i) {
+            private IEnumerator Begin(Skill s, Animator a, AnimatorStateInfo i) {
                   var state = ReadState(s, i, a);
-                  yield return new WaitUntil(() => i.normalizedTime >= startTime && state is {IsCancelled: false});
+                  yield return new WaitUntil(() => i.normalizedTime >= beingTime && state is {IsCancelled: false});
                   startEvent?.Invoke(s, a);
             }
 

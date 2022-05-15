@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.Jobs.LowLevel.Unsafe;
 using UnityEngine;
 using us_dead_kids.skill;
+using Environment = us_dead_kids.environment.Environment;
 
 namespace us_dead_kids.avatar {
 
@@ -25,25 +26,29 @@ namespace us_dead_kids.avatar {
                   public static readonly int Guard    = Animator.StringToHash("Guard");
                   public static readonly int UseSkill = Animator.StringToHash("Use Skill");
                   public static readonly int UseItem  = Animator.StringToHash("Use Item");
-                  public static readonly int Interact = Animator.StringToHash("Iteract");
+                  public static readonly int Interact = Animator.StringToHash("Interact");
 
             }
+
+            private readonly string _masterControllerPath = $"{Environment.GetCurrent().ToString().ToLower()}/master.controller";
 
 
             private void Start() {
-                  _avatar = new GameObject();
+                  _avatar = new GameObject {name = $"{name}.avatar"};
                   _avatar.transform.SetParent(transform);
 
-                  _animator = _avatar.AddComponent<Animator>();
+                  Debug.Log($"path: {_masterControllerPath}");
+                  _animator                           = _avatar.AddComponent<Animator>();
+                  _animator.runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>(_masterControllerPath);
             }
 
 
-            private bool IsAlive() {
+            private static bool IsAlive() {
                   return true;
             }
 
 
-            private void Exec(Action action) {
+            private static void Exec(Action action) {
                   if (IsAlive()) {
                         action.Invoke();
                   }

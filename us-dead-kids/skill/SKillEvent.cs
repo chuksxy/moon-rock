@@ -17,7 +17,7 @@ namespace us_dead_kids.skill {
 
 
             // Lock on to multiple targets/
-            // Pull lock on radius from skill declaration
+            // Pull lock on radius from skill metadata
             public void LockOnMultiple(Skill s, Animator animator) { }
 
       }
