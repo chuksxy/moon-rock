@@ -24,7 +24,7 @@ namespace us_dead_kids.skill {
 
 
             public void Test(Skill s, Animator a) {
-                  Debug.Log($"Skill [{s.ID}] invoked by [{a.name}].");
+                  Debug.Log($"Skill [{s.ID}] invoked by [{a.name}] at [{a.GetCurrentAnimatorStateInfo(0).normalizedTime}].");
             }
 
       }

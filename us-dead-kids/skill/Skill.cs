@@ -42,8 +42,18 @@ namespace us_dead_kids.skill {
             }
 
 
-            internal void Cancel(Animator animator, AnimatorStateInfo info, int layer) {
-                  Triggers().ForEach(action => SkillTrigger.Cancel(this, animator, info, layer));
+            internal void Cancel(Animator a, AnimatorStateInfo i, int layer) {
+                  var avatar = a.GetComponentInParent<Avatar>();
+                  if (avatar == null) {
+                        Debug.LogWarning($"skill [{skillID}] attempting to access null avatar on [{a.name}].");
+                        return;
+                  }
+
+                  var state = avatar.GetSkillState(skillID);
+                  if (state == null) return;
+
+                  state.NormalisedTime = 0;
+                  Triggers().ForEach(action => SkillTrigger.Cancel(this, a, i, layer));
             }
 
 
