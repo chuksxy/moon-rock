@@ -14,23 +14,23 @@ namespace us_dead_kids.skill {
             [SerializeField] private UnityEvent<Skill, Animator> endEvent;
 
 
-            public void Invoke(Skill s, Animator animator, AnimatorStateInfo i, int layer) {
-                  var avatar = animator.GetComponent<Avatar>();
+            public void Invoke(Skill s, Animator a, AnimatorStateInfo i, int l) {
+                  var avatar = a.GetComponent<Avatar>();
                   if (avatar == null) {
-                        Debug.LogWarning($"Avatar not assigned to game object [{animator.name}]");
+                        Debug.LogWarning($"Avatar not assigned to game object [{a.name}]");
                         return;
                   }
 
                   var state = ReadState(s, i, avatar);
                   state.IsCancelled = false;
 
-                  avatar.StartCoroutine(Start(s, animator, i));
-                  avatar.StartCoroutine(End(s, animator, i));
+                  avatar.StartCoroutine(Start(s, a, i));
+                  avatar.StartCoroutine(End(s, a, i));
             }
 
 
-            public static void Cancel(Skill s, Animator animator, AnimatorStateInfo i, int layer) {
-                  var state = ReadState(s, i, animator);
+            public static void Cancel(Skill s, Animator a, AnimatorStateInfo i, int l) {
+                  var state = ReadState(s, i, a);
                   if (state == null) return;
 
                   state.IsCancelled = true;
