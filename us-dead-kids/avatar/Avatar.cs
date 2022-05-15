@@ -4,6 +4,7 @@ using Unity.Jobs.LowLevel.Unsafe;
 using UnityEngine;
 using us_dead_kids.skill;
 using Environment = us_dead_kids.environment.Environment;
+using Object = System.Object;
 
 namespace us_dead_kids.avatar {
 
@@ -30,15 +31,16 @@ namespace us_dead_kids.avatar {
 
             }
 
-            private readonly string _masterControllerPath = $"{Environment.Path()}/master";
+            private readonly string _masterAvatarPath     = $"{Environment.Path()}/avatar/master";
+            private readonly string _masterControllerPath = $"{Environment.Path()}/avatar/master-controller";
 
 
             private void Start() {
-                  _avatar = new GameObject {name = $"{name}.avatar"};
-                  _avatar.transform.SetParent(transform);
+                  _avatar      = Instantiate(Resources.Load<GameObject>(_masterAvatarPath), transform, true);
+                  _avatar.name = $"{gameObject.name}.avatar";
+                  _animator    = _avatar.GetComponent<Animator>();
 
-                  Debug.Log($"path: {_masterControllerPath}");
-                  _animator                           = _avatar.AddComponent<Animator>();
+                  if (_animator == null) _animator = _avatar.AddComponent<Animator>();
                   _animator.runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>(_masterControllerPath);
             }
 
