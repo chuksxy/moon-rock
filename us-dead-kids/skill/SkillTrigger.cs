@@ -7,10 +7,8 @@ namespace us_dead_kids.skill {
 
       public class SkillTrigger {
 
-            public float                       BeingTime  { get; set; }
-            public float                       EndTime    { get; set; }
-            public UnityEvent<Skill, Animator> BeginEvent { get; set; }
-            public UnityEvent<Skill, Animator> EndEvent   { get; set; }
+            public float       TimeMarker { get; set; }
+            public SkillAction Action     { get; set; }
 
 
             public void Invoke(Skill s, Animator a, AnimatorStateInfo i, int layer) {
@@ -23,8 +21,7 @@ namespace us_dead_kids.skill {
                   var state = ReadState(s, i, avatar);
                   state.IsCancelled = false;
 
-                  avatar.InvokeAsync(() => Begin(s, a, i));
-                  avatar.InvokeAsync(() => End(s, a, i));
+                  avatar.InvokeAsync(() => Invoke(s, a, i));
             }
 
 
@@ -53,17 +50,14 @@ namespace us_dead_kids.skill {
             }
 
 
-            private IEnumerator Begin(Skill s, Animator a, AnimatorStateInfo i) {
+            private IEnumerator Invoke(Skill s, Animator a, AnimatorStateInfo i) {
                   var state = ReadState(s, i, a);
-                  yield return new WaitUntil(() => state.NormalisedTime >= BeingTime && state is {IsCancelled: false});
-                  BeginEvent?.Invoke(s, a);
-            }
+                  yield return new WaitUntil(() => state.NormalisedTime >= TimeMarker && state is {IsCancelled: false});
 
-
-            private IEnumerator End(Skill s, Animator a, AnimatorStateInfo i) {
-                  var state = ReadState(s, i, a);
-                  yield return new WaitUntil(() => state.NormalisedTime >= EndTime && state is {IsCancelled: false});
-                  EndEvent?.Invoke(s, a);
+                  Action.StartTrace(s, a);
+                  Action.EndTrace(s, a);
+                  Action.LockOn(s, a);
+                  Action.LockOnMultiple(s, a);
             }
 
       }
