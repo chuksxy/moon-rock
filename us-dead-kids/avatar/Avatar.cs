@@ -156,8 +156,9 @@ namespace us_dead_kids.avatar {
 
             public void UseRightArmament() {
                   Exec(() => {
+                        var i = IndexArmament(GetArmament(RIGHT_HAND_SLOT));
                         GetAnimator().SetTrigger(AnimParams.UseRightArmament);
-                        GetAnimator().SetInteger(AnimParams.ArmamentIndex, GetAndIndexArmament(LEFT_HAND_SLOT));
+                        GetAnimator().SetInteger(AnimParams.ArmamentIndex, i);
                         GetAnimator().SetInteger(AnimParams.Hand, RIGHT_HAND_SLOT);
                   });
             }
@@ -173,8 +174,9 @@ namespace us_dead_kids.avatar {
 
             public void UseLeftArmament() {
                   Exec(() => {
+                        var i = IndexArmament(GetArmament(LEFT_HAND_SLOT));
                         GetAnimator().SetTrigger(AnimParams.UseLeftArmament);
-                        GetAnimator().SetInteger(AnimParams.ArmamentIndex, GetAndIndexArmament(LEFT_HAND_SLOT));
+                        GetAnimator().SetInteger(AnimParams.ArmamentIndex, i);
                         GetAnimator().SetInteger(AnimParams.Hand, LEFT_HAND_SLOT);
                   });
             }
@@ -188,8 +190,15 @@ namespace us_dead_kids.avatar {
             }
 
 
-            private int GetAndIndexArmament(int hand) {
-                  return hand;
+            private string GetArmament(int hand) {
+                  // TODO:: Implement this
+                  return hand + "weapon";
+            }
+
+
+            private int IndexArmament(string armamentID) {
+                  // TODO:: Implement this!
+                  return armamentID.GetHashCode();
             }
 
 
