@@ -191,7 +191,7 @@ namespace us_dead_kids.avatar {
 
 
             private string GetArmament(int hand) {
-                  // TODO:: Implement this
+                  // TODO:: Implement this!
                   return hand + "weapon";
             }
 
@@ -225,7 +225,6 @@ namespace us_dead_kids.avatar {
 
             public void SetSkillState(SkillState s) {
                   if (_skillStates.ContainsKey(s.ID)) return;
-                  Debug.Log($"Skill [{s.ID}] used for the first time, tracking state.");
                   _skillStates.Add(s.ID, s);
             }
 
