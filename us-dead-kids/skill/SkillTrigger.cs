@@ -44,7 +44,7 @@ namespace us_dead_kids.skill {
                   if (state != null) return state;
 
                   state = s.ToState(i.shortNameHash);
-                  avatar.TrackSkillState(state);
+                  avatar.SetSkillState(state);
 
                   return state;
             }

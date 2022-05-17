@@ -12,6 +12,9 @@ namespace us_dead_kids.avatar {
       // KISS
       public class Avatar : MonoBehaviour {
 
+            private const int LEFT_HAND_SLOT  = 0;
+            private const int RIGHT_HAND_SLOT = 1;
+
             private Animator   _animator;
             private GameObject _avatar;
 
@@ -20,15 +23,23 @@ namespace us_dead_kids.avatar {
 
             private static class AnimParams {
 
-                  public static readonly int MoveX    = Animator.StringToHash("Move X");
-                  public static readonly int MoveZ    = Animator.StringToHash("Move Z");
-                  public static readonly int Run      = Animator.StringToHash("Run");
-                  public static readonly int Jump     = Animator.StringToHash("Jump");
-                  public static readonly int Evade    = Animator.StringToHash("Evade");
-                  public static readonly int Guard    = Animator.StringToHash("Guard");
-                  public static readonly int UseSkill = Animator.StringToHash("Use Skill");
-                  public static readonly int UseItem  = Animator.StringToHash("Use Item");
-                  public static readonly int Interact = Animator.StringToHash("Interact");
+                  public static readonly int MoveX            = Animator.StringToHash("Move X");
+                  public static readonly int MoveZ            = Animator.StringToHash("Move Z");
+                  public static readonly int Run              = Animator.StringToHash("Run");
+                  public static readonly int Evade            = Animator.StringToHash("Evade");
+                  public static readonly int Guard            = Animator.StringToHash("Guard");
+                  public static readonly int UseRightArmament = Animator.StringToHash("Right Armament");
+                  public static readonly int UseLeftArmament  = Animator.StringToHash("Left Armament");
+                  public static readonly int ArmamentIndex    = Animator.StringToHash("Armament Index");
+                  public static readonly int Melee            = Animator.StringToHash("Melee");
+                  public static readonly int MeleeIndex       = Animator.StringToHash("Melee Index");
+                  public static readonly int UseSkill         = Animator.StringToHash("Use Skill");
+                  public static readonly int SkillIndex       = Animator.StringToHash("Skill");
+                  public static readonly int UseItem          = Animator.StringToHash("Use Item");
+                  public static readonly int ItemIndex        = Animator.StringToHash("Item Index");
+                  public static readonly int Hand             = Animator.StringToHash("Hand");
+                  public static readonly int Interact         = Animator.StringToHash("Interact");
+                  public static readonly int Reload           = Animator.StringToHash("Reload");
 
             }
 
@@ -97,14 +108,22 @@ namespace us_dead_kids.avatar {
             }
 
 
-            // Make avatar jump
-            public void Jump() {
-                  Exec(() => { GetAnimator().SetTrigger(AnimParams.Jump); });
+            public void UseItem() {
+                  Exec(() => {
+                        var i = IndexItem(GetCurrentItem());
+                        GetAnimator().SetTrigger(AnimParams.UseItem);
+                        GetAnimator().SetInteger(AnimParams.ItemIndex, i);
+                  });
             }
 
 
-            public void UseItem() {
-                  Exec(() => { GetAnimator().SetTrigger(AnimParams.UseItem); });
+            private int IndexItem(string itemID) {
+                  return -1;
+            }
+
+
+            private string GetCurrentItem() {
+                  return "";
             }
 
 
@@ -112,11 +131,90 @@ namespace us_dead_kids.avatar {
             // Using a lightning skill outside guarantees its effectiveness
             // Using telekinesis skills will pull in all the weapons around the player within a specific radius
             public void UseSkill(int slot) {
-                  Exec(() => { GetAnimator().SetTrigger(AnimParams.UseSkill); });
+                  var index = IndexSkill(GetSkill(slot));
+                  Exec(() => {
+                        GetAnimator().SetTrigger(AnimParams.UseSkill);
+                        GetAnimator().SetInteger(AnimParams.SkillIndex, index);
+                  });
             }
 
 
-            public void TrackSkillState(SkillState s) {
+            private static string GetSkill(int slot) {
+                  return "";
+            }
+
+
+            private static int IndexSkill(string name) {
+                  return -1;
+            }
+
+
+            public void Melee() {
+                  Exec(() => { GetAnimator().SetTrigger(AnimParams.Melee); });
+            }
+
+
+            public void UseRightArmament() {
+                  Exec(() => {
+                        GetAnimator().SetTrigger(AnimParams.UseRightArmament);
+                        GetAnimator().SetInteger(AnimParams.ArmamentIndex, GetAndIndexArmament(LEFT_HAND_SLOT));
+                        GetAnimator().SetInteger(AnimParams.Hand, RIGHT_HAND_SLOT);
+                  });
+            }
+
+
+            public void CycleRightArmament() {
+                  Exec(() => {
+                        GetAnimator().SetTrigger(AnimParams.UseRightArmament);
+                        GetAnimator().SetInteger(AnimParams.Hand, RIGHT_HAND_SLOT);
+                  });
+            }
+
+
+            public void UseLeftArmament() {
+                  Exec(() => {
+                        GetAnimator().SetTrigger(AnimParams.UseLeftArmament);
+                        GetAnimator().SetInteger(AnimParams.ArmamentIndex, GetAndIndexArmament(LEFT_HAND_SLOT));
+                        GetAnimator().SetInteger(AnimParams.Hand, LEFT_HAND_SLOT);
+                  });
+            }
+
+
+            public void CycleLeftArmament() {
+                  Exec(() => {
+                        GetAnimator().SetTrigger(AnimParams.UseRightArmament);
+                        GetAnimator().SetInteger(AnimParams.Hand, LEFT_HAND_SLOT);
+                  });
+            }
+
+
+            private int GetAndIndexArmament(int hand) {
+                  return hand;
+            }
+
+
+            public void ReloadLeft() {
+                  Exec(() => {
+                        GetAnimator().SetTrigger(AnimParams.Reload);
+                        GetAnimator().SetInteger(AnimParams.Hand, LEFT_HAND_SLOT);
+                  });
+            }
+
+
+            public void ReloadRight() {
+                  Exec(() => {
+                        GetAnimator().SetTrigger(AnimParams.Reload);
+                        GetAnimator().SetInteger(AnimParams.Hand, RIGHT_HAND_SLOT);
+                  });
+            }
+
+
+            public void Interact() {
+                  Exec(() => { GetAnimator().SetTrigger(AnimParams.Interact); });
+            }
+
+
+            public void SetSkillState(SkillState s) {
                   if (_skillStates.ContainsKey(s.ID)) return;
                   Debug.Log($"Skill [{s.ID}] used for the first time, tracking state.");
                   _skillStates.Add(s.ID, s);
@@ -132,10 +230,6 @@ namespace us_dead_kids.avatar {
 
             public void InvokeAsync(Func<IEnumerator> action) {
                   StartCoroutine(action.Invoke());
-            }
-
-            public void Interact() {
-                  Exec(() => { GetAnimator().SetTrigger(AnimParams.Interact); });
             }
 
 
