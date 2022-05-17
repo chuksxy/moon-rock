@@ -43,22 +43,20 @@ namespace us_dead_kids.avatar {
 
             }
 
-            private static class Anim {
 
-                  public static class Layers {
+            public static class Layers {
 
-                        public const int Base         = 0;
-                        public const int Combat       = 1;
-                        public const int Melee        = 2;
-                        public const int Reload       = 3;
-                        public const int Skills       = 4;
-                        public const int Items        = 5;
-                        public const int Interactions = 6;
-                        public const int Death        = 7;
-
-                  }
+                  public const int Base         = 0;
+                  public const int Combat       = 1;
+                  public const int Melee        = 2;
+                  public const int Reload       = 3;
+                  public const int Skills       = 4;
+                  public const int Items        = 5;
+                  public const int Interactions = 6;
+                  public const int Death        = 7;
 
             }
+
 
             private readonly string _masterAvatarPath     = $"{Environment.Path()}/avatar/master";
             private readonly string _masterControllerPath = $"{Environment.Path()}/avatar/master-controller";
@@ -150,7 +148,7 @@ namespace us_dead_kids.avatar {
             public void UseSkill(int slot) {
                   var index = IndexSkill(GetSkill(slot));
                   Exec(() => {
-                        LayerInvoke(Anim.Layers.Skills, () => {
+                        LayerInvoke(Layers.Skills, () => {
                               GetAnimator().SetTrigger(AnimParams.UseSkill);
                               GetAnimator().SetInteger(AnimParams.SkillIndex, index);
                         });
@@ -175,7 +173,7 @@ namespace us_dead_kids.avatar {
 
             public void UseRightArmament() {
                   Exec(() => {
-                        LayerInvoke(Anim.Layers.Combat, () => {
+                        LayerInvoke(Layers.Combat, () => {
                               var i = IndexArmament(GetArmament(RIGHT_HAND_SLOT));
                               GetAnimator().SetTrigger(AnimParams.UseRightArmament);
                               GetAnimator().SetInteger(AnimParams.ArmamentIndex, i);
@@ -195,7 +193,7 @@ namespace us_dead_kids.avatar {
 
             public void UseLeftArmament() {
                   Exec(() => {
-                        LayerInvoke(Anim.Layers.Combat, () => {
+                        LayerInvoke(Layers.Combat, () => {
                               var i = IndexArmament(GetArmament(LEFT_HAND_SLOT));
                               GetAnimator().SetTrigger(AnimParams.UseLeftArmament);
                               GetAnimator().SetInteger(AnimParams.ArmamentIndex, i);
@@ -227,7 +225,7 @@ namespace us_dead_kids.avatar {
 
             public void ReloadLeft() {
                   Exec(() => {
-                        LayerInvoke(Anim.Layers.Reload, () => {
+                        LayerInvoke(Layers.Reload, () => {
                               GetAnimator().SetTrigger(AnimParams.Reload);
                               GetAnimator().SetInteger(AnimParams.Hand, LEFT_HAND_SLOT);
                         });
@@ -237,7 +235,7 @@ namespace us_dead_kids.avatar {
 
             public void ReloadRight() {
                   Exec(() => {
-                        LayerInvoke(Anim.Layers.Reload, () => {
+                        LayerInvoke(Layers.Reload, () => {
                               GetAnimator().SetTrigger(AnimParams.Reload);
                               GetAnimator().SetInteger(AnimParams.Hand, RIGHT_HAND_SLOT);
                         });
