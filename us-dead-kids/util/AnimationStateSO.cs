@@ -1,24 +1,23 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Avatar = us_dead_kids.avatar.Avatar;
 
-namespace us_dead_kids.skill {
+namespace us_dead_kids.util {
 
       [CreateAssetMenu(fileName = "Skill", menuName = "Us-Dead-Kids/Skills/Skill", order = 1)]
-      public class Skill : ScriptableObject {
+      public class AnimationStateSo : ScriptableObject {
 
-            [SerializeField] private string           skillID;
-            [SerializeField] private List<SkillEvent> events;
+            [SerializeField] private string               stateName;
+            [SerializeField] private List<AnimationEvent> events;
 
-            public string ID => skillID;
-
-
-            private List<SkillTrigger> _triggers;
+            public string ID => stateName;
 
 
-            private List<SkillTrigger> Triggers() {
+            private List<AnimationEvent.Trigger> _triggers;
+
+
+            private List<AnimationEvent.Trigger> Triggers() {
                   return _triggers ??= events.Select(a => a.ToTrigger()).ToList();
             }
 
@@ -31,11 +30,11 @@ namespace us_dead_kids.skill {
             internal void Tick(Animator a, AnimatorStateInfo i, int layer) {
                   var avatar = a.GetComponentInParent<Avatar>();
                   if (avatar == null) {
-                        Debug.LogWarning($"skill [{skillID}] attempting to access null avatar on [{a.name}].");
+                        Debug.LogWarning($"Attempting to access null avatar on [{a.name}].");
                         return;
                   }
 
-                  var state = avatar.GetSkillState(skillID);
+                  var state = avatar.AnimState(stateName);
                   if (state == null) return;
 
                   state.NormalisedTime = i.normalizedTime;
@@ -45,20 +44,20 @@ namespace us_dead_kids.skill {
             internal void Cancel(Animator a, AnimatorStateInfo i, int layer) {
                   var avatar = a.GetComponentInParent<Avatar>();
                   if (avatar == null) {
-                        Debug.LogWarning($"skill [{skillID}] attempting to access null avatar on [{a.name}].");
+                        Debug.LogWarning($"Attempting to access null avatar on [{a.name}].");
                         return;
                   }
 
-                  var state = avatar.GetSkillState(skillID);
+                  var state = avatar.AnimState(stateName);
                   if (state == null) return;
 
                   state.NormalisedTime = 0;
-                  Triggers().ForEach(action => SkillTrigger.Cancel(this, a, i, layer));
+                  Triggers().ForEach(action => AnimationEvent.Trigger.Cancel(this, a, i, layer));
             }
 
 
-            public SkillState ToState(int skillNameHash) {
-                  return new SkillState(skillID, skillNameHash);
+            public AnimationState ToState(int skillNameHash) {
+                  return new AnimationState(stateName, skillNameHash);
             }
 
       }

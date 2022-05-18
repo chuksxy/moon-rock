@@ -3,7 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Jobs.LowLevel.Unsafe;
 using UnityEngine;
-using us_dead_kids.skill;
+using us_dead_kids.util;
+using AnimationState = us_dead_kids.util.AnimationState;
 using Environment = us_dead_kids.environment.Environment;
 using Object = System.Object;
 
@@ -18,7 +19,7 @@ namespace us_dead_kids.avatar {
             private Animator   _animator;
             private GameObject _avatar;
 
-            private readonly Dictionary<string, SkillState> _skillStates = new Dictionary<string, SkillState>();
+            private readonly Dictionary<string, AnimationState> _skillStates = new Dictionary<string, AnimationState>();
 
 
             private static class AnimParams {
@@ -264,13 +265,13 @@ namespace us_dead_kids.avatar {
             }
 
 
-            public void SetSkillState(SkillState s) {
-                  if (_skillStates.ContainsKey(s.ID)) return;
-                  _skillStates.Add(s.ID, s);
+            public void SetSkillState(AnimationState s) {
+                  if (_skillStates.ContainsKey(s.Name)) return;
+                  _skillStates.Add(s.Name, s);
             }
 
 
-            public SkillState GetSkillState(string skillID) {
+            public AnimationState AnimState(string skillID) {
                   if (_skillStates.ContainsKey(skillID)) return _skillStates[skillID];
                   Debug.LogWarning($"Attempting to access skill [{skillID}] not assigned to avatar.");
                   return null;
