@@ -282,10 +282,12 @@ namespace us_dead_kids.avatar {
             }
 
 
-            private void LayerInvoke(int layer, Action action) {
+            private void LayerInvoke(int layer, Action action, bool reset = true) {
                   GetAnimator().SetLayerWeight(layer, 1.0f);
                   action.Invoke();
-                  GetAnimator().SetLayerWeight(layer, 0.0f);
+                  if (reset) {
+                        GetAnimator().SetLayerWeight(layer, 0.0f);
+                  }
             }
 
       }
