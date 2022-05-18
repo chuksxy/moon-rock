@@ -179,7 +179,7 @@ namespace us_dead_kids.avatar {
 
             public void Melee() {
                   Exec(() =>
-                        LayerInvoke(Layers.Skills, () => {
+                        LayerInvoke(Layers.Melee, () => {
                               GetAnimator().SetInteger(AnimParams.MeleeIndex, 0);
                               GetAnimator().SetTrigger(AnimParams.Melee);
                         })
