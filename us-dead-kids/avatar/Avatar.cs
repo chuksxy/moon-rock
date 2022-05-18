@@ -23,9 +23,8 @@ namespace us_dead_kids.avatar {
 
             private static class AnimParams {
 
-                  public static readonly int MoveX            = Animator.StringToHash("Move X");
-                  public static readonly int MoveZ            = Animator.StringToHash("Move Z");
-                  public static readonly int Run              = Animator.StringToHash("Run");
+                  public static readonly int Move             = Animator.StringToHash("Move");
+                  public static readonly int Sprint           = Animator.StringToHash("Sprint");
                   public static readonly int Evade            = Animator.StringToHash("Evade");
                   public static readonly int Guard            = Animator.StringToHash("Guard");
                   public static readonly int UseRightArmament = Animator.StringToHash("Right Armament");
@@ -34,7 +33,7 @@ namespace us_dead_kids.avatar {
                   public static readonly int Melee            = Animator.StringToHash("Melee");
                   public static readonly int MeleeIndex       = Animator.StringToHash("Melee Index");
                   public static readonly int UseSkill         = Animator.StringToHash("Use Skill");
-                  public static readonly int SkillIndex       = Animator.StringToHash("Skill");
+                  public static readonly int SkillIndex       = Animator.StringToHash("Skill Index");
                   public static readonly int UseItem          = Animator.StringToHash("Use Item");
                   public static readonly int ItemIndex        = Animator.StringToHash("Item Index");
                   public static readonly int Hand             = Animator.StringToHash("Hand");
@@ -44,14 +43,14 @@ namespace us_dead_kids.avatar {
             }
 
 
-            public static class Layers {
+            private static class Layers {
 
                   public const int Base         = 0;
                   public const int Combat       = 1;
                   public const int Melee        = 2;
                   public const int Reload       = 3;
                   public const int Skills       = 4;
-                  public const int Items        = 5;
+                  public const int Evade        = 5;
                   public const int Interactions = 6;
                   public const int Death        = 7;
 
@@ -93,22 +92,32 @@ namespace us_dead_kids.avatar {
             }
 
 
+            public void Rotate(Vector3 direction, bool interpolate, float speed) {
+                  var target = Quaternion.LookRotation(direction);
+                  _avatar.transform.rotation = interpolate
+                        ? Quaternion.Lerp(_avatar.transform.rotation, target, Time.deltaTime * speed)
+                        : target;
+            }
+
+
             // Move avatar in direction
             // Tilt Right
             // Tilt Left
             // Foot IK
-            public void Move(Vector3 direction, bool run) {
+            public void Move(Vector3 direction, bool sprint) {
                   Exec(() => {
-                        GetAnimator().SetFloat(AnimParams.MoveX, direction.x);
-                        GetAnimator().SetFloat(AnimParams.MoveZ, direction.z);
-                        GetAnimator().SetBool(AnimParams.Run, run);
+                        var move = Mathf.Max(Mathf.Abs(direction.x), Mathf.Abs(direction.z));
+                        GetAnimator().SetFloat(AnimParams.Move, move);
+                        GetAnimator().SetBool(AnimParams.Sprint, sprint);
                   });
             }
 
 
             // Adjust Torso to match aim direction
             // Head look at aim direction
-            public void Aim(Vector3 direction) { }
+            public void Aim(Vector3 direction) {
+                  // Use this to rotate the player's head towards their target.
+            }
 
 
             // Project an orb that negates damage
@@ -119,7 +128,9 @@ namespace us_dead_kids.avatar {
 
             // Hold to run
             public void Evade() {
-                  Exec(() => { GetAnimator().SetTrigger(AnimParams.Evade); });
+                  Exec(() =>
+                        LayerInvoke(Layers.Evade, () => GetAnimator().SetTrigger(AnimParams.Evade))
+                  );
             }
 
 
@@ -167,7 +178,12 @@ namespace us_dead_kids.avatar {
 
 
             public void Melee() {
-                  Exec(() => { GetAnimator().SetTrigger(AnimParams.Melee); });
+                  Exec(() =>
+                        LayerInvoke(Layers.Skills, () => {
+                              GetAnimator().SetInteger(AnimParams.MeleeIndex, 0);
+                              GetAnimator().SetTrigger(AnimParams.Melee);
+                        })
+                  );
             }
 
 
