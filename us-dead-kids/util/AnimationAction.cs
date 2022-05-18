@@ -13,7 +13,7 @@ namespace us_dead_kids.util {
 
       }
 
-      public static class SkillActionExtension {
+      public static class AnimationActionExtension {
 
 
             // Get Weapon, then trace
