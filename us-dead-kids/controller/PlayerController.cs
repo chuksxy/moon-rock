@@ -1,46 +1,46 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Avatar = moon.rock.avatar.Avatar;
+using Avatar = us_dead_kids.avatar.Avatar;
 
-namespace moon.rock.controller {
+namespace us_dead_kids.controller {
 
+      [RequireComponent(typeof(Avatar))]
       public class PlayerController : MonoBehaviour {
 
             private Avatar _avatar;
-            private Camera _camera;
 
 
             private void Start() {
                   _avatar = GetComponent<Avatar>();
                   if (_avatar == null) {
-                        Debug.LogError("cannot assign controller to null avatar");
-                  }
-
-                  _camera = GameObject.Find("Camera").GetComponent<Camera>();
-                  if (_camera == null) {
-                        Debug.LogError("cannot assign controller, cannot find main camera");
+                        Debug.LogWarning($"Attempting to control null avatar assigned to [{name}]");
                   }
             }
 
 
             // Left analog stick to move
             public void Move(InputAction.CallbackContext ctx) {
+                  if (ctx.canceled) return;
                   var direction = ctx.ReadValue<Vector2>();
-                  _avatar.Move(new Vector3(direction.x, 0, direction.y), _camera.transform);
+                  _avatar.Rotate(direction, true, 12.0f);
+                  _avatar.Move(new Vector3(direction.x, 0, direction.y), false);
             }
 
 
             // Right analog stick to aim
             public void Aim(InputAction.CallbackContext ctx) {
+                  if (ctx.canceled) return;
                   var direction = ctx.ReadValue<Vector2>();
-                  _avatar.Aim(direction, _camera.transform);
+                  // Allow y height aiming
+                  _avatar.Rotate(direction, true, 12.0f);
             }
 
 
             // Press L2 to fire Left hand weapon
             public void UseLeftHandWeapon(InputAction.CallbackContext ctx) {
-                  _avatar.UseLeftHandWeapon(ctx.duration);
+                  if (ctx.canceled) return;
+                  _avatar.UseLeftArmament();
             }
 
 
@@ -48,7 +48,7 @@ namespace moon.rock.controller {
             public void CycleLeftWeapon(InputAction.CallbackContext ctx) {
                   if (ctx.canceled) return;
                   if (ctx.started) {
-                        _avatar.CycleLeftWeapon();
+                        _avatar.CycleLeftArmament();
                   }
             }
 
@@ -56,7 +56,7 @@ namespace moon.rock.controller {
             // Press R2 to fire right hand weapon
             public void UseRightHandWeapon(InputAction.CallbackContext ctx) {
                   if (ctx.canceled) return;
-                  _avatar.UseRightHandWeapon(ctx.duration);
+                  _avatar.UseRightArmament();
             }
 
 
@@ -64,56 +64,46 @@ namespace moon.rock.controller {
             public void CycleRightWeapon(InputAction.CallbackContext ctx) {
                   if (ctx.canceled) return;
                   if (ctx.started) {
-                        _avatar.CycleRightWeapon();
+                        _avatar.CycleRightArmament();
                   }
             }
 
 
-            // Press R3 to Perform Melee
-            public void Melee() {
-                  // R3 Multiple times to combo
+            public void Melee(InputAction.CallbackContext ctx) {
+                  if (ctx.canceled) return;
+                  _avatar.Melee();
+            }
+
+
+            public void Guard(InputAction.CallbackContext ctx) {
+                  if (ctx.canceled) return;
+                  _avatar.Guard(true);
             }
 
 
             // Press ⭕️ to evade
             public void Evade(InputAction.CallbackContext ctx) {
+                  if (ctx.canceled) return;
                   // Tap ⭕️ to back step
                   // Tap ⭕️ + Left stick in direction to evade
-                  // Tap ⭕️ + R1 to quick evade right
-                  // Tap ⭕️ + L1 to quick evade left
+                  _avatar.Evade();
             }
 
 
-            // Hold L1 + ⭕ to boost forward very quickly
-            // Hold ⭕ then release for full boost.
-            public void Boost(InputAction.CallbackContext ctx) { }
-
-
-            // Hold L1 + ▲ to activate boosters.
-            // Hold ▲ to adjust booster level. The higher the level, the more energy is consumed.
-            public void ToggleBoosters(InputAction.CallbackContext ctx) { }
-
-
-            // Press ❌ to jump
-            public void Jump(InputAction.CallbackContext ctx) { }
-
-
-            // Hold L1 + ❌ for a high jump
-            public void HighJump(InputAction.CallbackContext ctx) { }
-
-
             // press ▲ to interact
-            public void Interact(InputAction.CallbackContext ctx) { }
-
-
-            // press L3 to crouch
-            public void Crouch(InputAction.CallbackContext ctx) { }
+            public void Interact(InputAction.CallbackContext ctx) {
+                  if (ctx.canceled) return;
+                  _avatar.Interact();
+            }
 
 
             // Hold ◻︎ [Box] + (L2 | R2) to reload the equipped weapon in hand.
-            public void Reload(int weapon) {
+            public void Reload(InputAction.CallbackContext ctx) {
                   // ◻ + L2
                   // ◻ + R2
+                  if (ctx.canceled) return;
+                  _avatar.ReloadLeft();
+                  _avatar.ReloadRight();
             }
 
       }
