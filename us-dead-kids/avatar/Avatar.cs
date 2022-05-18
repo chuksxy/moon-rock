@@ -19,7 +19,7 @@ namespace us_dead_kids.avatar {
             private Animator   _animator;
             private GameObject _avatar;
 
-            private readonly Dictionary<string, AnimationState> _skillStates = new Dictionary<string, AnimationState>();
+            private readonly Dictionary<string, AnimationState> _animationStates = new Dictionary<string, AnimationState>();
 
 
             private static class AnimParams {
@@ -266,13 +266,13 @@ namespace us_dead_kids.avatar {
 
 
             public void SetSkillState(AnimationState s) {
-                  if (_skillStates.ContainsKey(s.Name)) return;
-                  _skillStates.Add(s.Name, s);
+                  if (_animationStates.ContainsKey(s.Name)) return;
+                  _animationStates.Add(s.Name, s);
             }
 
 
             public AnimationState AnimState(string skillID) {
-                  if (_skillStates.ContainsKey(skillID)) return _skillStates[skillID];
+                  if (_animationStates.ContainsKey(skillID)) return _animationStates[skillID];
                   Debug.LogWarning($"Attempting to access skill [{skillID}] not assigned to avatar.");
                   return null;
             }
