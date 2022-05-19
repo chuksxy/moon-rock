@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace us_dead_kids.util {
+namespace us_dead_kids.lib {
 
       public class AnimationStateRegistry : MonoBehaviour {
 

@@ -1,17 +1,16 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.Jobs.LowLevel.Unsafe;
 using UnityEngine;
-using us_dead_kids.util;
-using AnimationState = us_dead_kids.util.AnimationState;
+using AnimationState = us_dead_kids.lib.AnimationState;
 using Environment = us_dead_kids.environment.Environment;
-using Object = System.Object;
 
 namespace us_dead_kids.avatar {
 
       // KISS
       public class Avatar : MonoBehaviour {
+
+            private string _avatarID = "no.id.assigned";
 
             private const int LEFT_HAND_SLOT  = 0;
             private const int RIGHT_HAND_SLOT = 1;
@@ -60,6 +59,11 @@ namespace us_dead_kids.avatar {
 
             private readonly string _masterAvatarPath     = $"{Environment.Path()}/avatar/master";
             private readonly string _masterControllerPath = $"{Environment.Path()}/avatar/master-controller";
+
+
+            public void Init(string avatarID) {
+                  _avatarID = avatarID;
+            }
 
 
             private void Start() {
