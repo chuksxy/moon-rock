@@ -8,7 +8,7 @@ using Environment = us_dead_kids.environment.Environment;
 namespace us_dead_kids.avatar {
 
       // KISS
-      public class Avatar : MonoBehaviour {
+      public partial class Avatar : MonoBehaviour {
 
             private string _avatarID = "no.id.assigned";
 
@@ -76,12 +76,18 @@ namespace us_dead_kids.avatar {
             }
 
 
-            private static bool IsAlive() {
-                  return true;
+            private bool IsAlive() {
+                  var s = Registry.Read(_avatarID);
+
+                  if (s == null) {
+                        return false;
+                  }
+
+                  return s.CurrentHealth > 0;
             }
 
 
-            private static void Exec(Action action) {
+            private void Exec(Action action) {
                   if (IsAlive()) {
                         action.Invoke();
                   }
