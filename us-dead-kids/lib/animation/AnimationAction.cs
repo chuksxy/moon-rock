@@ -47,6 +47,8 @@ namespace us_dead_kids.lib.animation {
                         return;
                   }
 
+                  Target.Clear(avatar);
+
                   avatar.TrackTargets = true;
                   avatar.InvokeCouroutine(() => Target.Track(avatar));
                   // Clear target when we exit the animation state either way.
