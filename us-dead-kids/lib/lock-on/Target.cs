@@ -9,9 +9,9 @@ namespace us_dead_kids.lib.lock_on {
       public static class Target {
 
             public static void Clear(Avatar caller) {
-                  if (caller != null) {
-                        caller.Targets = new List<Avatar>();
-                  }
+                  if (caller == null) return;
+                  caller.Targets      = new List<Avatar>();
+                  caller.TrackTargets = false;
             }
 
 
@@ -21,6 +21,8 @@ namespace us_dead_kids.lib.lock_on {
                   }
 
                   yield return new WaitUntil(() => state.IsCancelled);
+
+                  Clear(caller);
             }
 
 

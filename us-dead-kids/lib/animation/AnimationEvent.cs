@@ -35,7 +35,7 @@ namespace us_dead_kids.lib.animation {
                         var state = ReadState(s, i, avatar);
                         state.IsCancelled = false;
 
-                        avatar.InvokeAsync(() => Invoke(state, a, i));
+                        avatar.InvokeCouroutine(() => Invoke(state, a, i));
                   }
 
 

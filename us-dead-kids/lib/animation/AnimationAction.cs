@@ -48,8 +48,9 @@ namespace us_dead_kids.lib.animation {
                   }
 
                   avatar.TrackTargets = true;
-                  avatar.InvokeAsync(() => Target.Track(avatar));
-                  avatar.InvokeAsync(() => Target.ClearDelayed(avatar, state));
+                  avatar.InvokeCouroutine(() => Target.Track(avatar));
+                  // Clear target when we exit the animation state either way.
+                  avatar.InvokeCouroutine(() => Target.ClearDelayed(avatar, state));
             }
 
 
@@ -64,7 +65,6 @@ namespace us_dead_kids.lib.animation {
                         return;
                   }
 
-                  avatar.TrackTargets = false;
                   Target.Clear(avatar);
             }
 

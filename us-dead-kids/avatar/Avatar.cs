@@ -321,7 +321,7 @@ namespace us_dead_kids.avatar {
             }
 
 
-            public void InvokeAsync(Func<IEnumerator> action) {
+            public void InvokeCouroutine(Func<IEnumerator> action) {
                   StartCoroutine(action.Invoke());
             }
 
