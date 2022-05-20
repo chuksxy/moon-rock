@@ -8,12 +8,26 @@ namespace us_dead_kids.lib.animation {
       public enum AnimationAction {
 
             NoAction,
+
+            // Trace Melee Weapons 
             BeginTrace,
             EndTrace,
+
+            // Track Targets in range
             LockOnBegin,
             LockOnEnd,
+
+            // Enable Head shots
             HeadShotWindowBegin,
             HeadShotWindowEnd,
+
+            // Fire Weapon
+            Fire,
+            ContinuousFireBegin,
+            ContinuousFireEnd,
+
+            // Reload weapon
+            Reload,
 
       }
 
