@@ -19,8 +19,10 @@ namespace us_dead_kids.lib {
                         return;
                   }
 
+                  // Cannot transition immediately out of a state
                   a.SetBool(Params.Transition, false);
-                  a.SetFloat(Params.NormalisedTime, 0.0f);
+                  a.SetFloat(Params.NormalisedTime, i.normalizedTime);
+                  
                   state.Invoke(a, i, layer);
             }
 
@@ -48,9 +50,9 @@ namespace us_dead_kids.lib {
                         return;
                   }
 
-                  a.SetFloat(Params.NormalisedTime, 0.0f);
+                  a.SetFloat(Params.NormalisedTime, i.normalizedTime);
                   a.SetBool(Params.Transition, true);
-                  
+
                   state.Cancel(a, i, layer);
             }
 
