@@ -221,12 +221,13 @@ namespace us_dead_kids.avatar {
 
             public void UseRightArmament() {
                   Exec(() => {
-                        LayerInvoke(Layers.Combat, () => {
-                              var i = IndexArmament(GetArmament(RIGHT_HAND_SLOT));
-                              GetAnimator().SetTrigger(AnimParams.UseRightArmament);
-                              GetAnimator().SetInteger(AnimParams.ArmamentIndex, i);
-                              GetAnimator().SetInteger(AnimParams.Hand, RIGHT_HAND_SLOT);
-                        });
+                        InvokeArmament(GetArmament(RIGHT_HAND_SLOT), RIGHT_HAND_SLOT,
+                              () => LayerInvoke(Layers.Combat, () => {
+                                    var i = IndexArmament(GetArmament(RIGHT_HAND_SLOT));
+                                    GetAnimator().SetTrigger(AnimParams.UseRightArmament);
+                                    GetAnimator().SetInteger(AnimParams.ArmamentIndex, i);
+                                    GetAnimator().SetInteger(AnimParams.Hand, RIGHT_HAND_SLOT);
+                              }));
                   });
             }
 
@@ -273,10 +274,11 @@ namespace us_dead_kids.avatar {
 
             public void ReloadLeft() {
                   Exec(() => {
-                        LayerInvoke(Layers.Reload, () => {
-                              GetAnimator().SetTrigger(AnimParams.Reload);
-                              GetAnimator().SetInteger(AnimParams.Hand, LEFT_HAND_SLOT);
-                        });
+                        InvokeArmament(GetArmament(LEFT_HAND_SLOT), LEFT_HAND_SLOT, () =>
+                              LayerInvoke(Layers.Reload, () => {
+                                    GetAnimator().SetTrigger(AnimParams.Reload);
+                                    GetAnimator().SetInteger(AnimParams.Hand, LEFT_HAND_SLOT);
+                              }));
                   });
             }
 
@@ -311,6 +313,14 @@ namespace us_dead_kids.avatar {
 
             public void InvokeAsync(Func<IEnumerator> action) {
                   StartCoroutine(action.Invoke());
+            }
+
+
+            private void InvokeArmament(string id, int hand, Action action) {
+                  var ready = true;
+                  if (ready) {
+                        action.Invoke();
+                  }
             }
 
 
