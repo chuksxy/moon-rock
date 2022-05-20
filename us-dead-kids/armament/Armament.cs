@@ -48,6 +48,8 @@ namespace us_dead_kids.armament {
                   a.Avatar = avatar;
                   a.Hand   = hand;
 
+                  Registry.Put(state);
+
                   return a;
             }
 
