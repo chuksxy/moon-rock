@@ -66,7 +66,6 @@ namespace us_dead_kids.lib.animation {
                   return _triggers ??= events.Select(a => a.ToTrigger()).ToList();
             }
 
-
       }
 
 }

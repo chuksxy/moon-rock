@@ -35,7 +35,7 @@ namespace us_dead_kids.lib.animation {
                         var state = ReadState(s, i, avatar);
                         state.IsCancelled = false;
 
-                        avatar.InvokeCouroutine(() => Invoke(state, a, i));
+                        avatar.InvokeCouroutine(() => InvokeTrigger(state, a, i));
                   }
 
 
@@ -64,7 +64,7 @@ namespace us_dead_kids.lib.animation {
                   }
 
 
-                  private IEnumerator Invoke(AnimationState state, Animator a, AnimatorStateInfo i) {
+                  private IEnumerator InvokeTrigger(AnimationState state, Animator a, AnimatorStateInfo i) {
                         yield return new WaitUntil(() => state.NormalisedTime >= TimeMarker && state is {IsCancelled: false});
 
                         Action.BeginHeadShot(state, a);

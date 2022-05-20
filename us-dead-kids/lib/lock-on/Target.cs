@@ -8,13 +8,6 @@ namespace us_dead_kids.lib.lock_on {
 
       public static class Target {
 
-            public static void Clear(Avatar caller) {
-                  if (caller == null) return;
-                  caller.Targets      = new List<Avatar>();
-                  caller.TrackTargets = false;
-            }
-
-
             public static IEnumerator ClearDelayed(Avatar caller, AnimationState state) {
                   if (caller != null) {
                         yield return null;
@@ -23,6 +16,13 @@ namespace us_dead_kids.lib.lock_on {
                   yield return new WaitUntil(() => state.IsCancelled);
 
                   Clear(caller);
+            }
+
+
+            public static void Clear(Avatar caller) {
+                  if (caller == null) return;
+                  caller.Targets      = new List<Avatar>();
+                  caller.TrackTargets = false;
             }
 
 
@@ -46,7 +46,6 @@ namespace us_dead_kids.lib.lock_on {
             public static Avatar Closest(List<Avatar> targets) {
                   return null;
             }
-
 
       }
 
