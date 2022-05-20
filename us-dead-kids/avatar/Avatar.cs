@@ -75,7 +75,6 @@ namespace us_dead_kids.avatar {
 
             public void Load(string avatarID) {
                   var state = Registry.Read(avatarID);
-                  l
                   if (state != null) return;
 
                   Debug.LogWarning($"Avatar [{avatarID}] does not exist in registry, creating one.");
