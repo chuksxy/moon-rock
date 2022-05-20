@@ -7,7 +7,7 @@ namespace us_dead_kids.armament {
       [System.Serializable]
       public class ArmamentState {
 
-            public string                               ID          { get; set; }
+            public string                               ArmamentID          { get; set; }
             public string                               AvatarID    { get; set; }
             public string                               Name        { get; set; }
             public string                               Description { get; set; }

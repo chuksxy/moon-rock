@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using Avatar = us_dead_kids.avatar.Avatar;
 
@@ -11,7 +12,7 @@ namespace us_dead_kids.armament {
 
 
             public ArmamentState State() {
-                  return Registry.Read(ID, Avatar.ID, Hand);
+                  return Registry.Read(ID, Avatar.ID);
             }
 
 
@@ -33,7 +34,7 @@ namespace us_dead_kids.armament {
                         return current;
                   }
 
-                  var state = Registry.Read(avatar.ID, armamentID, hand);
+                  var state = Registry.Read(avatar.ID, armamentID);
                   if (state != null) return New(state, avatar, hand);
 
                   Debug.LogWarning($"Armament [{armamentID}] not found for avatar [{avatar.ID}].");
@@ -43,7 +44,7 @@ namespace us_dead_kids.armament {
 
             private static Armament New(ArmamentState state, Avatar avatar, int hand) {
                   var a = new GameObject().AddComponent<Armament>();
-                  a.ID     = state.ID;
+                  a.ID     = state.ArmamentID;
                   a.Avatar = avatar;
                   a.Hand   = hand;
 
@@ -53,9 +54,42 @@ namespace us_dead_kids.armament {
 
             public class Registry : MonoBehaviour {
 
-                  // 
-                  public static ArmamentState Read(string avatarID, string armamentID, int hand) {
-                        return new ArmamentState();
+                  private readonly Dictionary<string, ArmamentState> _compositeIDToArmament = new();
+
+                  private static Registry _registry;
+
+
+                  public static ArmamentState Read(string avatarID, string armamentID) {
+                        if (_registry == null) {
+                              Debug.LogWarning("Armament registry has not been created.");
+                              return null;
+                        }
+
+                        var key = GetKey(avatarID, armamentID);
+                        return _registry._compositeIDToArmament.ContainsKey(key)
+                              ? _registry._compositeIDToArmament[key]
+                              : new ArmamentState();
+                  }
+
+
+                  public static ArmamentState Put(ArmamentState s) {
+                        if (_registry == null) {
+                              Debug.LogWarning("Armament registry has not been created.");
+                              return null;
+                        }
+
+                        var key = GetKey(s.AvatarID, s.ArmamentID);
+                        if (_registry._compositeIDToArmament.ContainsKey(key)) {
+                              return _registry._compositeIDToArmament[key];
+                        }
+
+                        _registry._compositeIDToArmament.Add(key, s);
+                        return s;
+                  }
+
+
+                  private static string GetKey(string avatarID, string armamentID) {
+                        return $"{avatarID}::{armamentID}.key";
                   }
 
             }
