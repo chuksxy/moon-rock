@@ -302,9 +302,9 @@ namespace us_dead_kids.avatar {
             }
 
 
-            public AnimationState AnimState(string skillID) {
-                  if (_animationStates.ContainsKey(skillID)) return _animationStates[skillID];
-                  Debug.LogWarning($"Attempting to access skill [{skillID}] not assigned to avatar.");
+            public AnimationState AnimState(string stateName) {
+                  if (_animationStates.ContainsKey(stateName)) return _animationStates[stateName];
+                  Debug.LogWarning($"Attempting to access animation state [{stateName}] not assigned to avatar.");
                   return null;
             }
 
