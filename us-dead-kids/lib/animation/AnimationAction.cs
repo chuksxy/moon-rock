@@ -10,7 +10,7 @@ namespace us_dead_kids.lib.animation {
             NoAction,
             BeginTrace,
             EndTrace,
-            LockOn,
+            LockOnBegin,
             LockOnEnd,
             HeadShotWindowBegin,
             HeadShotWindowEnd,
@@ -21,7 +21,7 @@ namespace us_dead_kids.lib.animation {
 
 
             // Get Weapon, then trace
-            public static void StartTrace(this AnimationAction a, AnimationStateSo s, Animator animator) {
+            public static void BeginTrace(this AnimationAction a, AnimationState s, Animator animator) {
                   if (AnimationAction.BeginTrace == a) {
                         Debug.Log($"start tracing weapon for [{animator.name}] via skill [{s.Name}]");
                   }
@@ -29,18 +29,17 @@ namespace us_dead_kids.lib.animation {
 
 
             // Get Weapon, then trace
-            public static void EndTrace(this AnimationAction a, AnimationStateSo s, Animator animator) {
+            public static void EndTrace(this AnimationAction a, AnimationState s, Animator animator) {
                   if (AnimationAction.EndTrace == a) {
-                        Debug.Log($"end tracing weapon for [{animator.name}] via skill [{s.Name}]");
+                        Debug.Log($"end tracing weapon for [{animator.name}] for anim [{s.Name}]");
                   }
             }
 
 
-            // Lock on to single target
-            public static void LockOnBegin(this AnimationAction action, AnimationStateSo s, Animator animator) {
-                  if (AnimationAction.LockOn != action) return;
+            public static void BeginLockOn(this AnimationAction action, AnimationState state, Animator animator) {
+                  if (AnimationAction.LockOnBegin != action) return;
 
-                  Debug.Log($"lock unto to single target for [{animator.name}] via skill [{s.Name}]");
+                  Debug.Log($"lock unto to single target for [{animator.name}] for anim [{state.Name}]");
 
                   var avatar = animator.GetComponentInParent<Avatar>();
                   if (avatar == null) {
@@ -48,13 +47,13 @@ namespace us_dead_kids.lib.animation {
                         return;
                   }
 
-                  Target.Populate(avatar);
+                  avatar.TrackTargets = true;
+                  avatar.InvokeAsync(() => Target.Track(avatar));
+                  avatar.InvokeAsync(() => Target.ClearDelayed(avatar, state));
             }
 
 
-            // Lock on to multiple targets/
-            // Pull lock on radius from skill metadata
-            public static void LockOnEnd(this AnimationAction action, AnimationStateSo s, Animator animator) {
+            public static void EndLockOn(this AnimationAction action, AnimationState s, Animator animator) {
                   if (AnimationAction.LockOnEnd != action) return;
 
                   Debug.Log($"lock on to multiple targets for [{animator.name}] via skill [{s.Name}]");
@@ -65,12 +64,13 @@ namespace us_dead_kids.lib.animation {
                         return;
                   }
 
+                  avatar.TrackTargets = false;
                   Target.Clear(avatar);
             }
 
 
             // Listen for another button press at just the right moment to trigger a head shot.
-            public static void HeadShotWindowBegin(this AnimationAction a, AnimationStateSo s, Animator animator) {
+            public static void BeginHeadShot(this AnimationAction a, AnimationState s, Animator animator) {
                   if (AnimationAction.HeadShotWindowBegin == a) {
                         Debug.Log("Head shot window start");
                   }
@@ -78,7 +78,7 @@ namespace us_dead_kids.lib.animation {
 
 
             // Listen for another button press at just the right moment to trigger a head shot.
-            public static void HeadShotWindowEnd(this AnimationAction a, AnimationStateSo s, Animator animator) {
+            public static void EndHeadShot(this AnimationAction a, AnimationState s, Animator animator) {
                   if (AnimationAction.HeadShotWindowEnd == a) {
                         Debug.Log("Head shot end");
                   }

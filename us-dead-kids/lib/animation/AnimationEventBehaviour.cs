@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using UnityEngine;
+using Avatar = us_dead_kids.avatar.Avatar;
 
 namespace us_dead_kids.lib.animation {
 
@@ -22,7 +24,7 @@ namespace us_dead_kids.lib.animation {
                   // Cannot transition immediately out of a state
                   a.SetBool(Params.Transition, false);
                   a.SetFloat(Params.NormalisedTime, i.normalizedTime);
-                  
+
                   state.Invoke(a, i, layer);
             }
 
@@ -44,6 +46,12 @@ namespace us_dead_kids.lib.animation {
 
 
             public override void OnStateExit(Animator a, AnimatorStateInfo i, int layer) {
+                  var avatar = a.GetComponentInParent<Avatar>();
+                  if (avatar == null) {
+                        Debug.LogWarning($"Avatar not assigned to animator [{a.name}]");
+                        return;
+                  }
+
                   var state = AnimationStateRegistry.Read(i);
                   if (state == null) {
                         Debug.LogWarning($"Attempting to access null state assigned to [{a.name}]");

@@ -26,7 +26,7 @@ namespace us_dead_kids.lib.animation {
 
 
                   public void Invoke(AnimationStateSo s, Animator a, AnimatorStateInfo i, int layer) {
-                        var avatar = a.GetComponentInParent<avatar.Avatar>();
+                        var avatar = a.GetComponentInParent<Avatar>();
                         if (avatar == null) {
                               Debug.LogWarning($"Avatar not assigned to game object [{a.name}]");
                               return;
@@ -35,7 +35,7 @@ namespace us_dead_kids.lib.animation {
                         var state = ReadState(s, i, avatar);
                         state.IsCancelled = false;
 
-                        avatar.InvokeAsync(() => Invoke(s, a, i));
+                        avatar.InvokeAsync(() => Invoke(state, a, i));
                   }
 
 
@@ -58,20 +58,21 @@ namespace us_dead_kids.lib.animation {
                         if (state != null) return state;
 
                         state = s.ToState(i.shortNameHash);
-                        avatar.SetSkillState(state);
+                        avatar.SetAnimState(state);
 
                         return state;
                   }
 
 
-                  private IEnumerator Invoke(AnimationStateSo s, Animator a, AnimatorStateInfo i) {
-                        var state = ReadState(s, i, a);
+                  private IEnumerator Invoke(AnimationState state, Animator a, AnimatorStateInfo i) {
                         yield return new WaitUntil(() => state.NormalisedTime >= TimeMarker && state is {IsCancelled: false});
 
-                        Action.StartTrace(s, a);
-                        Action.EndTrace(s, a);
-                        Action.LockOnBegin(s, a);
-                        Action.LockOnEnd(s, a);
+                        Action.BeginHeadShot(state, a);
+                        Action.BeginTrace(state, a);
+                        Action.BeginLockOn(state, a);
+                        Action.EndLockOn(state, a);
+                        Action.EndTrace(state, a);
+                        Action.EndHeadShot(state, a);
                   }
 
             }

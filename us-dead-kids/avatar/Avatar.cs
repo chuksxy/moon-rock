@@ -24,7 +24,8 @@ namespace us_dead_kids.avatar {
             public Armament LeftArmament  { get; set; }
             public Armament RightArmament { get; set; }
 
-            public List<Avatar> Targets { get; set; }
+            public List<Avatar> Targets      { get; set; }
+            public bool         TrackTargets { get; set; }
 
             private static class AnimParams {
 
@@ -307,7 +308,7 @@ namespace us_dead_kids.avatar {
             }
 
 
-            public void SetSkillState(AnimationState s) {
+            public void SetAnimState(AnimationState s) {
                   if (_animationStates.ContainsKey(s.Name)) return;
                   _animationStates.Add(s.Name, s);
             }
