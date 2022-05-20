@@ -193,12 +193,13 @@ namespace us_dead_kids.avatar {
             // Using telekinesis skills will pull in all the weapons around the player within a specific radius
             public void UseSkill(int slot) {
                   var index = IndexSkill(GetSkill(slot));
-                  Exec(() => {
-                        LayerInvoke(Layers.Skills, () => {
-                              GetAnimator().SetTrigger(AnimParams.UseSkill);
-                              GetAnimator().SetInteger(AnimParams.SkillIndex, index);
-                        });
-                  });
+                  Exec(() => InvokeArmament(GetArmament(LEFT_HAND_SLOT), LEFT_HAND_SLOT, () => {
+                              LayerInvoke(Layers.Skills, () => {
+                                    GetAnimator().SetTrigger(AnimParams.UseSkill);
+                                    GetAnimator().SetInteger(AnimParams.SkillIndex, index);
+                              });
+                        })
+                  );
             }
 
 
@@ -245,11 +246,13 @@ namespace us_dead_kids.avatar {
 
             public void UseLeftArmament() {
                   Exec(() => {
-                        LayerInvoke(Layers.Combat, () => {
-                              var i = IndexArmament(GetArmament(LEFT_HAND_SLOT));
-                              GetAnimator().SetTrigger(AnimParams.UseLeftArmament);
-                              GetAnimator().SetInteger(AnimParams.ArmamentIndex, i);
-                              GetAnimator().SetInteger(AnimParams.Hand, LEFT_HAND_SLOT);
+                        InvokeArmament(GetArmament(LEFT_HAND_SLOT), LEFT_HAND_SLOT, () => {
+                              LayerInvoke(Layers.Combat, () => {
+                                    var i = IndexArmament(GetArmament(LEFT_HAND_SLOT));
+                                    GetAnimator().SetTrigger(AnimParams.UseLeftArmament);
+                                    GetAnimator().SetInteger(AnimParams.ArmamentIndex, i);
+                                    GetAnimator().SetInteger(AnimParams.Hand, LEFT_HAND_SLOT);
+                              });
                         });
                   });
             }
@@ -277,11 +280,10 @@ namespace us_dead_kids.avatar {
 
             public void ReloadLeft() {
                   Exec(() => {
-                        InvokeArmament(GetArmament(LEFT_HAND_SLOT), LEFT_HAND_SLOT, () =>
-                              LayerInvoke(Layers.Reload, () => {
-                                    GetAnimator().SetTrigger(AnimParams.Reload);
-                                    GetAnimator().SetInteger(AnimParams.Hand, LEFT_HAND_SLOT);
-                              }));
+                        LayerInvoke(Layers.Reload, () => {
+                              GetAnimator().SetTrigger(AnimParams.Reload);
+                              GetAnimator().SetInteger(AnimParams.Hand, LEFT_HAND_SLOT);
+                        });
                   });
             }
 
