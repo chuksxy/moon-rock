@@ -8,7 +8,7 @@ namespace us_dead_kids.avatar {
 
             public class Registry : MonoBehaviour {
 
-                  private readonly Dictionary<string, State> _stateByID = new Dictionary<string, State>();
+                  private readonly Dictionary<string, AvatarState> _stateByID = new Dictionary<string, AvatarState>();
 
                   private static Registry _registry;
 
@@ -22,7 +22,7 @@ namespace us_dead_kids.avatar {
                   }
 
 
-                  public static State Read(string avatarID) {
+                  public static AvatarState Read(string avatarID) {
                         if (_registry == null) {
                               return null;
                         }
@@ -36,7 +36,7 @@ namespace us_dead_kids.avatar {
                   }
 
 
-                  public static void Put(State state) {
+                  public static void Put(AvatarState state) {
                         if (_registry == null) {
                               return;
                         }

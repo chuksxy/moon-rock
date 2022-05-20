@@ -7,6 +7,12 @@ namespace us_dead_kids.armament {
 
             public string ID     { get; set; }
             public Avatar Avatar { get; set; }
+            public int    Hand   { get; set; }
+
+
+            public ArmamentState State() {
+                  return Registry.Read(ID, Avatar.ID, Hand);
+            }
 
 
             public static Armament Read(Avatar avatar, string armamentID, int hand) {
@@ -35,7 +41,7 @@ namespace us_dead_kids.armament {
             }
 
 
-            private static Armament New(State state, Avatar avatar) {
+            private static Armament New(ArmamentState state, Avatar avatar) {
                   var a = new GameObject().AddComponent<Armament>();
                   a.ID     = state.ID;
                   a.Avatar = avatar;
@@ -46,8 +52,8 @@ namespace us_dead_kids.armament {
             public class Registry : MonoBehaviour {
 
                   // 
-                  public static State Read(string avatarID, string armamentID, int hand) {
-                        return new State();
+                  public static ArmamentState Read(string avatarID, string armamentID, int hand) {
+                        return new ArmamentState();
                   }
 
             }

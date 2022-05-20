@@ -3,7 +3,7 @@ using System.Collections.Generic;
 namespace us_dead_kids.avatar {
 
       [System.Serializable]
-      public class State {
+      public class AvatarState {
 
             public string ID   { get; set; }
             public string Name { get; set; }

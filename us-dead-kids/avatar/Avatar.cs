@@ -64,7 +64,7 @@ namespace us_dead_kids.avatar {
             private readonly string _masterControllerPath = $"{Environment.Path()}/avatar/master-controller";
 
 
-            public void New(State state) {
+            public void New(AvatarState state) {
                   var existing = Registry.Read(state.ID);
                   if (existing != null) {
                         Debug.LogWarning($"Avatar with ID [{state.ID}] already exists.");
@@ -81,7 +81,7 @@ namespace us_dead_kids.avatar {
                   if (state != null) return;
 
                   Debug.LogWarning($"Avatar [{avatarID}] does not exist in registry, creating one.");
-                  state = new State() {
+                  state = new AvatarState() {
                         ID = avatarID,
                   };
                   Registry.Put(state);
@@ -319,9 +319,14 @@ namespace us_dead_kids.avatar {
             }
 
 
-            private void InvokeArmament(string id, int hand, Action action) {
-                  var ready = true;
-                  if (ready) {
+            private void InvokeArmament(string armamentID, int hand, Action action) {
+                  var armament = Armament.Read(this, armamentID, hand);
+                  if (armament == null) {
+                        Debug.LogWarning($"Armament [{armamentID}] not found, cannot invoke on avatar [{ID}].");
+                        return;
+                  }
+                  
+                  if (armament.State().IsReady()) {
                         action.Invoke();
                   }
             }
