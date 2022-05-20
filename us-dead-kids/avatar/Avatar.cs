@@ -322,10 +322,10 @@ namespace us_dead_kids.avatar {
             private void InvokeArmament(string armamentID, int hand, Action action) {
                   var armament = Armament.Read(this, armamentID, hand);
                   if (armament == null) {
-                        Debug.LogWarning($"Armament [{armamentID}] not found, cannot invoke on avatar [{ID}].");
+                        Debug.LogWarning($"Armament [{armamentID}] not found. Cannot invoke on avatar [{ID}].");
                         return;
                   }
-                  
+
                   if (armament.State().IsReady()) {
                         action.Invoke();
                   }

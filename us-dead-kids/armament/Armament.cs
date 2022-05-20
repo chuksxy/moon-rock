@@ -34,17 +34,19 @@ namespace us_dead_kids.armament {
                   }
 
                   var state = Registry.Read(avatar.ID, armamentID, hand);
-                  if (state != null) return New(state, avatar);
+                  if (state != null) return New(state, avatar, hand);
 
                   Debug.LogWarning($"Armament [{armamentID}] not found for avatar [{avatar.ID}].");
                   return null;
             }
 
 
-            private static Armament New(ArmamentState state, Avatar avatar) {
+            private static Armament New(ArmamentState state, Avatar avatar, int hand) {
                   var a = new GameObject().AddComponent<Armament>();
                   a.ID     = state.ID;
                   a.Avatar = avatar;
+                  a.Hand   = hand;
+
                   return a;
             }
 
