@@ -11,7 +11,7 @@ namespace us_dead_kids.lib.animation {
             BeginTrace,
             EndTrace,
             LockOn,
-            LockOnMultiple,
+            LockOnEnd,
             HeadShotWindowBegin,
             HeadShotWindowEnd,
 
@@ -37,7 +37,7 @@ namespace us_dead_kids.lib.animation {
 
 
             // Lock on to single target
-            public static void LockOn(this AnimationAction action, AnimationStateSo s, Animator animator) {
+            public static void LockOnBegin(this AnimationAction action, AnimationStateSo s, Animator animator) {
                   if (AnimationAction.LockOn != action) return;
 
                   Debug.Log($"lock unto to single target for [{animator.name}] via skill [{s.Name}]");
@@ -54,10 +54,18 @@ namespace us_dead_kids.lib.animation {
 
             // Lock on to multiple targets/
             // Pull lock on radius from skill metadata
-            public static void LockOnMultiple(this AnimationAction a, AnimationStateSo s, Animator animator) {
-                  if (AnimationAction.LockOnMultiple == a) {
-                        Debug.Log($"lock on to multiple targets for [{animator.name}] via skill [{s.Name}]");
+            public static void LockOnEnd(this AnimationAction action, AnimationStateSo s, Animator animator) {
+                  if (AnimationAction.LockOnEnd != action) return;
+
+                  Debug.Log($"lock on to multiple targets for [{animator.name}] via skill [{s.Name}]");
+
+                  var avatar = animator.GetComponentInParent<Avatar>();
+                  if (avatar == null) {
+                        Debug.LogWarning($"No avatar assigned to animator [{animator.name}]");
+                        return;
                   }
+
+                  Target.Clear(avatar);
             }
 
 

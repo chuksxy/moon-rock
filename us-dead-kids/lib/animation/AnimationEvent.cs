@@ -70,8 +70,8 @@ namespace us_dead_kids.lib.animation {
 
                         Action.StartTrace(s, a);
                         Action.EndTrace(s, a);
-                        Action.LockOn(s, a);
-                        Action.LockOnMultiple(s, a);
+                        Action.LockOnBegin(s, a);
+                        Action.LockOnEnd(s, a);
                   }
 
             }
