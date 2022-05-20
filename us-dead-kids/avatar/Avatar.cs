@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using us_dead_kids.armament;
 using AnimationState = us_dead_kids.lib.AnimationState;
 using Environment = us_dead_kids.environment.Environment;
 
@@ -10,16 +11,18 @@ namespace us_dead_kids.avatar {
       // KISS
       public partial class Avatar : MonoBehaviour {
 
-            private string _avatarID = "no.id.assigned";
-
-            private const int LEFT_HAND_SLOT  = 0;
-            private const int RIGHT_HAND_SLOT = 1;
+            public const int LEFT_HAND_SLOT  = 0;
+            public const int RIGHT_HAND_SLOT = 1;
 
             private Animator   _animator;
             private GameObject _avatar;
 
             private readonly Dictionary<string, AnimationState> _animationStates = new Dictionary<string, AnimationState>();
 
+            public string ID { get; private set; } = "no.id.assigned";
+
+            public Armament LeftArmament  { get; set; }
+            public Armament RightArmament { get; set; }
 
             private static class AnimParams {
 
@@ -69,7 +72,7 @@ namespace us_dead_kids.avatar {
                   }
 
                   Registry.Put(state);
-                  _avatarID = state.ID;
+                  ID = state.ID;
             }
 
 
@@ -83,7 +86,7 @@ namespace us_dead_kids.avatar {
                   };
                   Registry.Put(state);
 
-                  _avatarID = avatarID;
+                  ID = avatarID;
             }
 
 
@@ -98,7 +101,7 @@ namespace us_dead_kids.avatar {
 
 
             private bool IsAlive() {
-                  var s = Registry.Read(_avatarID);
+                  var s = Registry.Read(ID);
 
                   if (s == null) {
                         return false;
