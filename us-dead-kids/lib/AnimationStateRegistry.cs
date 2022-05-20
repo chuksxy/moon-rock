@@ -13,9 +13,9 @@ namespace us_dead_kids.lib {
             private void Awake() {
                   if (animStates != null && animStates.Count > 0) {
                         animStates.ForEach(s => {
-                              var shortNameHash = Animator.StringToHash(s.ID);
+                              var shortNameHash = Animator.StringToHash(s.Name);
                               if (Animations.ContainsKey(shortNameHash)) {
-                                    Debug.LogWarning($"Skill [{s.ID}] has already been registered.");
+                                    Debug.LogWarning($"Skill [{s.Name}] has already been registered.");
                                     return;
                               }
 

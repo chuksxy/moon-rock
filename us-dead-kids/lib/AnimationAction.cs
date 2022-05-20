@@ -19,7 +19,7 @@ namespace us_dead_kids.lib {
             // Get Weapon, then trace
             public static void StartTrace(this AnimationAction a, AnimationStateSo s, Animator animator) {
                   if (AnimationAction.StartTrace == a) {
-                        Debug.Log($"start tracing weapon for [{animator.name}] via skill [{s.ID}]");
+                        Debug.Log($"start tracing weapon for [{animator.name}] via skill [{s.Name}]");
                   }
             }
 
@@ -27,7 +27,7 @@ namespace us_dead_kids.lib {
             // Get Weapon, then trace
             public static void EndTrace(this AnimationAction a, AnimationStateSo s, Animator animator) {
                   if (AnimationAction.EndTrace == a) {
-                        Debug.Log($"end tracing weapon for [{animator.name}] via skill [{s.ID}]");
+                        Debug.Log($"end tracing weapon for [{animator.name}] via skill [{s.Name}]");
                   }
             }
 
@@ -35,7 +35,7 @@ namespace us_dead_kids.lib {
             // Lock on to single target
             public static void LockOn(this AnimationAction a, AnimationStateSo s, Animator animator) {
                   if (AnimationAction.LockOn == a) {
-                        Debug.Log($"lock unto to single target for [{animator.name}] via skill [{s.ID}]");
+                        Debug.Log($"lock unto to single target for [{animator.name}] via skill [{s.Name}]");
                   }
             }
 
@@ -44,7 +44,7 @@ namespace us_dead_kids.lib {
             // Pull lock on radius from skill metadata
             public static void LockOnMultiple(this AnimationAction a, AnimationStateSo s, Animator animator) {
                   if (AnimationAction.LockOnMultiple == a) {
-                        Debug.Log($"lock on to multiple targets for [{animator.name}] via skill [{s.ID}]");
+                        Debug.Log($"lock on to multiple targets for [{animator.name}] via skill [{s.Name}]");
                   }
             }
 

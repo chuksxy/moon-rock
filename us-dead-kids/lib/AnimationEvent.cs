@@ -54,7 +54,7 @@ namespace us_dead_kids.lib {
                               return null;
                         }
 
-                        var state = avatar.AnimState(s.ID);
+                        var state = avatar.AnimState(s.Name);
                         if (state != null) return state;
 
                         state = s.ToState(i.shortNameHash);
