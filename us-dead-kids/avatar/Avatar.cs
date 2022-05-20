@@ -61,7 +61,29 @@ namespace us_dead_kids.avatar {
             private readonly string _masterControllerPath = $"{Environment.Path()}/avatar/master-controller";
 
 
-            public void Init(string avatarID) {
+            public void New(State state) {
+                  var existing = Registry.Read(state.ID);
+                  if (existing != null) {
+                        Debug.LogWarning($"Avatar with ID [{state.ID}] already exists.");
+                        return;
+                  }
+
+                  Registry.Put(state);
+                  _avatarID = state.ID;
+            }
+
+
+            public void Load(string avatarID) {
+                  var state = Registry.Read(avatarID);
+                  l
+                  if (state != null) return;
+
+                  Debug.LogWarning($"Avatar [{avatarID}] does not exist in registry, creating one.");
+                  state = new State() {
+                        ID = avatarID,
+                  };
+                  Registry.Put(state);
+
                   _avatarID = avatarID;
             }
 
