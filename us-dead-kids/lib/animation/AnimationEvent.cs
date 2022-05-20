@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using Avatar = us_dead_kids.avatar.Avatar;
 
-namespace us_dead_kids.lib {
+namespace us_dead_kids.lib.animation {
 
       [System.Serializable]
       public struct AnimationEvent {

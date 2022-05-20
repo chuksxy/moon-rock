@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEngine;
 using Avatar = us_dead_kids.avatar.Avatar;
 
-namespace us_dead_kids.lib {
+namespace us_dead_kids.lib.animation {
 
       [CreateAssetMenu(fileName = "Skill", menuName = "Us-Dead-Kids/Animation/State", order = 1)]
       public class AnimationStateSo : ScriptableObject {

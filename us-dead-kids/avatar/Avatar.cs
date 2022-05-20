@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using us_dead_kids.armament;
-using AnimationState = us_dead_kids.lib.AnimationState;
+using AnimationState = us_dead_kids.lib.animation.AnimationState;
 using Environment = us_dead_kids.environment.Environment;
 
 namespace us_dead_kids.avatar {
@@ -23,6 +23,8 @@ namespace us_dead_kids.avatar {
 
             public Armament LeftArmament  { get; set; }
             public Armament RightArmament { get; set; }
+
+            public List<Avatar> Targets { get; set; }
 
             private static class AnimParams {
 
@@ -94,6 +96,8 @@ namespace us_dead_kids.avatar {
                   _avatar      = Instantiate(Resources.Load<GameObject>(_masterAvatarPath), transform, true);
                   _avatar.name = $"{gameObject.name}.avatar";
                   _animator    = _avatar.GetComponent<Animator>();
+
+                  _avatar.AddComponent<AvatarMarker>();
 
                   if (_animator == null) _animator = _avatar.AddComponent<Animator>();
                   _animator.runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>(_masterControllerPath);
