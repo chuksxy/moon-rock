@@ -29,22 +29,21 @@ namespace us_dead_kids.avatar {
 
             private static class AnimParams {
 
-                  public static readonly int Move             = Animator.StringToHash("Move");
-                  public static readonly int Sprint           = Animator.StringToHash("Sprint");
-                  public static readonly int Evade            = Animator.StringToHash("Evade");
-                  public static readonly int Guard            = Animator.StringToHash("Guard");
-                  public static readonly int UseRightArmament = Animator.StringToHash("Right Armament");
-                  public static readonly int UseLeftArmament  = Animator.StringToHash("Left Armament");
-                  public static readonly int ArmamentIndex    = Animator.StringToHash("Armament Index");
-                  public static readonly int Melee            = Animator.StringToHash("Melee");
-                  public static readonly int MeleeIndex       = Animator.StringToHash("Melee Index");
-                  public static readonly int UseSkill         = Animator.StringToHash("Use Skill");
-                  public static readonly int SkillIndex       = Animator.StringToHash("Skill Index");
-                  public static readonly int UseItem          = Animator.StringToHash("Use Item");
-                  public static readonly int ItemIndex        = Animator.StringToHash("Item Index");
-                  public static readonly int Hand             = Animator.StringToHash("Hand");
-                  public static readonly int Interact         = Animator.StringToHash("Interact");
-                  public static readonly int Reload           = Animator.StringToHash("Reload");
+                  public static readonly int Move          = Animator.StringToHash("Move");
+                  public static readonly int Sprint        = Animator.StringToHash("Sprint");
+                  public static readonly int Evade         = Animator.StringToHash("Evade");
+                  public static readonly int Guard         = Animator.StringToHash("Guard");
+                  public static readonly int UseArmament   = Animator.StringToHash("Use Armament");
+                  public static readonly int Hand          = Animator.StringToHash("Hand");
+                  public static readonly int ArmamentIndex = Animator.StringToHash("Armament Index");
+                  public static readonly int Melee         = Animator.StringToHash("Melee");
+                  public static readonly int MeleeIndex    = Animator.StringToHash("Melee Index");
+                  public static readonly int UseSkill      = Animator.StringToHash("Use Skill");
+                  public static readonly int SkillIndex    = Animator.StringToHash("Skill Index");
+                  public static readonly int UseItem       = Animator.StringToHash("Use Item");
+                  public static readonly int ItemIndex     = Animator.StringToHash("Item Index");
+                  public static readonly int Interact      = Animator.StringToHash("Interact");
+                  public static readonly int Reload        = Animator.StringToHash("Reload");
 
             }
 
@@ -68,26 +67,36 @@ namespace us_dead_kids.avatar {
 
 
             public void New(AvatarState state) {
-                  var existing = Registry.Read(state.ID);
+                  var existing = AvatarRegistry.Read(state.ID);
                   if (existing != null) {
                         Debug.LogWarning($"Avatar with ID [{state.ID}] already exists.");
                         return;
                   }
 
-                  Registry.Put(state);
+                  AvatarRegistry.Put(state);
                   ID = state.ID;
             }
 
 
             public void Load(string avatarID) {
-                  var state = Registry.Read(avatarID);
+                  var state = AvatarRegistry.Read(avatarID);
                   if (state != null) return;
 
                   Debug.LogWarning($"Avatar [{avatarID}] does not exist in registry, creating one.");
-                  state = new AvatarState() {
-                        ID = avatarID,
+                  state = new AvatarState {
+                        ID             = avatarID,
+                        Name           = $"avatar_{avatarID}.transient",
+                        CurrentHealth  = 200,
+                        MaxHealth      = 200,
+                        MaxSpeed       = 12,
+                        CurrentSpeed   = 12,
+                        MaxStamina     = 162,
+                        CurrentStamina = 162,
+                        Equipment =
+                              new List<string>() {"white.distressed.vest", "isengrim.distressed.shorts", "neon.ape.runners"},
+                        Items = new List<string>() {"half-smoked-spliff.wet", "broken-weed-grinder", "limitless-pill.half"},
                   };
-                  Registry.Put(state);
+                  AvatarRegistry.Put(state);
 
                   ID = avatarID;
             }
@@ -102,11 +111,14 @@ namespace us_dead_kids.avatar {
 
                   if (_animator == null) _animator = _avatar.AddComponent<Animator>();
                   _animator.runtimeAnimatorController = Resources.Load<RuntimeAnimatorController>(_masterControllerPath);
+
+                  // TODO:: Remove this shit.
+                  Load(gameObject.name);
             }
 
 
             private bool IsAlive() {
-                  var s = Registry.Read(ID);
+                  var s = AvatarRegistry.Read(ID);
 
                   if (s == null) {
                         return false;
@@ -129,6 +141,11 @@ namespace us_dead_kids.avatar {
                   }
 
                   return _animator;
+            }
+
+
+            public void Rotate(Vector2 direction, bool interpolate, float speed) {
+                  Rotate(new Vector3(direction.x, 0, direction.y), interpolate, speed);
             }
 
 
@@ -233,7 +250,7 @@ namespace us_dead_kids.avatar {
                         InvokeArmament(GetArmament(RIGHT_HAND_SLOT), RIGHT_HAND_SLOT,
                               () => LayerInvoke(Layers.Combat, () => {
                                     var i = IndexArmament(GetArmament(RIGHT_HAND_SLOT));
-                                    GetAnimator().SetTrigger(AnimParams.UseRightArmament);
+                                    GetAnimator().SetTrigger(AnimParams.UseArmament);
                                     GetAnimator().SetInteger(AnimParams.ArmamentIndex, i);
                                     GetAnimator().SetInteger(AnimParams.Hand, RIGHT_HAND_SLOT);
                               }));
@@ -243,7 +260,7 @@ namespace us_dead_kids.avatar {
 
             public void CycleRightArmament() {
                   Exec(() => {
-                        GetAnimator().SetTrigger(AnimParams.UseRightArmament);
+                        GetAnimator().SetTrigger(AnimParams.UseArmament);
                         GetAnimator().SetInteger(AnimParams.Hand, RIGHT_HAND_SLOT);
                   });
             }
@@ -254,7 +271,7 @@ namespace us_dead_kids.avatar {
                         InvokeArmament(GetArmament(LEFT_HAND_SLOT), LEFT_HAND_SLOT, () => {
                               LayerInvoke(Layers.Combat, () => {
                                     var i = IndexArmament(GetArmament(LEFT_HAND_SLOT));
-                                    GetAnimator().SetTrigger(AnimParams.UseLeftArmament);
+                                    GetAnimator().SetTrigger(AnimParams.UseArmament);
                                     GetAnimator().SetInteger(AnimParams.ArmamentIndex, i);
                                     GetAnimator().SetInteger(AnimParams.Hand, LEFT_HAND_SLOT);
                               });
@@ -265,7 +282,7 @@ namespace us_dead_kids.avatar {
 
             public void CycleLeftArmament() {
                   Exec(() => {
-                        GetAnimator().SetTrigger(AnimParams.UseRightArmament);
+                        GetAnimator().SetTrigger(AnimParams.UseArmament);
                         GetAnimator().SetInteger(AnimParams.Hand, LEFT_HAND_SLOT);
                   });
             }

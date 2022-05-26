@@ -21,7 +21,7 @@ namespace us_dead_kids.controller {
 
             // Left analog stick to move
             public void Move(InputAction.CallbackContext ctx) {
-                  if (ctx.canceled) return;
+                  //if (ctx.canceled) return;
                   var direction = ctx.ReadValue<Vector2>();
                   _avatar.Rotate(direction, true, 12.0f);
                   _avatar.Move(new Vector3(direction.x, 0, direction.y), false);

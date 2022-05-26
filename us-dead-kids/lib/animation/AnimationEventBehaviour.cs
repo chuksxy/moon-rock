@@ -16,10 +16,7 @@ namespace us_dead_kids.lib.animation {
 
             public override void OnStateEnter(Animator a, AnimatorStateInfo i, int layer) {
                   var state = AnimationStateRegistry.Read(i);
-                  if (state == null) {
-                        Debug.LogWarning($"Attempting to access null state assigned to [{a.name}]");
-                        return;
-                  }
+                  if (state == null) return;
 
                   // Cannot transition immediately out of a state
                   a.SetBool(Params.Transition, false);
@@ -31,10 +28,7 @@ namespace us_dead_kids.lib.animation {
 
             public override void OnStateUpdate(Animator a, AnimatorStateInfo i, int layer) {
                   var state = AnimationStateRegistry.Read(i);
-                  if (state == null) {
-                        Debug.LogWarning($"Attempting to access null state assigned to [{a.name}]");
-                        return;
-                  }
+                  if (state == null) return;
 
                   a.SetFloat(Params.NormalisedTime, i.normalizedTime);
                   if (i.normalizedTime >= state.ExitTime()) {
@@ -53,10 +47,7 @@ namespace us_dead_kids.lib.animation {
                   }
 
                   var state = AnimationStateRegistry.Read(i);
-                  if (state == null) {
-                        Debug.LogWarning($"Attempting to access null state assigned to [{a.name}]");
-                        return;
-                  }
+                  if (state == null) return;
 
                   a.SetFloat(Params.NormalisedTime, i.normalizedTime);
                   a.SetBool(Params.Transition, true);

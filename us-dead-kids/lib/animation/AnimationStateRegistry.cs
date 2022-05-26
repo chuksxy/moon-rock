@@ -3,6 +3,9 @@ using UnityEngine;
 
 namespace us_dead_kids.lib.animation {
 
+      /// <summary>
+      /// Read externally configured animation states;
+      /// </summary>
       public class AnimationStateRegistry : MonoBehaviour {
 
             [SerializeField] private List<AnimationStateSo> animStates;
@@ -15,7 +18,7 @@ namespace us_dead_kids.lib.animation {
                         animStates.ForEach(s => {
                               var shortNameHash = Animator.StringToHash(s.Name);
                               if (Animations.ContainsKey(shortNameHash)) {
-                                    Debug.LogWarning($"Skill [{s.Name}] has already been registered.");
+                                    Debug.LogWarning($"Animation [{s.Name}] has already been registered.");
                                     return;
                               }
 
@@ -27,9 +30,7 @@ namespace us_dead_kids.lib.animation {
 
             public static AnimationStateSo Read(AnimatorStateInfo i) {
                   var skillHash = i.shortNameHash;
-                  if (Animations.ContainsKey(skillHash)) return Animations[skillHash];
-                  Debug.LogWarning($"Attempting to access skill not in registry [{i.ToString()}]");
-                  return null;
+                  return Animations.ContainsKey(skillHash) ? Animations[skillHash] : null;
             }
 
       }
