@@ -19,32 +19,8 @@ namespace us_dead_kids.lib.animation {
             public  string                       Name => stateName;
 
 
-            public float ExitTime() {
-                  return exitTime <= 0 ? DEFAULT_EXIT_TIME : exitTime;
-            }
-
-
-            public AnimationState ToState(int skillNameHash) {
-                  return new AnimationState(stateName, skillNameHash);
-            }
-
-
             internal void Invoke(Animator a, AnimatorStateInfo i, int layer) {
                   Triggers().ForEach(trigger => trigger.Invoke(this, a, i, layer));
-            }
-
-
-            internal void Tick(Animator a, AnimatorStateInfo i, int layer) {
-                  var avatar = a.GetComponentInParent<Avatar>();
-                  if (avatar == null) {
-                        Debug.LogWarning($"Attempting to access null avatar on [{a.name}].");
-                        return;
-                  }
-
-                  var state = avatar.AnimState(stateName);
-                  if (state == null) return;
-
-                  state.NormalisedTime = i.normalizedTime;
             }
 
 
@@ -55,7 +31,7 @@ namespace us_dead_kids.lib.animation {
                         return;
                   }
 
-                  var state = avatar.AnimState(stateName);
+                  var state = avatar.AnimState(i.fullPathHash);
                   if (state == null) return;
 
                   state.NormalisedTime = 0;

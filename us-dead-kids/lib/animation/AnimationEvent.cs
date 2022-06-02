@@ -33,15 +33,22 @@ namespace us_dead_kids.lib.animation {
                         }
 
                         var state = ReadState(s, i, avatar);
-                        state.IsCancelled = false;
+                        if (state == null) {
+                              Debug.LogWarning($"state [{i.fullPathHash}] is null.");
+                              return;
+                        }
 
+                        state.IsCancelled = false;
                         avatar.InvokeCoroutine(() => InvokeTrigger(state, a, i));
                   }
 
 
                   public static void Cancel(AnimationStateSO s, Animator a, AnimatorStateInfo i, int layer) {
                         var state = ReadState(s, i, a);
-                        if (state == null) return;
+                        if (state == null) {
+                              Debug.LogWarning($"state [{i.fullPathHash}] is null.");
+                              return;
+                        }
 
                         state.IsCancelled = true;
                   }
@@ -49,18 +56,9 @@ namespace us_dead_kids.lib.animation {
 
                   private static AnimationState ReadState(AnimationStateSO s, AnimatorStateInfo i, Component c) {
                         var avatar = c.GetComponentInParent<Avatar>();
-                        if (avatar == null) {
-                              Debug.LogWarning($"Avatar not assigned to game object [{c.name}]");
-                              return null;
-                        }
-
-                        var state = avatar.AnimState(s.Name);
-                        if (state != null) return state;
-
-                        state = s.ToState(i.shortNameHash);
-                        avatar.SetAnimState(state);
-
-                        return state;
+                        if (avatar != null) return avatar.AnimState(i.fullPathHash);
+                        Debug.LogWarning($"Avatar not assigned to game object [{c.name}]");
+                        return null;
                   }
 
 

@@ -18,7 +18,8 @@ namespace us_dead_kids.avatar {
             private Animator   _animator;
             private GameObject _avatar;
 
-            private readonly Dictionary<string, AnimationState> _animationStates = new();
+            private readonly Dictionary<int, AnimationState> _animationStates = new();
+            private readonly Dictionary<int, bool>           _animationLocks  = new();
 
             public string ID { get; private set; } = "no.id.assigned";
 
@@ -49,10 +50,10 @@ namespace us_dead_kids.avatar {
             }
 
 
-            private static class Layers {
+            private static class Locks {
 
                   public const int Base         = 0;
-                  public const int Combat       = 1;
+                  public const int L_FIRE       = 1;
                   public const int Melee        = 2;
                   public const int Reload       = 3;
                   public const int Skills       = 4;
@@ -187,7 +188,7 @@ namespace us_dead_kids.avatar {
             // Hold to run
             public void Evade() {
                   Exec(() =>
-                        LayerInvoke(Layers.Evade, () => GetAnimator().SetTrigger(AnimParams.Evade))
+                        Lock(Locks.Evade, () => GetAnimator().SetTrigger(AnimParams.Evade))
                   );
             }
 
@@ -217,7 +218,7 @@ namespace us_dead_kids.avatar {
             public void UseSkill(int slot) {
                   var index = IndexSkill(GetSkill(slot));
                   Exec(() => InvokeArmament(GetArmament(LEFT_HAND_SLOT), LEFT_HAND_SLOT, () => {
-                              LayerInvoke(Layers.Skills, () => {
+                              Lock(Locks.Skills, () => {
                                     GetAnimator().SetTrigger(AnimParams.UseSkill);
                                     GetAnimator().SetInteger(AnimParams.SkillIndex, index);
                               });
@@ -238,7 +239,7 @@ namespace us_dead_kids.avatar {
 
             public void Melee() {
                   Exec(() =>
-                        LayerInvoke(Layers.Melee, () => {
+                        Lock(Locks.Melee, () => {
                               GetAnimator().SetInteger(AnimParams.MeleeIndex, 0);
                               GetAnimator().SetTrigger(AnimParams.Melee);
                         })
@@ -247,14 +248,16 @@ namespace us_dead_kids.avatar {
 
 
             public void RightFire() {
+                  const float lockDuration = 0.25f;
                   Exec(() => {
-                        InvokeArmament(GetArmament(RIGHT_HAND_SLOT), RIGHT_HAND_SLOT,
-                              () => LayerInvoke(Layers.Combat, () => {
-                                    var i = IndexArmament(GetArmament(RIGHT_HAND_SLOT));
-                                    GetAnimator().SetTrigger(AnimParams.Fire);
-                                    GetAnimator().SetInteger(AnimParams.ArmamentIndex, i);
-                                    GetAnimator().SetInteger(AnimParams.Hand, RIGHT_HAND_SLOT);
-                              }));
+                        InvokeArmament(GetArmament(RIGHT_HAND_SLOT), RIGHT_HAND_SLOT, () =>
+                              Lock(GetAnimator().GetLayerIndex("Fire"), () => {
+                                          var i = IndexArmament(GetArmament(RIGHT_HAND_SLOT));
+                                          GetAnimator().SetTrigger(AnimParams.Fire);
+                                          GetAnimator().SetInteger(AnimParams.ArmamentIndex, i);
+                                          GetAnimator().SetInteger(AnimParams.Hand, RIGHT_HAND_SLOT);
+                                    },
+                                    lockDuration));
                   });
             }
 
@@ -268,14 +271,16 @@ namespace us_dead_kids.avatar {
 
 
             public void LeftFire() {
+                  const float lockDuration = 0.25f;
                   Exec(() => {
                         InvokeArmament(GetArmament(LEFT_HAND_SLOT), LEFT_HAND_SLOT, () => {
-                              LayerInvoke(Layers.Combat, () => {
-                                    var i = IndexArmament(GetArmament(LEFT_HAND_SLOT));
-                                    GetAnimator().SetTrigger(AnimParams.Fire);
-                                    GetAnimator().SetInteger(AnimParams.ArmamentIndex, i);
-                                    GetAnimator().SetInteger(AnimParams.Hand, LEFT_HAND_SLOT);
-                              });
+                              Lock(GetAnimator().GetLayerIndex("Fire"), () => {
+                                          var i = IndexArmament(GetArmament(LEFT_HAND_SLOT));
+                                          GetAnimator().SetTrigger(AnimParams.Fire);
+                                          GetAnimator().SetInteger(AnimParams.ArmamentIndex, i);
+                                          GetAnimator().SetInteger(AnimParams.Hand, LEFT_HAND_SLOT);
+                                    },
+                                    lockDuration);
                         });
                   });
             }
@@ -303,7 +308,7 @@ namespace us_dead_kids.avatar {
 
             public void ReloadLeft() {
                   Exec(() => {
-                        LayerInvoke(Layers.Reload, () => {
+                        Lock(Locks.Reload, () => {
                               GetAnimator().SetTrigger(AnimParams.Reload);
                               GetAnimator().SetInteger(AnimParams.Hand, LEFT_HAND_SLOT);
                         });
@@ -313,7 +318,7 @@ namespace us_dead_kids.avatar {
 
             public void ReloadRight() {
                   Exec(() => {
-                        LayerInvoke(Layers.Reload, () => {
+                        Lock(Locks.Reload, () => {
                               GetAnimator().SetTrigger(AnimParams.Reload);
                               GetAnimator().SetInteger(AnimParams.Hand, RIGHT_HAND_SLOT);
                         });
@@ -327,14 +332,14 @@ namespace us_dead_kids.avatar {
 
 
             public void SetAnimState(AnimationState s) {
-                  if (_animationStates.ContainsKey(s.Name)) return;
-                  _animationStates.Add(s.Name, s);
+                  if (_animationStates.ContainsKey(s.StateHash)) return;
+                  _animationStates.Add(s.StateHash, s);
             }
 
 
-            public AnimationState AnimState(string stateName) {
-                  if (_animationStates.ContainsKey(stateName)) return _animationStates[stateName];
-                  Debug.LogWarning($"Attempting to access animation state [{stateName}] not assigned to avatar.");
+            public AnimationState AnimState(int nameHash) {
+                  if (_animationStates.ContainsKey(nameHash)) return _animationStates[nameHash];
+                  Debug.LogWarning($"Attempting to access animation state [{nameHash}] not assigned to avatar.");
                   return null;
             }
 
@@ -362,15 +367,45 @@ namespace us_dead_kids.avatar {
             }
 
 
-            private void LayerInvoke(int layer, Action action, bool reset = true) {
-                  GetAnimator().SetLayerWeight(layer, 1.0f);
+            private void Lock(int lockID, Action action, float duration = 0.05f, bool reset = true) {
+                  if (IsLocked(lockID)) {
+                        return;
+                  }
+
+                  if (GetAnimator().GetLayerWeight(lockID) < 1.0f) {
+                        GetAnimator().SetLayerWeight(lockID, 1.0f);
+                  }
+
                   action.Invoke();
 
-                  if (reset) {
-                        // Resetting layer's is done via animation behaviours for now.
+                  if (!reset) return;
+
+                  IEnumerator Reset() {
+                        yield return new WaitForSeconds(duration);
+
+                        if (IsLocked(lockID)) {
+                              Debug.Log($"unlocking layer [{lockID}] for [{_avatar.name}]");
+                              ToggleLock(lockID, false);
+                        }
                   }
+
+                  StartCoroutine(Reset());
             }
 
+
+            private bool IsLocked(int lockID) {
+                  return _animationLocks.ContainsKey(lockID) && _animationLocks[lockID];
+            }
+
+
+            public void ToggleLock(int lockID, bool value) {
+                  if (!_animationLocks.ContainsKey(lockID)) {
+                        _animationLocks.Add(lockID, value);
+                        return;
+                  }
+
+                  _animationLocks[lockID] = value;
+            }
 
       }
 

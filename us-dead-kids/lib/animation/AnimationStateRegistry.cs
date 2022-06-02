@@ -29,8 +29,7 @@ namespace us_dead_kids.lib.animation {
 
 
             public static AnimationStateSO Read(AnimatorStateInfo i) {
-                  var skillHash = i.shortNameHash;
-                  return Animations.ContainsKey(skillHash) ? Animations[skillHash] : null;
+                  return Animations.ContainsKey(i.fullPathHash) ? Animations[i.fullPathHash] : null;
             }
 
       }
