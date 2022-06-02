@@ -25,7 +25,7 @@ namespace us_dead_kids.lib.animation {
                   public AnimationAction Action     { get; set; }
 
 
-                  public void Invoke(AnimationStateSo s, Animator a, AnimatorStateInfo i, int layer) {
+                  public void Invoke(AnimationStateSO s, Animator a, AnimatorStateInfo i, int layer) {
                         var avatar = a.GetComponentInParent<Avatar>();
                         if (avatar == null) {
                               Debug.LogWarning($"Avatar not assigned to game object [{a.name}]");
@@ -35,11 +35,11 @@ namespace us_dead_kids.lib.animation {
                         var state = ReadState(s, i, avatar);
                         state.IsCancelled = false;
 
-                        avatar.InvokeCouroutine(() => InvokeTrigger(state, a, i));
+                        avatar.InvokeCoroutine(() => InvokeTrigger(state, a, i));
                   }
 
 
-                  public static void Cancel(AnimationStateSo s, Animator a, AnimatorStateInfo i, int layer) {
+                  public static void Cancel(AnimationStateSO s, Animator a, AnimatorStateInfo i, int layer) {
                         var state = ReadState(s, i, a);
                         if (state == null) return;
 
@@ -47,7 +47,7 @@ namespace us_dead_kids.lib.animation {
                   }
 
 
-                  private static AnimationState ReadState(AnimationStateSo s, AnimatorStateInfo i, Component c) {
+                  private static AnimationState ReadState(AnimationStateSO s, AnimatorStateInfo i, Component c) {
                         var avatar = c.GetComponentInParent<Avatar>();
                         if (avatar == null) {
                               Debug.LogWarning($"Avatar not assigned to game object [{c.name}]");

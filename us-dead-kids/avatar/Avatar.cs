@@ -3,13 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using us_dead_kids.armament;
+using us_dead_kids.environment;
 using AnimationState = us_dead_kids.lib.animation.AnimationState;
 using Environment = us_dead_kids.environment.Environment;
 
 namespace us_dead_kids.avatar {
 
       // KISS
-      public partial class Avatar : MonoBehaviour {
+      public class Avatar : MonoBehaviour {
 
             public const int LEFT_HAND_SLOT  = 0;
             public const int RIGHT_HAND_SLOT = 1;
@@ -17,7 +18,7 @@ namespace us_dead_kids.avatar {
             private Animator   _animator;
             private GameObject _avatar;
 
-            private readonly Dictionary<string, AnimationState> _animationStates = new Dictionary<string, AnimationState>();
+            private readonly Dictionary<string, AnimationState> _animationStates = new();
 
             public string ID { get; private set; } = "no.id.assigned";
 
@@ -33,7 +34,7 @@ namespace us_dead_kids.avatar {
                   public static readonly int Sprint        = Animator.StringToHash("Sprint");
                   public static readonly int Evade         = Animator.StringToHash("Evade");
                   public static readonly int Guard         = Animator.StringToHash("Guard");
-                  public static readonly int UseArmament   = Animator.StringToHash("Use Armament");
+                  public static readonly int Fire          = Animator.StringToHash("Fire");
                   public static readonly int Hand          = Animator.StringToHash("Hand");
                   public static readonly int ArmamentIndex = Animator.StringToHash("Armament Index");
                   public static readonly int Melee         = Animator.StringToHash("Melee");
@@ -245,12 +246,12 @@ namespace us_dead_kids.avatar {
             }
 
 
-            public void UseRightArmament() {
+            public void RightFire() {
                   Exec(() => {
                         InvokeArmament(GetArmament(RIGHT_HAND_SLOT), RIGHT_HAND_SLOT,
                               () => LayerInvoke(Layers.Combat, () => {
                                     var i = IndexArmament(GetArmament(RIGHT_HAND_SLOT));
-                                    GetAnimator().SetTrigger(AnimParams.UseArmament);
+                                    GetAnimator().SetTrigger(AnimParams.Fire);
                                     GetAnimator().SetInteger(AnimParams.ArmamentIndex, i);
                                     GetAnimator().SetInteger(AnimParams.Hand, RIGHT_HAND_SLOT);
                               }));
@@ -260,18 +261,18 @@ namespace us_dead_kids.avatar {
 
             public void CycleRightArmament() {
                   Exec(() => {
-                        GetAnimator().SetTrigger(AnimParams.UseArmament);
+                        GetAnimator().SetTrigger(AnimParams.Fire);
                         GetAnimator().SetInteger(AnimParams.Hand, RIGHT_HAND_SLOT);
                   });
             }
 
 
-            public void UseLeftArmament() {
+            public void LeftFire() {
                   Exec(() => {
                         InvokeArmament(GetArmament(LEFT_HAND_SLOT), LEFT_HAND_SLOT, () => {
                               LayerInvoke(Layers.Combat, () => {
                                     var i = IndexArmament(GetArmament(LEFT_HAND_SLOT));
-                                    GetAnimator().SetTrigger(AnimParams.UseArmament);
+                                    GetAnimator().SetTrigger(AnimParams.Fire);
                                     GetAnimator().SetInteger(AnimParams.ArmamentIndex, i);
                                     GetAnimator().SetInteger(AnimParams.Hand, LEFT_HAND_SLOT);
                               });
@@ -282,7 +283,7 @@ namespace us_dead_kids.avatar {
 
             public void CycleLeftArmament() {
                   Exec(() => {
-                        GetAnimator().SetTrigger(AnimParams.UseArmament);
+                        GetAnimator().SetTrigger(AnimParams.Fire);
                         GetAnimator().SetInteger(AnimParams.Hand, LEFT_HAND_SLOT);
                   });
             }
@@ -290,13 +291,13 @@ namespace us_dead_kids.avatar {
 
             private string GetArmament(int hand) {
                   // TODO:: Implement this!
-                  return hand + "weapon";
+                  return $"weapon.{hand}";
             }
 
 
             private int IndexArmament(string armamentID) {
                   // TODO:: Implement this!
-                  return armamentID.GetHashCode();
+                  return 0;
             }
 
 
@@ -338,12 +339,17 @@ namespace us_dead_kids.avatar {
             }
 
 
-            public void InvokeCouroutine(Func<IEnumerator> action) {
+            public void InvokeCoroutine(Func<IEnumerator> action) {
                   StartCoroutine(action.Invoke());
             }
 
 
             private void InvokeArmament(string armamentID, int hand, Action action) {
+                  if (Environment.Current == Env.STAGING) {
+                        // TODO:: Implement and remove this
+                        action.Invoke();
+                  }
+
                   var armament = Armament.Read(this, armamentID, hand);
                   if (armament == null) {
                         Debug.LogWarning($"Armament [{armamentID}] not found. Cannot invoke on avatar [{ID}].");
@@ -359,10 +365,12 @@ namespace us_dead_kids.avatar {
             private void LayerInvoke(int layer, Action action, bool reset = true) {
                   GetAnimator().SetLayerWeight(layer, 1.0f);
                   action.Invoke();
+
                   if (reset) {
-                        GetAnimator().SetLayerWeight(layer, 0.0f);
+                        // Resetting layer's is done via animation behaviours for now.
                   }
             }
+
 
       }
 

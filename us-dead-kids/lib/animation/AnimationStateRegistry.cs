@@ -8,27 +8,27 @@ namespace us_dead_kids.lib.animation {
       /// </summary>
       public class AnimationStateRegistry : MonoBehaviour {
 
-            [SerializeField] private List<AnimationStateSo> animStates;
+            [SerializeField] private List<AnimationStateSO> states;
 
-            private static readonly Dictionary<int, AnimationStateSo> Animations = new Dictionary<int, AnimationStateSo>();
+            private static readonly Dictionary<int, AnimationStateSO> Animations = new();
 
 
             private void Awake() {
-                  if (animStates != null && animStates.Count > 0) {
-                        animStates.ForEach(s => {
-                              var shortNameHash = Animator.StringToHash(s.Name);
-                              if (Animations.ContainsKey(shortNameHash)) {
-                                    Debug.LogWarning($"Animation [{s.Name}] has already been registered.");
+                  if (states is {Count: > 0}) {
+                        states.ForEach(s => {
+                              if (s.Mirror()) {
+                                    Animations.Add(Animator.StringToHash($"{s.Name}_l"), s);
+                                    Animations.Add(Animator.StringToHash($"{s.name}_r"), s);
                                     return;
                               }
 
-                              Animations.Add(shortNameHash, s);
+                              Animations.Add(Animator.StringToHash(s.name), s);
                         });
                   }
             }
 
 
-            public static AnimationStateSo Read(AnimatorStateInfo i) {
+            public static AnimationStateSO Read(AnimatorStateInfo i) {
                   var skillHash = i.shortNameHash;
                   return Animations.ContainsKey(skillHash) ? Animations[skillHash] : null;
             }

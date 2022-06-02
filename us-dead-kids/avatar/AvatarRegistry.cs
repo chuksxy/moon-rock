@@ -12,12 +12,14 @@ namespace us_dead_kids.avatar {
             private static AvatarRegistry _registry;
 
 
-            private void Start() {
+            private void OnEnable() {
                   if (_registry != null) {
+                        Debug.LogWarning("avatar registry already initialized.");
                         return;
                   }
 
                   _registry = this;
+                  Debug.Log($"avatar registry initialised on [{gameObject.name}]");
             }
 
 

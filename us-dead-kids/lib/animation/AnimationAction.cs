@@ -29,6 +29,7 @@ namespace us_dead_kids.lib.animation {
             // Reload weapon
             Reload,
 
+
       }
 
       public static class AnimationActionExtension {
@@ -64,9 +65,9 @@ namespace us_dead_kids.lib.animation {
                   Target.Clear(avatar);
 
                   avatar.TrackTargets = true;
-                  avatar.InvokeCouroutine(() => Target.Track(avatar));
+                  avatar.InvokeCoroutine(() => Target.Track(avatar));
                   // Clear target when we exit the animation state either way.
-                  avatar.InvokeCouroutine(() => Target.ClearDelayed(avatar, state));
+                  avatar.InvokeCoroutine(() => Target.ClearDelayed(avatar, state));
             }
 
 
@@ -99,6 +100,7 @@ namespace us_dead_kids.lib.animation {
                         Debug.Log("Head shot end");
                   }
             }
+
 
       }
 

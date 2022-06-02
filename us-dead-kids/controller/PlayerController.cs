@@ -5,14 +5,15 @@ using Avatar = us_dead_kids.avatar.Avatar;
 
 namespace us_dead_kids.controller {
 
-      [RequireComponent(typeof(Avatar))]
       public class PlayerController : MonoBehaviour {
+
+            private const float ROT_SPEED = 12.0f;
 
             private Avatar _avatar;
 
 
             private void Start() {
-                  _avatar = GetComponent<Avatar>();
+                  _avatar = GameObject.FindWithTag("Player")?.GetComponent<Avatar>();
                   if (_avatar == null) {
                         Debug.LogWarning($"Attempting to control null avatar assigned to [{name}]");
                   }
@@ -21,9 +22,11 @@ namespace us_dead_kids.controller {
 
             // Left analog stick to move
             public void Move(InputAction.CallbackContext ctx) {
-                  //if (ctx.canceled) return;
                   var direction = ctx.ReadValue<Vector2>();
-                  _avatar.Rotate(direction, true, 12.0f);
+                  if (direction != Vector2.zero) {
+                        _avatar.Rotate(direction, true, ROT_SPEED * 3.0f);
+                  }
+
                   _avatar.Move(new Vector3(direction.x, 0, direction.y), false);
             }
 
@@ -31,16 +34,17 @@ namespace us_dead_kids.controller {
             // Right analog stick to aim
             public void Aim(InputAction.CallbackContext ctx) {
                   if (ctx.canceled) return;
-                  var direction = ctx.ReadValue<Vector2>();
                   // Allow y height aiming
-                  _avatar.Rotate(direction, true, 12.0f);
+                  _avatar.Rotate(ctx.ReadValue<Vector2>(), true, ROT_SPEED * 2.0f);
             }
 
 
             // Press L2 to fire Left hand weapon
-            public void UseLeftHandWeapon(InputAction.CallbackContext ctx) {
+            public void LeftFire(InputAction.CallbackContext ctx) {
                   if (ctx.canceled) return;
-                  _avatar.UseLeftArmament();
+                  if (ctx.started) {
+                        _avatar.LeftFire();
+                  }
             }
 
 
@@ -54,9 +58,11 @@ namespace us_dead_kids.controller {
 
 
             // Press R2 to fire right hand weapon
-            public void UseRightHandWeapon(InputAction.CallbackContext ctx) {
+            public void RightFire(InputAction.CallbackContext ctx) {
                   if (ctx.canceled) return;
-                  _avatar.UseRightArmament();
+                  if (ctx.started) {
+                        _avatar.RightFire();
+                  }
             }
 
 

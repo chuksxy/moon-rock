@@ -5,11 +5,12 @@ using Avatar = us_dead_kids.avatar.Avatar;
 
 namespace us_dead_kids.lib.animation {
 
-      [CreateAssetMenu(fileName = "Skill", menuName = "Us-Dead-Kids/Animation/State", order = 1)]
-      public class AnimationStateSo : ScriptableObject {
+      [CreateAssetMenu(fileName = "State", menuName = "Us-Dead-Kids/Animation/State", order = 1)]
+      public class AnimationStateSO : ScriptableObject {
 
             private const float DEFAULT_EXIT_TIME = 0.5f;
 
+            [SerializeField] private bool                 mirror;
             [SerializeField] private string               stateName;
             [SerializeField] private List<AnimationEvent> events;
             [SerializeField] private float                exitTime = -1;
@@ -19,7 +20,7 @@ namespace us_dead_kids.lib.animation {
 
 
             public float ExitTime() {
-                  return exitTime < 0 ? DEFAULT_EXIT_TIME : exitTime;
+                  return exitTime <= 0 ? DEFAULT_EXIT_TIME : exitTime;
             }
 
 
@@ -64,6 +65,11 @@ namespace us_dead_kids.lib.animation {
 
             private List<AnimationEvent.Trigger> Triggers() {
                   return _triggers ??= events.Select(a => a.ToTrigger()).ToList();
+            }
+
+
+            public bool Mirror() {
+                  return mirror;
             }
 
       }
