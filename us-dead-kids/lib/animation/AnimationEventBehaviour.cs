@@ -7,6 +7,7 @@ namespace us_dead_kids.lib.animation {
       public static class AnimationBehaviourParams {
 
             public static readonly int NormalisedTime = Animator.StringToHash("NormalisedTime");
+            public static readonly int Exit           = Animator.StringToHash("Exit");
 
 
       }
@@ -15,7 +16,8 @@ namespace us_dead_kids.lib.animation {
 
 
             public override void OnStateEnter(Animator a, AnimatorStateInfo i, int layer) {
-                  a.SetFloat(AnimationBehaviourParams.NormalisedTime, i.normalizedTime);
+                  a.SetFloat(AnimationBehaviourParams.NormalisedTime, 0.0f);
+                  a.SetBool(AnimationBehaviourParams.Exit, false);
 
                   var avatar = a.GetComponentInParent<Avatar>();
                   if (avatar == null) {
@@ -23,12 +25,13 @@ namespace us_dead_kids.lib.animation {
                         return;
                   }
 
-                  avatar.ToggleLock(layer, true);
+                  var state = avatar.AnimState(i);
+                  state.NormalisedTime = 0.0f;
 
-                  var r = AnimationStateRegistry.Read(i);
-                  if (r == null) return;
+                  var animationStateSo = AnimationRegistry.Read(i);
+                  if (animationStateSo == null) return;
 
-                  r.Invoke(a, i, layer);
+                  animationStateSo.Invoke(a, i, layer);
             }
 
 
@@ -39,22 +42,30 @@ namespace us_dead_kids.lib.animation {
                         return;
                   }
 
-
-                  var state = avatar.AnimState(i.fullPathHash);
-                  if (state == null) {
-                        state = new AnimationState("", i.fullPathHash);
-                        avatar.SetAnimState(state);
-                  }
-
-                  a.SetFloat(AnimationBehaviourParams.NormalisedTime, i.normalizedTime);
+                  var state = avatar.AnimState(i);
                   state.NormalisedTime = i.normalizedTime;
+
+                  a.SetBool(AnimationBehaviourParams.Exit, state.Exit());
+                  a.SetFloat(AnimationBehaviourParams.NormalisedTime, i.normalizedTime);
             }
 
 
             public override void OnStateExit(Animator a, AnimatorStateInfo i, int layer) {
-                  var r = AnimationStateRegistry.Read(i);
-                  if (r == null) return;
-                  r.Cancel(a, i, layer);
+                  a.SetFloat(AnimationBehaviourParams.NormalisedTime, 1.0f);
+                  a.SetBool(AnimationBehaviourParams.Exit, true);
+
+                  var avatar = a.GetComponentInParent<Avatar>();
+                  if (avatar == null) {
+                        Debug.LogWarning($"Avatar not assigned to animator [{a.name}]");
+                        return;
+                  }
+
+                  var state = avatar.AnimState(i);
+                  state.NormalisedTime = 1.0f;
+
+                  var animationStateSo = AnimationRegistry.Read(i);
+                  if (animationStateSo == null) return;
+                  animationStateSo.Cancel(a, i, layer);
             }
 
       }

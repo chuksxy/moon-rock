@@ -4,10 +4,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using us_dead_kids.armament;
 using us_dead_kids.environment;
+using us_dead_kids.lib.animation;
 using AnimationState = us_dead_kids.lib.animation.AnimationState;
 using Environment = us_dead_kids.environment.Environment;
 
 namespace us_dead_kids.avatar {
+
+      // A certain part of the animation has played
+      // I input the right paramters
+      // E.G
+      // Fire -> .45f -> Move, Dodge, Guard
 
       // KISS
       public class Avatar : MonoBehaviour {
@@ -29,6 +35,8 @@ namespace us_dead_kids.avatar {
             public List<Avatar> Targets      { get; set; }
             public bool         TrackTargets { get; set; }
 
+            public int LastKnownAnimLayer { get; set; }
+
             private static class AnimParams {
 
                   public static readonly int Move          = Animator.StringToHash("Move");
@@ -46,20 +54,6 @@ namespace us_dead_kids.avatar {
                   public static readonly int ItemIndex     = Animator.StringToHash("Item Index");
                   public static readonly int Interact      = Animator.StringToHash("Interact");
                   public static readonly int Reload        = Animator.StringToHash("Reload");
-
-            }
-
-
-            private static class Locks {
-
-                  public const int Base         = 0;
-                  public const int L_FIRE       = 1;
-                  public const int Melee        = 2;
-                  public const int Reload       = 3;
-                  public const int Skills       = 4;
-                  public const int Evade        = 5;
-                  public const int Interactions = 6;
-                  public const int Death        = 7;
 
             }
 
@@ -138,9 +132,10 @@ namespace us_dead_kids.avatar {
 
 
             private Animator GetAnimator() {
-                  if (_animator == null) {
-                        Debug.LogWarning($"Attempting to access null animator assigned to [{gameObject.name}]");
-                  }
+                  if (_animator != null) return _animator;
+
+                  Debug.LogWarning($"Attempting to access null animator assigned to [{gameObject.name}]");
+                  _animator = _avatar.AddComponent<Animator>();
 
                   return _animator;
             }
@@ -165,9 +160,11 @@ namespace us_dead_kids.avatar {
             // Foot IK
             public void Move(Vector3 direction, bool sprint) {
                   Exec(() => {
-                        var move = Mathf.Max(Mathf.Abs(direction.x), Mathf.Abs(direction.z));
-                        GetAnimator().SetFloat(AnimParams.Move, move);
-                        GetAnimator().SetBool(AnimParams.Sprint, sprint);
+                        Lock(GetAnimator().GetLayerIndex("Move"), () => {
+                              var move = Mathf.Max(Mathf.Abs(direction.x), Mathf.Abs(direction.z));
+                              GetAnimator().SetFloat(AnimParams.Move, move);
+                              GetAnimator().SetBool(AnimParams.Sprint, sprint);
+                        });
                   });
             }
 
@@ -187,9 +184,7 @@ namespace us_dead_kids.avatar {
 
             // Hold to run
             public void Evade() {
-                  Exec(() =>
-                        Lock(Locks.Evade, () => GetAnimator().SetTrigger(AnimParams.Evade))
-                  );
+                  Exec(() => { GetAnimator().SetTrigger(AnimParams.Evade); });
             }
 
 
@@ -218,7 +213,8 @@ namespace us_dead_kids.avatar {
             public void UseSkill(int slot) {
                   var index = IndexSkill(GetSkill(slot));
                   Exec(() => InvokeArmament(GetArmament(LEFT_HAND_SLOT), LEFT_HAND_SLOT, () => {
-                              Lock(Locks.Skills, () => {
+                              var lockID = GetAnimator().GetLayerIndex("Skills");
+                              Lock(lockID, () => {
                                     GetAnimator().SetTrigger(AnimParams.UseSkill);
                                     GetAnimator().SetInteger(AnimParams.SkillIndex, index);
                               });
@@ -238,26 +234,25 @@ namespace us_dead_kids.avatar {
 
 
             public void Melee() {
-                  Exec(() =>
-                        Lock(Locks.Melee, () => {
+                  Exec(() => {
+                        var lockID = GetAnimator().GetLayerIndex("Melee");
+                        Lock(lockID, () => {
                               GetAnimator().SetInteger(AnimParams.MeleeIndex, 0);
                               GetAnimator().SetTrigger(AnimParams.Melee);
-                        })
-                  );
+                        });
+                  });
             }
 
 
             public void RightFire() {
-                  const float lockDuration = 0.25f;
                   Exec(() => {
-                        InvokeArmament(GetArmament(RIGHT_HAND_SLOT), RIGHT_HAND_SLOT, () =>
-                              Lock(GetAnimator().GetLayerIndex("Fire"), () => {
-                                          var i = IndexArmament(GetArmament(RIGHT_HAND_SLOT));
-                                          GetAnimator().SetTrigger(AnimParams.Fire);
-                                          GetAnimator().SetInteger(AnimParams.ArmamentIndex, i);
-                                          GetAnimator().SetInteger(AnimParams.Hand, RIGHT_HAND_SLOT);
-                                    },
-                                    lockDuration));
+                        InvokeArmament(GetArmament(RIGHT_HAND_SLOT), RIGHT_HAND_SLOT, () => {
+                                    var i = IndexArmament(GetArmament(RIGHT_HAND_SLOT));
+                                    GetAnimator().SetTrigger(AnimParams.Fire);
+                                    GetAnimator().SetInteger(AnimParams.ArmamentIndex, i);
+                                    GetAnimator().SetInteger(AnimParams.Hand, RIGHT_HAND_SLOT);
+                              }
+                        );
                   });
             }
 
@@ -271,16 +266,12 @@ namespace us_dead_kids.avatar {
 
 
             public void LeftFire() {
-                  const float lockDuration = 0.25f;
                   Exec(() => {
                         InvokeArmament(GetArmament(LEFT_HAND_SLOT), LEFT_HAND_SLOT, () => {
-                              Lock(GetAnimator().GetLayerIndex("Fire"), () => {
-                                          var i = IndexArmament(GetArmament(LEFT_HAND_SLOT));
-                                          GetAnimator().SetTrigger(AnimParams.Fire);
-                                          GetAnimator().SetInteger(AnimParams.ArmamentIndex, i);
-                                          GetAnimator().SetInteger(AnimParams.Hand, LEFT_HAND_SLOT);
-                                    },
-                                    lockDuration);
+                              var i = IndexArmament(GetArmament(LEFT_HAND_SLOT));
+                              GetAnimator().SetTrigger(AnimParams.Fire);
+                              GetAnimator().SetInteger(AnimParams.ArmamentIndex, i);
+                              GetAnimator().SetInteger(AnimParams.Hand, LEFT_HAND_SLOT);
                         });
                   });
             }
@@ -308,7 +299,7 @@ namespace us_dead_kids.avatar {
 
             public void ReloadLeft() {
                   Exec(() => {
-                        Lock(Locks.Reload, () => {
+                        Lock(GetAnimator().GetLayerIndex("Reload"), () => {
                               GetAnimator().SetTrigger(AnimParams.Reload);
                               GetAnimator().SetInteger(AnimParams.Hand, LEFT_HAND_SLOT);
                         });
@@ -318,7 +309,7 @@ namespace us_dead_kids.avatar {
 
             public void ReloadRight() {
                   Exec(() => {
-                        Lock(Locks.Reload, () => {
+                        Lock(GetAnimator().GetLayerIndex("Reload"), () => {
                               GetAnimator().SetTrigger(AnimParams.Reload);
                               GetAnimator().SetInteger(AnimParams.Hand, RIGHT_HAND_SLOT);
                         });
@@ -331,16 +322,24 @@ namespace us_dead_kids.avatar {
             }
 
 
-            public void SetAnimState(AnimationState s) {
-                  if (_animationStates.ContainsKey(s.StateHash)) return;
-                  _animationStates.Add(s.StateHash, s);
+            public AnimationState AnimState(AnimatorStateInfo s) {
+                  if (_animationStates.ContainsKey(s.shortNameHash)) return _animationStates[s.shortNameHash];
+                  Debug.LogWarning($"Attempting to access animation state [{s.shortNameHash}] not assigned to avatar.");
+
+                  var animStateSo = AnimationRegistry.Read(s);
+
+                  return SetAnimState(animStateSo?.ToState(s.shortNameHash));
             }
 
 
-            public AnimationState AnimState(int nameHash) {
-                  if (_animationStates.ContainsKey(nameHash)) return _animationStates[nameHash];
-                  Debug.LogWarning($"Attempting to access animation state [{nameHash}] not assigned to avatar.");
-                  return null;
+            private AnimationState SetAnimState(AnimationState s) {
+                  if (s == null) {
+                        return null;
+                  }
+
+                  if (_animationStates.ContainsKey(s.NameHash)) return _animationStates[s.NameHash];
+                  _animationStates.Add(s.NameHash, s);
+                  return s;
             }
 
 
@@ -367,29 +366,8 @@ namespace us_dead_kids.avatar {
             }
 
 
-            private void Lock(int lockID, Action action, float duration = 0.05f, bool reset = true) {
-                  if (IsLocked(lockID)) {
-                        return;
-                  }
-
-                  if (GetAnimator().GetLayerWeight(lockID) < 1.0f) {
-                        GetAnimator().SetLayerWeight(lockID, 1.0f);
-                  }
-
+            private void Lock(int lockID, Action action) {
                   action.Invoke();
-
-                  if (!reset) return;
-
-                  IEnumerator Reset() {
-                        yield return new WaitForSeconds(duration);
-
-                        if (IsLocked(lockID)) {
-                              Debug.Log($"unlocking layer [{lockID}] for [{_avatar.name}]");
-                              ToggleLock(lockID, false);
-                        }
-                  }
-
-                  StartCoroutine(Reset());
             }
 
 
@@ -398,13 +376,32 @@ namespace us_dead_kids.avatar {
             }
 
 
-            public void ToggleLock(int lockID, bool value) {
+            public void ToggleLowerLocks(int lockID, bool value, float duration = -1.0f) {
+                  for (var i = 0; i <= lockID; i++) {
+                        ToggleLock(lockID, value, duration);
+                  }
+            }
+
+
+            private void ToggleLock(int lockID, bool value, float duration = -1.0f) {
                   if (!_animationLocks.ContainsKey(lockID)) {
                         _animationLocks.Add(lockID, value);
                         return;
                   }
 
                   _animationLocks[lockID] = value;
+
+                  IEnumerator Reset() {
+                        yield return new WaitForSeconds(duration);
+
+                        if (IsLocked(lockID)) {
+                              ToggleLowerLocks(lockID, false);
+                        }
+                  }
+
+                  if (duration > 0.0f && GetAnimator().GetLayerIndex("Move") != lockID) {
+                        StartCoroutine(Reset());
+                  }
             }
 
       }

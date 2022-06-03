@@ -8,8 +8,6 @@ namespace us_dead_kids.lib.animation {
       [CreateAssetMenu(fileName = "State", menuName = "Us-Dead-Kids/Animation/State", order = 1)]
       public class AnimationStateSO : ScriptableObject {
 
-            private const float DEFAULT_EXIT_TIME = 0.5f;
-
             [SerializeField] private bool                 mirror;
             [SerializeField] private string               stateName;
             [SerializeField] private List<AnimationEvent> events;
@@ -17,6 +15,13 @@ namespace us_dead_kids.lib.animation {
 
             private List<AnimationEvent.Trigger> _triggers;
             public  string                       Name => stateName;
+
+
+            internal AnimationState ToState(int shortNameHash) {
+                  return new AnimationState(stateName, shortNameHash) {
+                        ExitTime = exitTime
+                  };
+            }
 
 
             internal void Invoke(Animator a, AnimatorStateInfo i, int layer) {
@@ -31,7 +36,7 @@ namespace us_dead_kids.lib.animation {
                         return;
                   }
 
-                  var state = avatar.AnimState(i.fullPathHash);
+                  var state = avatar.AnimState(i);
                   if (state == null) return;
 
                   state.NormalisedTime = 0;

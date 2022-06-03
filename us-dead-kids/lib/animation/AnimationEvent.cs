@@ -56,7 +56,7 @@ namespace us_dead_kids.lib.animation {
 
                   private static AnimationState ReadState(AnimationStateSO s, AnimatorStateInfo i, Component c) {
                         var avatar = c.GetComponentInParent<Avatar>();
-                        if (avatar != null) return avatar.AnimState(i.fullPathHash);
+                        if (avatar != null) return avatar.AnimState(i);
                         Debug.LogWarning($"Avatar not assigned to game object [{c.name}]");
                         return null;
                   }

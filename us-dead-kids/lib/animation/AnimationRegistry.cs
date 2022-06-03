@@ -6,7 +6,7 @@ namespace us_dead_kids.lib.animation {
       /// <summary>
       /// Read externally configured animation states;
       /// </summary>
-      public class AnimationStateRegistry : MonoBehaviour {
+      public class AnimationRegistry : MonoBehaviour {
 
             [SerializeField] private List<AnimationStateSO> states;
 
@@ -29,7 +29,7 @@ namespace us_dead_kids.lib.animation {
 
 
             public static AnimationStateSO Read(AnimatorStateInfo i) {
-                  return Animations.ContainsKey(i.fullPathHash) ? Animations[i.fullPathHash] : null;
+                  return Animations.ContainsKey(i.shortNameHash) ? Animations[i.shortNameHash] : null;
             }
 
       }
