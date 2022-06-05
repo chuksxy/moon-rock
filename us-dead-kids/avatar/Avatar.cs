@@ -257,8 +257,8 @@ namespace us_dead_kids.avatar {
                                     if (GetAnimator().GetBool(AnimParams.StanceEvade)) {
                                           GetAnimator().SetTrigger(AnimParams.FireClose);
                                     }
-                                    else if (GetAnimator().GetBool("Stance.Close-Fire")) {
-                                          GetAnimator().SetTrigger("Fire.Close");
+                                    else if (GetAnimator().GetBool(AnimParams.StanceCloseFire)) {
+                                          GetAnimator().SetTrigger(AnimParams.FireClose);
                                     }
                                     else {
                                           GetAnimator().SetTrigger(AnimParams.Fire);
