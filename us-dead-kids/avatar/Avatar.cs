@@ -165,7 +165,7 @@ namespace us_dead_kids.avatar {
             // Foot IK
             public void Move(Vector3 direction, float modifier) {
                   Exec(() => {
-                        Lock(GetAnimator().GetLayerIndex("Move"), () => {
+                        LayerInvoke(GetAnimator().GetLayerIndex("Move"), () => {
                               var move = Mathf.Max(Mathf.Abs(direction.x), Mathf.Abs(direction.z));
                               GetAnimator().SetFloat(AnimParams.Move, move);
 
@@ -284,11 +284,11 @@ namespace us_dead_kids.avatar {
                   Exec(() => {
                         InvokeArmament(GetArmament(LEFT_HAND_SLOT), LEFT_HAND_SLOT, () => {
                               var i = IndexArmament(GetArmament(LEFT_HAND_SLOT));
-                              if (GetAnimator().GetBool("Stance.Evade")) {
-                                    GetAnimator().SetTrigger("Fire.Close");
+                              if (GetAnimator().GetBool(AnimParams.StanceEvade)) {
+                                    GetAnimator().SetTrigger(AnimParams.FireClose);
                               }
-                              else if (GetAnimator().GetBool("Stance.Close-Fire")) {
-                                    GetAnimator().SetTrigger("Fire.Close");
+                              else if (GetAnimator().GetBool(AnimParams.StanceCloseFire)) {
+                                    GetAnimator().SetTrigger(AnimParams.FireClose);
                               }
                               else {
                                     GetAnimator().SetTrigger(AnimParams.Fire);
@@ -386,42 +386,8 @@ namespace us_dead_kids.avatar {
             }
 
 
-            private void Lock(int lockID, Action action) {
+            private static void LayerInvoke(int layerID, Action action) {
                   action.Invoke();
-            }
-
-
-            private bool IsLocked(int lockID) {
-                  return _animationLocks.ContainsKey(lockID) && _animationLocks[lockID];
-            }
-
-
-            public void ToggleLowerLocks(int lockID, bool value, float duration = -1.0f) {
-                  for (var i = 0; i <= lockID; i++) {
-                        ToggleLock(lockID, value, duration);
-                  }
-            }
-
-
-            private void ToggleLock(int lockID, bool value, float duration = -1.0f) {
-                  if (!_animationLocks.ContainsKey(lockID)) {
-                        _animationLocks.Add(lockID, value);
-                        return;
-                  }
-
-                  _animationLocks[lockID] = value;
-
-                  IEnumerator Reset() {
-                        yield return new WaitForSeconds(duration);
-
-                        if (IsLocked(lockID)) {
-                              ToggleLowerLocks(lockID, false);
-                        }
-                  }
-
-                  if (duration > 0.0f && GetAnimator().GetLayerIndex("Move") != lockID) {
-                        StartCoroutine(Reset());
-                  }
             }
 
       }
