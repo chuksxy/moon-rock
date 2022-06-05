@@ -27,7 +27,7 @@ namespace us_dead_kids.controller {
                         _avatar.Rotate(direction, true, ROT_SPEED * 3.0f);
                   }
 
-                  _avatar.Move(new Vector3(direction.x, 0, direction.y), false);
+                  _avatar.Move(new Vector3(direction.x, 0, direction.y), 1.0f);
             }
 
 
@@ -93,6 +93,12 @@ namespace us_dead_kids.controller {
                   // Tap ⭕️ to back step
                   // Tap ⭕️ + Left stick in direction to evade
                   _avatar.Evade();
+            }
+
+
+            public void Jump(InputAction.CallbackContext ctx) {
+                  if (ctx.canceled) return;
+                  _avatar.Jump();
             }
 
 

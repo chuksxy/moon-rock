@@ -42,18 +42,23 @@ namespace us_dead_kids.avatar {
                   public static readonly int Move          = Animator.StringToHash("Move");
                   public static readonly int Sprint        = Animator.StringToHash("Sprint");
                   public static readonly int Evade         = Animator.StringToHash("Evade");
+                  public static readonly int Jump          = Animator.StringToHash("Jump");
                   public static readonly int Guard         = Animator.StringToHash("Guard");
                   public static readonly int Fire          = Animator.StringToHash("Fire");
+                  public static readonly int FireClose     = Animator.StringToHash("Fire.Close");
                   public static readonly int Hand          = Animator.StringToHash("Hand");
                   public static readonly int ArmamentIndex = Animator.StringToHash("Armament Index");
                   public static readonly int Melee         = Animator.StringToHash("Melee");
                   public static readonly int MeleeIndex    = Animator.StringToHash("Melee Index");
-                  public static readonly int UseSkill      = Animator.StringToHash("Use Skill");
-                  public static readonly int SkillIndex    = Animator.StringToHash("Skill Index");
-                  public static readonly int UseItem       = Animator.StringToHash("Use Item");
                   public static readonly int ItemIndex     = Animator.StringToHash("Item Index");
+                  public static readonly int SkillIndex    = Animator.StringToHash("Skill Index");
+                  public static readonly int UseSkill      = Animator.StringToHash("Use Skill");
+                  public static readonly int UseItem       = Animator.StringToHash("Use Item");
                   public static readonly int Interact      = Animator.StringToHash("Interact");
                   public static readonly int Reload        = Animator.StringToHash("Reload");
+
+                  public static readonly int StanceEvade     = Animator.StringToHash("Stance.Evade");
+                  public static readonly int StanceCloseFire = Animator.StringToHash("Stance.Close-Fire");
 
             }
 
@@ -158,12 +163,14 @@ namespace us_dead_kids.avatar {
             // Tilt Right
             // Tilt Left
             // Foot IK
-            public void Move(Vector3 direction, bool sprint) {
+            public void Move(Vector3 direction, float modifier) {
                   Exec(() => {
                         Lock(GetAnimator().GetLayerIndex("Move"), () => {
                               var move = Mathf.Max(Mathf.Abs(direction.x), Mathf.Abs(direction.z));
                               GetAnimator().SetFloat(AnimParams.Move, move);
-                              GetAnimator().SetBool(AnimParams.Sprint, sprint);
+
+                              var sprint = Mathf.Lerp(GetAnimator().GetFloat(AnimParams.Sprint), modifier, Time.deltaTime);
+                              GetAnimator().SetFloat(AnimParams.Sprint, sprint);
                         });
                   });
             }
@@ -185,6 +192,11 @@ namespace us_dead_kids.avatar {
             // Hold to run
             public void Evade() {
                   Exec(() => { GetAnimator().SetTrigger(AnimParams.Evade); });
+            }
+
+
+            public void Jump() {
+                  Exec(() => { GetAnimator().SetTrigger(AnimParams.Jump); });
             }
 
 
@@ -213,11 +225,8 @@ namespace us_dead_kids.avatar {
             public void UseSkill(int slot) {
                   var index = IndexSkill(GetSkill(slot));
                   Exec(() => InvokeArmament(GetArmament(LEFT_HAND_SLOT), LEFT_HAND_SLOT, () => {
-                              var lockID = GetAnimator().GetLayerIndex("Skills");
-                              Lock(lockID, () => {
-                                    GetAnimator().SetTrigger(AnimParams.UseSkill);
-                                    GetAnimator().SetInteger(AnimParams.SkillIndex, index);
-                              });
+                              GetAnimator().SetTrigger(AnimParams.UseSkill);
+                              GetAnimator().SetInteger(AnimParams.SkillIndex, index);
                         })
                   );
             }
@@ -235,11 +244,8 @@ namespace us_dead_kids.avatar {
 
             public void Melee() {
                   Exec(() => {
-                        var lockID = GetAnimator().GetLayerIndex("Melee");
-                        Lock(lockID, () => {
-                              GetAnimator().SetInteger(AnimParams.MeleeIndex, 0);
-                              GetAnimator().SetTrigger(AnimParams.Melee);
-                        });
+                        GetAnimator().SetInteger(AnimParams.MeleeIndex, 0);
+                        GetAnimator().SetTrigger(AnimParams.Melee);
                   });
             }
 
@@ -248,7 +254,16 @@ namespace us_dead_kids.avatar {
                   Exec(() => {
                         InvokeArmament(GetArmament(RIGHT_HAND_SLOT), RIGHT_HAND_SLOT, () => {
                                     var i = IndexArmament(GetArmament(RIGHT_HAND_SLOT));
-                                    GetAnimator().SetTrigger(AnimParams.Fire);
+                                    if (GetAnimator().GetBool(AnimParams.StanceEvade)) {
+                                          GetAnimator().SetTrigger(AnimParams.FireClose);
+                                    }
+                                    else if (GetAnimator().GetBool("Stance.Close-Fire")) {
+                                          GetAnimator().SetTrigger("Fire.Close");
+                                    }
+                                    else {
+                                          GetAnimator().SetTrigger(AnimParams.Fire);
+                                    }
+
                                     GetAnimator().SetInteger(AnimParams.ArmamentIndex, i);
                                     GetAnimator().SetInteger(AnimParams.Hand, RIGHT_HAND_SLOT);
                               }
@@ -269,7 +284,16 @@ namespace us_dead_kids.avatar {
                   Exec(() => {
                         InvokeArmament(GetArmament(LEFT_HAND_SLOT), LEFT_HAND_SLOT, () => {
                               var i = IndexArmament(GetArmament(LEFT_HAND_SLOT));
-                              GetAnimator().SetTrigger(AnimParams.Fire);
+                              if (GetAnimator().GetBool("Stance.Evade")) {
+                                    GetAnimator().SetTrigger("Fire.Close");
+                              }
+                              else if (GetAnimator().GetBool("Stance.Close-Fire")) {
+                                    GetAnimator().SetTrigger("Fire.Close");
+                              }
+                              else {
+                                    GetAnimator().SetTrigger(AnimParams.Fire);
+                              }
+
                               GetAnimator().SetInteger(AnimParams.ArmamentIndex, i);
                               GetAnimator().SetInteger(AnimParams.Hand, LEFT_HAND_SLOT);
                         });
@@ -299,20 +323,16 @@ namespace us_dead_kids.avatar {
 
             public void ReloadLeft() {
                   Exec(() => {
-                        Lock(GetAnimator().GetLayerIndex("Reload"), () => {
-                              GetAnimator().SetTrigger(AnimParams.Reload);
-                              GetAnimator().SetInteger(AnimParams.Hand, LEFT_HAND_SLOT);
-                        });
+                        GetAnimator().SetTrigger(AnimParams.Reload);
+                        GetAnimator().SetInteger(AnimParams.Hand, LEFT_HAND_SLOT);
                   });
             }
 
 
             public void ReloadRight() {
                   Exec(() => {
-                        Lock(GetAnimator().GetLayerIndex("Reload"), () => {
-                              GetAnimator().SetTrigger(AnimParams.Reload);
-                              GetAnimator().SetInteger(AnimParams.Hand, RIGHT_HAND_SLOT);
-                        });
+                        GetAnimator().SetTrigger(AnimParams.Reload);
+                        GetAnimator().SetInteger(AnimParams.Hand, RIGHT_HAND_SLOT);
                   });
             }
 

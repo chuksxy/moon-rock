@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Avatar = us_dead_kids.avatar.Avatar;
@@ -13,6 +14,11 @@ namespace us_dead_kids.lib.animation {
       }
 
       public class AnimationEventBehaviour : StateMachineBehaviour {
+
+            public delegate void CallBack();
+
+            public CallBack OnEnter;
+            public CallBack OnExit;
 
 
             public override void OnStateEnter(Animator a, AnimatorStateInfo i, int layer) {
@@ -32,6 +38,7 @@ namespace us_dead_kids.lib.animation {
                   if (animationStateSo == null) return;
 
                   animationStateSo.Invoke(a, i, layer);
+                  animationStateSo.OverrideParameters(this, a, i, layer);
             }
 
 
@@ -65,7 +72,9 @@ namespace us_dead_kids.lib.animation {
 
                   var animationStateSo = AnimationRegistry.Read(i);
                   if (animationStateSo == null) return;
+                  
                   animationStateSo.Cancel(a, i, layer);
+                  animationStateSo.ResetParameters(a, i, layer);
             }
 
       }
