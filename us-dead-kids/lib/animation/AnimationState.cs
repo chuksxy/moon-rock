@@ -6,7 +6,7 @@ namespace us_dead_kids.lib.animation {
                   Name     = name;
                   NameHash = nameHash;
             }
-
+      
 
             public string Name           { get; }
             public int    NameHash       { get; }

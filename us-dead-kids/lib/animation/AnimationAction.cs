@@ -1,4 +1,5 @@
 using UnityEngine;
+using us_dead_kids.game;
 using us_dead_kids.lib.lock_on;
 using Avatar = us_dead_kids.avatar.Avatar;
 
@@ -29,6 +30,8 @@ namespace us_dead_kids.lib.animation {
             // Reload weapon
             Reload,
 
+            DecrementStamina,
+            DecrementHealth
 
       }
 
@@ -99,6 +102,16 @@ namespace us_dead_kids.lib.animation {
                   if (AnimationAction.HeadShotWindowEnd == a) {
                         Debug.Log("Head shot end");
                   }
+            }
+
+
+            public static void DecrementStamina(this AnimationAction a, AnimationState s, Animator animator) {
+                  if (AnimationAction.DecrementStamina != a) return;
+
+                  var avatar = animator.GetComponent<Avatar>();
+                  if (avatar == null) return;
+
+                  GameManager.ExecOnAvatarService(service => { service.MutateStamina(avatar.ID, -12); });
             }
 
 
