@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using us_dead_kids.armament;
 using us_dead_kids.environment;
+using us_dead_kids.game;
 using us_dead_kids.lib.animation;
 using AnimationState = us_dead_kids.lib.animation.AnimationState;
 using Environment = us_dead_kids.environment.Environment;
@@ -68,23 +69,27 @@ namespace us_dead_kids.avatar {
 
 
             public void New(AvatarState state) {
-                  var existing = AvatarRegistry.Read(state.ID);
+                  AvatarState existing = null;
+                  GameManager.ExecOnAvatarRegistry(s => existing = s.Read(state.ID));
+
                   if (existing != null) {
                         Debug.LogWarning($"Avatar with ID [{state.ID}] already exists.");
                         return;
                   }
 
-                  AvatarRegistry.Put(state);
+                  GameManager.ExecOnAvatarRegistry(r => r.Put(state));
                   ID = state.ID;
             }
 
 
             public void Load(string avatarID) {
-                  var state = AvatarRegistry.Read(avatarID);
-                  if (state != null) return;
+                  AvatarState existing = null;
+                  GameManager.ExecOnAvatarRegistry(s => existing = s.Read(avatarID));
+
+                  if (existing != null) return;
 
                   Debug.LogWarning($"Avatar [{avatarID}] does not exist in registry, creating one.");
-                  state = new AvatarState {
+                  var state = new AvatarState {
                         ID             = avatarID,
                         Name           = $"avatar_{avatarID}.transient",
                         CurrentHealth  = 200,
@@ -97,8 +102,8 @@ namespace us_dead_kids.avatar {
                               new List<string>() {"white.distressed.vest", "isengrim.distressed.shorts", "neon.ape.runners"},
                         Items = new List<string>() {"half-smoked-spliff.wet", "broken-weed-grinder", "limitless-pill.half"},
                   };
-                  AvatarRegistry.Put(state);
 
+                  GameManager.ExecOnAvatarRegistry(r => r.Put(state));
                   ID = avatarID;
             }
 
@@ -119,13 +124,9 @@ namespace us_dead_kids.avatar {
 
 
             private bool IsAlive() {
-                  var s = AvatarRegistry.Read(ID);
-
-                  if (s == null) {
-                        return false;
-                  }
-
-                  return s.CurrentHealth > 0;
+                  var alive = false;
+                  GameManager.ExecOnAvatarService(s => { alive = s.IsAlive(ID); });
+                  return alive;
             }
 
 

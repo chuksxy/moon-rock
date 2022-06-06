@@ -15,6 +15,8 @@ namespace us_dead_kids.lib.animation {
             [SerializeField] private List<AnimationEvent>       events;
             [SerializeField] private float                      exitTime = -1;
 
+            [SerializeField] private bool terminal;
+
             private List<AnimationEvent.Trigger> _triggers;
             public  string                       Name => stateName;
 
@@ -62,6 +64,10 @@ namespace us_dead_kids.lib.animation {
                         Debug.Log($"override parameter [{param.Name()}] for [{a.name}] with value [{param.Value()}]");
                         a.SetBool(param.Name(), param.Value());
                   });
+
+                  if (IsTerminal()) {
+                        a.SetBool("Terminate", true);
+                  }
             }
 
 
@@ -83,6 +89,10 @@ namespace us_dead_kids.lib.animation {
                         Debug.Log($"resetting parameter [{param.Name()}] for [{a.name}].");
                         a.SetBool(param.Name(), !param.Value());
                   });
+
+                  if (IsTerminal()) {
+                        a.SetBool("Terminate", false);
+                  }
             }
 
 
@@ -93,6 +103,11 @@ namespace us_dead_kids.lib.animation {
 
             public bool Mirror() {
                   return mirror;
+            }
+
+
+            private bool IsTerminal() {
+                  return terminal;
             }
 
       }
